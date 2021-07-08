@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { JustaservService } from 'src/app/justaserv.service';
-import { addbutton } from 'src/app/shared/myanimations/addtocart';
+import { JustaservService } from '../../justaserv.service';
+import { addbutton } from '../../shared/myanimations/addtocart';
 import {shake} from "../../shared/myanimations/shake"
 import { Products, Shoptemp } from '../interfaces/shopin';
 import { ItemquantityComponent } from '../itemquantity/itemquantity.component';
