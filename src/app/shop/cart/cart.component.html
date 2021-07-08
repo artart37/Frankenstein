@@ -1,0 +1,25 @@
+<section class="wrapper">
+    <ng-container *ngFor="let item of myproducts, let i = index, trackBy:trackbyID">
+        <div class="product">
+            <div class="prodimg" @elnganime>
+                <img src="{{item.image}}" alt="{{item.products}}">
+            </div>
+            <span class="prod_title">{{item.product}}</span>
+            <span class="prod_price">Item price: {{item.price}} {{item.currency}}</span>
+            <span class="special_note" *ngIf="item?.quantity | validatequantity:states[i].bool" [@shake] = "states[i].animestate">{{item?.quantity | validatequantity: states[i].bool | uppercase}}</span>
+            <div class="hidden_gem">
+                <div class="call_for_action">
+                    <app-itemquantity [item]="item" [states]="states[i]"></app-itemquantity>
+                    <div class="action">
+                        <button class="cart" (click)="addtocart(i, states[i], item)" [@addbuttonanim]="addanimestate[i].addtocartanimestate">
+                            <span class="addtext">{{item?.quantity>0?"Add to cart":"Place an order"}}</span>
+                            <span class="vcheckmark"></span>
+                        </button>
+                        <button class="details" (click)="itemdetails(i, states[i], item)">View details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</section>
+<router-outlet name="modal"></router-outlet>

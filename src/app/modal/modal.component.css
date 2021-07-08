@@ -1,0 +1,39 @@
+.modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+  }
+   .modal-content {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    position: relative;
+    transition: all 5s ease-in-out;
+    width: fit-content;
+    max-width: 70%;
+    min-width: 30%;
+    box-sizing: border-box;
+  }
+  .modal-content .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+  }
+  .modal-content .close:hover {
+    color: rgb(214, 20, 111);
+  }
+  @media screen and (max-width: 700px){
+    /* .modal-content{
+      width: 70%;
+    } */
+  }

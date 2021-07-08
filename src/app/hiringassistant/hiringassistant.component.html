@@ -1,0 +1,120 @@
+<h1>Hiring Assistants</h1>
+<hr>
+<h3>Here we have the app-hirassisttable child, inside of which we have projected the app-date child which is inside a div witha class name bbc and refernce bbc (#bbc)</h3>
+<app-hirassisttable>
+<div class="bbc" #bbc>
+    <h2>Date</h2>
+    <app-date></app-date>
+</div>
+<app-date></app-date>
+</app-hirassisttable>
+<h2>Pipes</h2>
+<p><strong>Pipes Transform only the view of the data, and not the actual data</strong></p>
+<!-- Pipe transforms data before displaying it -->
+<div style="float: left; width: 49%; border: blueviolet 1px solid; padding: 0 2px;">
+    <p><strong>None:</strong> {{stringforpipe}}</p>
+    <p><strong>Lowercase:</strong> {{stringforpipe | lowercase}}</p>
+    <p><strong>Uppercase:</strong> {{stringforpipe | uppercase}}</p>
+    <p><strong>Titlecase:</strong> {{stringforpipe | titlecase}}</p>
+    <!-- Thios slices the data from position 3 up to position 10 -->
+    <p><strong>Slice:</strong> {{stringforpipe | slice:3:10}} </p>
+    <p><strong>JSON:</strong> {{objforpipe | json}}</p>
+</div>
+<div style="float: right; width: 49%; border: blueviolet 1px solid; padding: 0 2px;">
+<!-- Minimum 1 digit in the integer place "5", from minimum 2 digits in the decimal place "36" to maximum 3 digits in the decimal place "364" -->
+<p><strong>Number:</strong> {{numberforpipe | number: '1.2-3'}}</p>
+<!-- Minimum 4 digits in the integer place "0005", from minimum 4 digits in the decimal place "3640" to maximum 5 digits in the decimal place "3640" -->
+<p><strong>Number:</strong> {{numberforpipe | number: '4.4-5'}}</p>
+<!-- Minimum 3 digits in the integer place "005", from minimum 1 digits in the decimal place "3" to maximum 2 digits in the decimal place "36" because the last "4" rounds to 6, in case if it was "8", we would have "37" -->
+<p><strong>Number:</strong> {{numberforpipe | number: '3.1-2'}}</p>
+<!-- See more about percent pipe at https://angular.io/api/common/PercentPipe -->
+<p><strong>Percent:</strong> {{numberforpercentpipe | percent: '2.2-3'}}</p>
+<!-- See more about currency pipe at https://angular.io/api/common/CurrencyPipe -->
+<p><strong>Currency:</strong> {{numberforcurrencytpipe | currency: 'AMD '}}</p>
+<!-- See more about date pipe at https://angular.io/api/common/DatePipe -->
+<p><strong>Date:</strong> {{dateforpipes | date: 'dd MMMM yyyy'}}</p>
+</div>
+<h2>Services</h2>
+<!-- A service is a class witha specific purpose -->
+<h3>The purposes of Services</h3>
+<ol>
+<li>Sharing data between multiple compoonents</li>
+<li>Implement application logic, i.e. for example a user inputs their date of birth and we calculate the age independent of a particular view</li>
+<li>External interaction, e.g. connecting with database</li>
+</ol>
+<p>The naming convention is -.service.ts</p>
+<p><strong>The Service should be used in the app module ts, because angular is a hierarchical framework. Had we regsitered the service in
+aparticular component, only that component and it schildren would have access to it</strong></p>
+<p>Service is used by Dependency Injection</p>
+<hr>
+<h2>Dependency Injection (DI)</h2>
+<p>DI is a coding pattern in which a class receives its dependencies from external sources rather than creating them itself</p>
+<p><strong>Dependency is specified in the constructor</strong></p>
+<hr>
+<h2>Provided by the Service in thehiringassistantservice.service.ts </h2>
+<h3>Sending Data from this component to the huser component on clicking the profile button</h3>
+<table class="pure-table" style="margin: 0 auto;">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Random ID</th>
+            <th>Name</th>
+            <th>Area of Expertise</th>
+            <th>Profile</th>
+            <th>Profile</th>
+            <th>Relative navigation</th>
+        </tr>
+    </thead>
+  <tbody>
+<ng-container *ngFor="let hirs of hiringassistservice;  let idxhs = index">
+   <tr>
+        <td>{{idxhs+1}}</td>
+        <td>{{hirs.hirid}}</td>
+        <td>{{hirs.hiringassistantname}}</td>
+        <td>{{hirs.areaofexpertise}}</td>
+        <!-- Here, below, after the comma we have the optional parametre: "idxhs+1" which is equivalent to the parametre "id" we have defined in the app-routing module.
+        We could pick any parametre here: instead of idxhs+1 we could have hirs.hiringassistantname etc., and in that case the parametre "id" we had defined in the app-routing, would equal
+        the value of the  said parametre here, i.e. hirs.hiringassistantname.
+        -->
+        <td><a [routerLink]="['/hiringassistants', idxhs+1]" (click)="sendData(hiringassistservice)">Pass Id to the route</a></td>
+        <!-- Doing the same thing via a function: routetodetails(hirs). Of course we could have merged the tow functions -->
+        <td><button (click)="sendData(hiringassistservice); routetodetails(idxhs)">Pass Random Id to the route via function</button></td>
+        <td><button (click)="sendData(hiringassistservice); relativeNav(idxhs)">Relative navigation</button></td>
+    </tr>
+</ng-container>
+</tbody>
+</table>
+<hr>
+<h2>Observables</h2>
+<ol>
+    <li>A sequence of items that arrive asynchronously over time - an HTTP response. We receive the HTTP response as an observable.</li>
+    <li>After we make a get request we receive an HTTP response as an observable hwich we need to convert to a readable format,e.g. an array which we need to assign to a local variable.</li>
+    <li>We only provide the data to the components which have subscribed to the service.</li>
+</ol>
+<h2>RxJS</h2>
+<ul>
+    <li>Reactive Extensions for Javascript</li>
+    <li>External library to work with observables</li>
+</ul>
+<h1>API News goes here (via Service)</h1>
+<!-- Sliced the array newsapidata here to up to 4 items -->
+<section class="ui-grid-a" style="margin:0 0 40px 0">
+<!-- Within the H3 tage here we tell angular to display the error message stored in the errorMsg variable defined in the hiringassistant ts file -->
+<h3>{{errorMsg}}</h3>
+<!-- Just a quick tool for a progress spinner while the data is not loaded -->
+<ng-container *ngIf="this.newsapidata.length==0">
+<app-progressspinner></app-progressspinner>
+</ng-container>
+<ng-container *ngFor="let item of newsapidata | slice:2:4; let ids = index">
+    <a href="{{item.url}}" data-transition="none" class="ui-link" @elnganime>
+    <article class="block">
+    <img class="article-img" src="{{item.urlToImage}}" alt="IMG">
+    <div class="article-text">
+    <h3>{{item.title}}</h3>
+    <p>{{item.publishedAt | date:"dd MMMM yyyy"}}</p>
+    <p>{{item.description}}</p>
+    </div>
+    </article>
+  </a>
+</ng-container>
+</section>

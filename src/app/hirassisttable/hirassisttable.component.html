@@ -1,0 +1,29 @@
+<p>Implementing ContentChild (code is in hirassisttable.ts)</p>
+<ng-content select=".bbc"></ng-content>
+<hr>
+<table class="pure-table" style="margin: 0 auto;">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Random ID</th>
+            <th>Name</th>
+            <th>Area of Expertise</th>
+            <th>Profile</th>
+        </tr>
+    </thead>
+  <tbody>
+<ng-container *ngFor="let hirguru of hiringassistants; let idxh = index">
+    <tr>
+        <td>{{idxh+1}}</td>
+        <td>{{hirguru.hirid}}</td>
+        <td>{{hirguru.hiringassistantname}}</td>
+        <td>{{hirguru.areaofexpertise}}</td>
+        <td><a [routerLink]="['/hiringassistants', idxh+1]" (click)="sendData(hiringassistants)">Profile</a></td>
+    </tr>
+</ng-container>
+</tbody>
+</table>
+<hr>
+<p>Accessing ContentChildren within console log</p>
+<ng-content></ng-content>
+<hr>

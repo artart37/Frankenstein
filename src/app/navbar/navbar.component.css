@@ -1,0 +1,108 @@
+.navContainer {
+    line-height: 1.7em;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    border: none;
+    margin:0 auto;
+    padding:50px 0 0 0;
+    max-width: 1200px;
+    /* background-color: ivory; */
+}
+.navbar {
+    line-height: 1.7em;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    list-style: none;
+    display: block;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+.navbar>li{
+    line-height: 1.7em;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    text-shadow: none;
+    font-weight: normal;
+    text-transform: uppercase;
+    list-style: none;
+    width: 12.5%;
+    display: inline-block;
+}
+.navbar>li a{
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    text-transform: uppercase;
+    list-style: none;
+    line-height: 1.7em;
+    text-decoration: none;
+    padding: 0.7em 1em;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    border: none;
+    display: block;
+}
+.navbar>li a ::before{
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    text-shadow: none;
+}
+.head {
+    border-bottom: solid 1px #000;
+    box-sizing: border-box;
+    /* background-color: aliceblue; */
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+}
+.wrapper{
+    max-width: 1200px;
+    margin: 0 auto;
+    /* background-color: honeydew; */
+}
+.title{
+    font-size: 2em;
+    font-weight: bold;
+}
+.tophead {
+  display: inline-block;
+  padding: 5px;
+  /* background-color: beige; */
+  box-sizing: border-box;
+  width: calc(100% - 40px);
+  text-align: center;
+  margin: 0 auto;
+}
+.cart {
+  display: inline-block;
+  /* background-color: bisque; */
+  box-sizing: border-box;
+  width: 40px;
+  position: absolute;
+  height: 49px;
+  padding:23px 0 0 10px;
+  cursor: pointer;
+  outline: none;
+}
+.carticon::before{
+    content: "🛒"; 
+    /* background-color: cornflowerblue; */
+    z-index: 0;
+}
+.itemnumber {
+    width: auto;
+    min-width: 14px;
+    height: 14px;
+    font-size: 10px;
+    background-color: rgb(251 4 67);
+    color: #ffffff;
+    z-index: 1000;
+    display: inline-block;
+    text-align: center;
+    border-radius: 50%;
+    position: absolute;
+    left: 25px;
+    font-weight: bold;
+}

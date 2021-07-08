@@ -1,0 +1,149 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+.activelink{
+  color: #ff0656;
+  font-weight: 700;
+  outline: 0px;
+  border: none;
+  background-color: rgb(232, 229, 240);
+}
+.inp {
+  border: slateblue solid 0.5px;
+}
+.underlinet{
+  color: black;
+  position: relative;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  overflow: hidden;
+  background: linear-gradient(90deg, rgb(196, 10, 180), rgb(159, 25, 236), rgb(240, 4, 114));
+  background-size: 80%;
+  animation: animate 1s linear infinite;
+  background-clip: text;
+ -webkit-background-clip: text;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0);
+}
+@keyframes animate {
+  0% {
+    background-position: -500%;
+  }
+  100% {
+    background-position: 500%;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+}
+ router-outlet ~ *:not(app-contactha):not(app-overviewha) {
+    position: absolute;
+    width: 100%;
+}
+
+/*Style for my Product number for various parentr components*/
+/*For Basket Component*/
+.actionsection>app-itemquantity>.quantity {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: nowrap;
+  max-width: 157.19px;
+}
+.actionsection>app-itemquantity>.quantity>.plus, .actionsection>app-itemquantity>.quantity>.minus {
+  padding: 1em;
+  font-weight: bold;
+  border: none;
+  font-size: 1em;
+  background-color: #f1f1f1;
+  outline: none;
+  cursor: pointer;
+  background-position: right bottom;
+  flex: 1;
+  width: 50px;
+}
+.actionsection>app-itemquantity>.quantity>.item_q {
+  font-weight: bold;
+  font-size: 1em;
+  background-color: #fdfdfd;
+  outline: none;
+  text-align: center;
+  border: solid 0.1em #f1f1f1;
+  /* box-sizing: border-box; */
+  flex: 1;
+  width: 50px;
+}
+@media screen and (max-width: 780px) {
+  .actionsection>app-itemquantity {
+      display: inline-block;
+      margin-left: -104px;
+  }
+  .actionsection>app-itemquantity>.quantity>.item_q {
+    font-size: 0.7em;
+    width: 35px;
+  }
+  .actionsection>app-itemquantity>.quantity>.plus, .actionsection>app-itemquantity>.quantity>.minus {
+    flex: none;
+    width: 35px;
+    height: 35px;
+    padding:0;
+  }
+  }
+/* For Item details */
+.actions>app-itemquantity>.quantity{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: nowrap;
+}
+.actions>app-itemquantity>.quantity>.plus, .actions>app-itemquantity>.quantity>.minus{
+  padding: 1em;
+  font-weight: bold;
+  border: none;
+  font-size: 1em;
+  background-color: #f1f1f1;
+  outline: none;
+  cursor: pointer;
+  background-position: right bottom;
+  flex: 1;
+}
+.actions>app-itemquantity>.quantity>.item_q{
+  max-width: 100px;
+  font-weight: bold; 
+  font-size: 1em;
+  background-color: #fdfdfd;
+  outline: none;
+  text-align: center;
+  border: solid 0.1em  #f1f1f1;
+  box-sizing: border-box;
+  flex: 1;
+}
+/*For Main Cart Component*/
+.call_for_action>app-itemquantity>.quantity {
+  display: block;
+  margin: 0 0 0.5rem 0;
+}
+.call_for_action>app-itemquantity>.quantity>.plus, .call_for_action>app-itemquantity>.quantity>.minus {
+  width: 35px;
+  height:35px;
+  font-weight: bold;
+  border: none;
+  font-size: 1em;
+  background-color: #f1f1f1;
+  outline: none;
+  text-align: center;
+  cursor: pointer;
+}
+.call_for_action>app-itemquantity>.quantity>.item_q {
+  height:35px;
+  max-width: 50px;
+  font-weight: bold;
+  font-size: 1em;
+  background-color: #fdfdfd;
+  outline: none;
+  text-align: center;
+  border: solid 0.1em  #f1f1f1;
+  box-sizing: border-box;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

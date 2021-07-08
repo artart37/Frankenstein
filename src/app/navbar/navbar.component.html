@@ -1,0 +1,39 @@
+<div class="head">
+    <div class="wrapper">
+        <section class="tophead">
+            <span class="title">frankenstein</span>
+        </section>
+        <section class="cart" routerLink="/basket">
+            <span class="carticon"></span>
+            <span class="itemnumber" [@shake]="iconshakeanime | async">{{numberofaddeditems?numberofaddeditems:0}}</span>
+        </section>  
+    </div>
+</div>
+    <div class="navContainer">
+    <ul class="navbar">
+        <li>
+            <a routerLink="/home" routerLinkActive="activelink">Home</a>
+        </li>
+        <li>
+            <a routerLink="/candidate"  routerLinkActive="activelink">Candidate</a>
+        </li>
+        <li>
+            <a routerLink="/hiringassistants" routerLinkActive="activelink">Hiring Assistant</a>
+        </li>
+        <li>
+            <a routerLink="/forms" routerLinkActive="activelink">Forms</a>
+        </li>
+        <li>
+            <a routerLink="/bindings" routerLinkActive="activelink">Core</a>
+        </li>
+        <li>
+            <a routerLink="/javascriptandtypescript" routerLinkActive="activelink">JS/TS</a>
+        </li>
+        <li>
+            <a routerLink="/observables" routerLinkActive="activelink">Observables</a>
+        </li>
+        <li>
+            <a routerLink="/shopping" routerLinkActive="activelink">Shop</a>
+        </li>
+    </ul>
+</div>

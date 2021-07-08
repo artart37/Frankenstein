@@ -1,0 +1,15 @@
+<p>You have selected a user with userid {{departmentuserid}}</p>
+<p>You have selected a user with userid {{username}}</p>
+<!-- <p>The length of the "{{test}}" text is {{test.length}}</p>
+<p>The capitalised version of "{{test}}" text is {{test.toUpperCase();}}</p> -->
+<p>{{2+2}}</p>
+<!-- <p>{{"Some text +" + test}}</p> -->
+<p>The url of this page is {{obtxt}}</p>
+<h1>{{inputtext}}</h1>
+<input type="text" #test>
+<!-- Here the #test is the reference variable. If we submitted only "test" we would have the whole input html element in the console-->
+<button (click)="submitinputvalue(test.value);">Log</button>
+
+<h1>{{inputtext}}</h1>
+<input type="text" [(ngModel)]="inputtext" (ngModelChange)="changeHandler()">
+<button>Two way binding</button>

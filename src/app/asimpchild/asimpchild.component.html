@@ -1,0 +1,47 @@
+<ng-container *ngIf="boold">
+ <ul>
+    <li>Name: <span class="emph">{{obfpush.name}}</span></li>
+    <li>Last Name: <span class="emph">{{obfpush.lastname}}</span></li>
+    <li>Position: <span class="emph">{{obfpush.position}}</span></li>
+</ul>   
+</ng-container>
+<table class="pure-table" *ngIf="booldo">
+<thead>
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Position</th>
+    </tr>
+</thead>
+    <tbody>
+        <ng-container *ngFor="let user of arrforpush; let idx = index; trackBy:trackbyID">
+            <tr (click)="gettherowdata(idx, user);">
+                <td>{{idx}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.lastname}}</td>
+                <td>{{user.position}}</td>
+            </tr>
+        </ng-container>
+     </tbody>
+</table>
+<table class="pure-table" *ngIf="simpboolo">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Position</th>
+        </tr>
+    </thead>
+        <tbody>
+            <ng-container *ngFor="let user of myobarr; let idx = index; trackBy:trackbyID">
+                <tr (click)="gettherowdata(idx, user);">
+                    <td>{{idx}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.lastname}}</td>
+                    <td>{{user.position}}</td>
+                </tr>
+            </ng-container>
+         </tbody>
+    </table>

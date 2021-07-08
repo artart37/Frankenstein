@@ -1,0 +1,7 @@
+<div class="quantity">
+    <button class="minus" (click)="new.dec()">-</button>
+    <!-- Had we gotten the specific element through the dynamic ID -->
+    <!-- <input id="{{'inp'+i}}" type="text" class="item_q" [disabled]="item?.quantity>0==false" defzero #new ="newvalue" [value]="val?val:0" [(shabadaba)]="states.animestate" [availability]="item?.quantity" [(spbool)]="states.bool"> -->
+    <input #quant type="text" class="item_q" defzero #new ="newvalue" [value]="val?val:item?.quantity>0?1:0" [(shabadaba)]="states.animestate" [availability]="item?.quantity" [(spbool)]="states.bool" [grandparent] = "parentcomp" [i] ="index">
+    <button class="plus" (click)="new.inc()">+</button>
+</div>

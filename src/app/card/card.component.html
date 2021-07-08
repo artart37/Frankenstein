@@ -1,0 +1,51 @@
+<div class="card">
+  <h2>{{testtext}}</h2>
+<h2 [ngStyle]="{
+'color': cards.title.length<5?'#000':'#b40049',
+'font-weight': cards.title.length<7?'normal':'bold'
+}">{{index}} {{cards.title}}</h2>
+<!-- <p class="text" [ngClass]="{
+  'orange': textcolor==='orange',
+  'green': textcolor==='green'
+}">{{text}}</p> -->
+<p class="text" 
+[class.orange] = "textcolor ==='orange'"
+[class.green] = "textcolor ==='green'"
+>{{cards.text}}
+</p>
+<h2>Ng Content concept</h2>
+<p>Projecting content (any, even whole components) ONLY from the PARENT component into the EMBDEDDED CHILD component</p>
+<ng-content select=".strong"></ng-content>
+<ng-content select=".homeclassp, .preclassp" ></ng-content>
+<ng-content></ng-content>
+<p>{{getinfo()}}</p>
+<div>
+<!--[] is the binding is used for properties like src or disabled-->
+<img [src]="imgUrl" alt="alternative text">
+<input type="button" name="" [value]="value">
+</div>
+<div  class="buttons">
+<button [disabled]="disabled">{{value}}</button>
+<!--() is the binding is used for event functions (similar to js onClick)-->
+<button type="button" name="button" (click)="changetitle()">Change title</button>
+<!--here we wrap the js code directly with returning the title variable into something inside  ' ' -->
+<button type="button" name="button" (click)="cards.title='Inline title'">Change title inline</button>
+<button (click)="textcolor = 'orange'">Set Orange</button>
+<button (click)="textcolor = 'green'">Set Green</button>
+</div>
+<div>
+<strong>{{cardDate | date: 'dd MMMM yyyy HH:mm:ss'}} Time: {{cardDate | date: 'HH:mm:ss'}} </strong>
+</div>
+<!-- <div>
+<!--$ sign iused for referencing events. Here we have a two way binding
+<input type="text" (input)="inputHandler($event);" [value]="title">
+</div> -->
+<!-- <br>
+<div>
+<!-- An easir way of the above - local referencing with using # for myInput variable which has a value
+<input type="text" #myInput (input)="inputHandler(myInput.value);" [value]="title">
+</div>-->
+<div>
+<!-- Another way of two way binding after adding the forms module in the module ts -->
+<input type="text" [(ngModel)]="cards.title" (ngModelChange)="changeHandler()">
+</div>

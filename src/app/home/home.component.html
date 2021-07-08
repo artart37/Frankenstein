@@ -1,0 +1,25 @@
+<hr>
+<div>
+    <button (click)="togglecards();">Toggle cards</button>
+    <div *ngIf="toggle; else noCards">
+    <!-- Here iterCard is a variable (we haven't defined anywhere, the name is improvised by us  os the array cards we have defined in app.component.ts -->
+    <app-card
+    *ngFor="let iterCard of cards; let idx = index"
+    [cards]="iterCard"
+    [index]="idx +1"
+    [candies]="candidateusers"
+    (tivoutput)="tivtiv=$event"
+    >
+    <p class="homeclassp"><em>A text with a class homeclass from the parent {{tivtiv}}</em></p>
+    <pre class="preclassp">A text with a class preclassp from the parent</pre>
+    <strong class="strong">A text with a class strong from the parent</strong>
+    <p>This is a text not specifically defined in the ng content</p>
+    </app-card>
+    <!-- <app-card></app-card>
+    <app-card></app-card> -->
+    </div>
+    <!-- mg-template only works with structural directives such as *ngIf, *ngFor, [ngSwitch]  -->
+    <ng-template #noCards>
+    <p>Cards are hidden!</p>
+    </ng-template>
+ </div>

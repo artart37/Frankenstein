@@ -1,0 +1,97 @@
+<h1>Observables</h1>
+<p>The concept of observables is very important, and that is why we have created a special page for it.</p>
+<p>We have used Observables in the hiringassistservice.service.ts, huser.component.ts, and have subscribed to it in hirisngassist.component.ts</p>
+<h2>What are Observables?</h2>
+<span>You may find reliable information about Obseravbles in the offical website of <a href="https://rxjs-dev.firebaseapp.com/guide/observable">RXJS</a>, at the
+<a href="https://angular.io/guide/observables">Angular</a> website, or other resources such as:
+<a href="https://stackoverflow.com/questions/33771080/what-type-is-the-subscriber-in-observable-createsubscriber-in-ang">1</a>, 
+<a href="https://medium.com/@luukgruijs/understanding-creating-and-subscribing-to-observables-in-angular-426dbf0b04a3">2</a>, 
+<a href="https://medium.com/@luukgruijs/understanding-creating-and-subscribing-to-observables-in-angular-426dbf0b04a3">3</a>, 
+<a href="https://medium.com/@neelbommisetty/creation-observables-rxjs-creation-operators-f9d1f827c60c">4</a>, 
+<a href="https://sites.google.com/site/debasish22blog/rxjs/observables-observers-and-subscriptions">5</a>, 
+<a href="https://ultimatecourses.com/blog/rxjs-observables-observers-operators">6</a>
+</span>
+<hr>
+<strong>1. Example. </strong><span>The following is an Observable that <span class="emph">pushes</span> the values 1, 2, 3 immediately (synchronously) <span class="emph"> when subscribed,</span> and the value 4 after one second has passed 
+<span class="emph"> since the subscribe call,</span> then completes:
+</span>
+<h3>Creating Observables using <span class="emph">new Observable</span> </h3>
+<p>RxJS introduces Observables, a new Push system for JavaScript. An Observable is a Producer of multiple values, "pushing" them to Observers (Consumers).</p>
+<ol>
+    <li>We named our observable as <span class="emph">observable$</span> variable. The $ sign is usually used for naming observables, but it is optional.</li>
+    <li>We told angular that it is an observable with the <span class="emph">:Observable.</span></li>
+    <li>We went further with declaring it as an observable of type number with <span style="font-weight: bold;">observable$:Observable</span><span class="emph">< number >.</span></li>
+    <li>We then say that we are creating a new observable with the code <span style="font-weight: bold;">observable$:Observable< number>=</span><span class="emph">new Observable.</span></li>
+    <li>Inside the <span class="emph">new Observable.</span> is the  <span class="emph"> subscriber function (optional)</span> that is called when the observable$ Observable is initially subscribed to.</li>
+    <li>The <span class="emph">subscriber function</span> is the function that is executed when a consumer calls the subscribe() method. The subscriber function defines how to obtain or generate values or messages to be published.</li>
+    <li>In our example the <span class="emph"> subsrciber function</span> is a function with a parametre: "subscriber"</li>
+    <li>The <span class="emph">subscriber function</span> runs when the observable’s subscribe() method executes.</li>
+    <li>The subscriber function <span class="emph">receives an Observer object</span>, and <span class="emph">can</span> publish values to the observer's next(), error() and complete() methods.</li>
+    <li>In our example the subscriber function publishes the values 1,2,3 and after a second 4 to the next method </li>
+</ol>
+<img src="\assets\images\exobnum.PNG">
+
+<h3>Subscribing</h3>
+<p>To invoke the Observable and see these values, we need to subscribe to it.</p>
+<ol>
+<li>In our first subscribe example we <span class="emph">subscribe</span> to the observable$ Observable with the <span class="emph">.subscribe()</span></li>
+<li>Inside the <span class="emph">.subscribe(here)</span> we pass an Observer</li>
+<li>An <span class="emph">Observer</span> is a JavaScript <span class="emph">object</span> that defines the handlers for the notifications I receive. Because it is of an Object type, we enclose it inside object curly brackets</li>
+<li>The subscribe() call returns a Subscription <span class="emph">object</span> that has an <span class="emph">unsubscribe() method</span>, which I can call to stop receiving notifications.</li>
+</ol>
+<img src="\assets\images\ex1ob.PNG">
+<h3>Defining Observers</h3>
+<ol>
+<li>In the example 1.1  we create an Observer that logs the received message to the mess variable which displayed here <span class="emph">{{mess}}</span></li>
+<li>We quickly see the result of the complete method above, because the values are pushed almost instantly, exce[t for before the 4 where we have setTimeout</li>
+<li>Another way for creating Observers can be seen in teh example 1.2 (inline) <span class="emph">{{mess}}</span> </li>
+</ol>
+<span>There are multiple ways of creating observables, which can be xplored at the <a href="https://angular.io/guide/observables">Angular</a> website </span>
+<h3>We have more detailed and various practical exmples of usage in our <span class="emph">hiringassistantservice.service.ts, huser.component.ts</span></h3>
+<hr>
+<h3>Other Ways of Creating Observables</h3>
+<ol>
+    <li>Using OF. See in Console.</li>
+    <li>Create with custom fromEvent function. Examples are below</li>
+    <li>The full list of Creation Operators can be found here <a href="https://rxjs-dev.firebaseapp.com/guide/operators">RXJS</a> </li>
+    <li>You may read many more about creating and using observables, Behaviour Subjects at <a href="https://www.djamware.com/post/5da31946ae418d042e1aef1d/angular-8-tutorial-observable-and-rxjs-examples">this</a> website, or alternatively <a href="https://medium.com/better-programming/rxjava-different-ways-of-creating-observables-7ec3204f1e23">here.</a> </li>
+</ol>
+<h4>Implementing fromEvent</h4>
+<p>Read more about fromEvent at <a href="http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-fromEvent">this</a> website.</p>
+<strong>3.1</strong>
+<hr>
+
+<button type="menu" class="clickevent">Click Event (output in console)</button>
+<hr>
+<p>Here we use addEventListener() which <span class="emph">sets up a function</span> that <span class="emph">will be called whenever the specified event is delivered to the target.</span>  Details can be found <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener">here</a></p>
+<p>The first param of addEventListener is an event type, which in our case is "input" which works on value change. The full list can be found <a href="https://developer.mozilla.org/en-US/docs/Web/Events"></a> here.</p>
+<p>The second param of addEventListener is a function in our case, that receives a notification when an event of the specified type occurs, in our case when value change ("input")</p>
+<p>In the below example you may also find implenetation of <span class="emph">.pipe() method, along with map, filter, distinctUntilChanged and other operators</span>, more details about which yo umay find at the official docs of <a href="https://rxjs-dev.firebaseapp.com/guide/operators">RXJS</a> </p>
+<strong>3.2</strong>
+<p>The implemented code returns values only if the num of chars is more than two, is not empty, null or undefined and is not the same as previously changed.</p>
+<input type="text" name="s" id="search" class="search" placeholder="Output is in console">
+<hr>
+<h2>Using Subject in Angular to Multicast</h2>
+<p>The main reason to use Subject is to multicast.</p>
+<p>What is a Subject? An RxJS Subject is a special type of Observable that allows values to be multicasted to many Observers. While plain Observables are unicast (each subscribed Observer owns an independent execution of the Observable), Subjects are multicast.</p>
+<p><span class="emph">A Subject is like an Observable, but can multicast to many Observers.</span> Subjects are like EventEmitters: they maintain a registry of many listeners. Learn mor at <a href="https://rxjs-dev.firebaseapp.com/guide/subject">RxJs</a></p>
+<p class="emph">Every Subject is an Observable.</p>
+<p>When using Subjects instead of plain Observables, all subscribed Observers will get the same values of emitted data.</p>
+<p> <span class="emph">Internally to the Subject, subscribe does not invoke a new execution that delivers values.</span>It simply registers the given Observer in a list of Observers, similarly to how addListener usually works in other libraries and languages.</p>
+<h3>Hot and Cold Observables</h3>
+<p>Unlike regular Observables, Subjects are called hot. A hot Observable starts emitting events even before any observer subscribes to it which means observers may lose previous emitted values if they don’t subscribe at that right time while cold Observables ****start emitting values when at least one observer is subscribed.</p>
+<hr>
+<strong>Example 4</strong>
+<p><span class="emph">Every Subject is an Observer.</span>It is an object with the methods next(v), error(e), and complete().</p>
+<p>To feed a new value to the Subject, just call next(theValue), and it will be multicasted to the Observers registered to listen to the Subject.</p>
+<h3>The variants of Subjects are:</h3>
+<ol>
+    <li>BehaviorSubject</li>
+    <li>ReplaySubject</li>
+    <li>AsyncSubject</li>
+    <li>See in-depth explnations at <a href="https://rxjs-dev.firebaseapp.com/guide/subject">RxJs</a></li>
+    <li>An excellent article to help understand which subject to use: <a href="https://coryrylan.com/blog/rxjs-observables-versus-subjects">Subjects.</a></li>
+</ol>
+<p class="emph">While you can technically pass around instances of Subject, doing so allows implementation details to bleed into other parts of the application. To prevent this, it is best to convert Subjects to Observables so that the sequence is exposed in a read-only fashion. 
+    Luckily, this is quite easy to accomplish with the <span class="emph">.asObservable()</span> instance method inherited by the Subject class in RxJS.</p>
+<p>There is no <span class="emph">next()</span> on Observable; only on <span class="emph">Subject</span> and <span class="emph">BehaviorSubject</span>, which extends Subject (and both extend Observable).</p>

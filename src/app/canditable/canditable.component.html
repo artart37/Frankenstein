@@ -1,0 +1,38 @@
+<ng-content select=".randomtext"></ng-content>
+<!-- NGFOR -->
+<table class="pure-table">
+    <thead>
+        <tr>
+            <th>Check if first</th>
+            <th>Check if last</th>
+            <th>Count length of the iterable</th>
+            <th>Check if even (works opposite because of index + 1)</th>
+            <th>Check if odd (works opposite because of index + 1)</th>
+             <th>ID</th>
+            <th>User Random ID</th>
+            <th>User Unique ID</th>
+            <th>User Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+  <tbody>
+       <ng-container *ngFor="let candies of candi; let idx = index; first as isfirst; let islast = last; let countlength = count; even as isEven; odd as isOdd, trackBy: trackbyID"
+            >  <tr (click)="selectuser(idx, candies);">   <!-- (click)="gotocandipage(candi);" -->
+                <td>{{isfirst}}</td>
+                <td>{{islast}}</td>
+                <td>{{countlength}}</td>
+                <td>{{isEven}}</td>
+                <td>{{isOdd}}</td>
+                <td  #getid>{{idx+1}}</td>
+                <td>{{candies.userid}}</td>
+                <td>{{idx+1}}{{candies.userid}}</td>
+                <td>{{candies.name}}</td>
+                <td><a routerLinkActive="activelink" [routerLink]="['/candidate', candies.userid]">Profile</a></td>
+            </tr>
+        </ng-container>
+      </tbody>
+</table>
+<hr>
+<h2>Sending data to the parent (candidate component)</h2>
+<button (click)="fireEvent();">Send data to the parent</button>
+<button (click)="callParentGreet();">Send data from the child via a function</button>

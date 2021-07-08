@@ -1,0 +1,9 @@
+<header  @elheaderanime>
+<app-navbar></app-navbar>
+</header>
+<div class="container" [@pageanime]="prepareRoute(goutlet)">
+<!-- The router outlet shows where the routed component contents go. In our Example they go below the navigation -->
+<router-outlet #goutlet="outlet"></router-outlet>
+ <!-- We can also have named outlets -->
+<router-outlet name="modal"></router-outlet>
+</div>

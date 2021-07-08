@@ -1,0 +1,1011 @@
+<div style="margin:0 auto 40px auto">
+    <h1>Bindings</h1>
+    <p>See more at <a href="https://angular.io/guide/template-syntax#event-binding">this</a> and <a href="https://angular.io/guide/user-input">this</a> official documentation, or <a href="https://coursetro.com/posts/code/59/Angular-4-Event-Binding">here</a> for some other explanation.</p>
+    <p><a href="https://stackoverflow.com/questions/37944199/what-exactly-event-object-do-in-angular-2">$event</a></p>
+    <h2>Interpolation</h2>
+    <ol>
+        <li>{{interpol}}</li>
+        <li>The sum of 1 + 1 is {{1 + 1}}.</li>
+        <li>The sum of 1 + 1 is not {{1 + 1 + getVal()}}.</li>
+        <li><img src="{{img}}" alt="image" style="height: 1.2rem;"></li>
+    </ol>
+    <h2>Property Binding</h2>
+    <h3>HTML Attributes vs DOM Properties</h3>
+    <em>We can define HTML elements in a website, and we can set <span class="emph"></span> attributes for these elements.</em>
+    <em>Once the browser parses this HTML code, it will create the appropriate <span class="emph">DOM node</span>. This DOM node is, in fact, an object and <span class="emph">because it's an object it has properties.</span></em>
+    <em>Don't forget that HTML is a markup language, just like XML. Since both of them are markup languages, they operate using attributes.</em>
+    <em>Equally, remember that DOM is short for Document Object Model - and since it's an object, it works with properties.</em>
+    <p>When the DOM node is created based on the HTML element, many of the DOM properties map to HTML attributes that have the same name, however, we can't state that there's a 1:1 relationship between them.</p>
+    <p>Based on the previous statement we can assume that id is both an attribute and a property, so is type.</p>
+    <ul>
+        <li>Template binding works with properties and events, not attributes.</li>
+        <li>It is important to remember that HTML attribute and the DOM property are different things, even when they have the same name.</li>
+        <li>In Angular, the only role of HTML attributes is to initialize element and directive state.</li>
+    </ul>
+    <ul>
+        <li>Use property binding to set <span class="emph">properties of target elements</span>  or directive <span class="emph"> @Input() decorators.</span></li>
+        <li>Property binding flows a value in <span class="emph">one direction,</span>  from a component's property into a target element property.</li>
+        <li>You <span class="emph">can't use property binding to read or pull values out of target elements.</span> Similarly, you  <span class="emph">cannot use property binding to call a method on the target element.</span></li>
+        <li>If the element raises events, you can listen to them with an <span class="emph">event binding.</span></li>
+    </ul>
+    <h3>Example 1</h3>
+    <h4>Binding the src property of an image element to a component's imgsrcex</h4>
+    <img [src]="imgsrcex" style="height: 1.5rem;">
+    <h3>Example 2</h3>
+    <h4>Binding the disabled property of a button to a booldis var</h4>
+    <em>boolids var returns false; hence the button is disabled</em>
+    <button [disabled]="booldis">Button</button>
+    <h3>Example 3</h3>
+    <h4>Binding to the colSpan property.</h4>
+    <ul>
+        <li>Notice that it's not <span class="emph">colspan</span> which is an <span class="emph">attribute</span>, but <span class="emph">colSpan</span> which is a <span class="emph">DOM property</span> and correspondes to the <span class="emph">colspan attribute.</span></li>
+        <li>Read more about colspan attribute <a href="https://www.w3schools.com/tags/att_colspan.asp#:~:text=The%20colspan%20attribute%20defines%20the,a%20table%20cell%20should%20span.">here</a>, and more about the corresponding colSpan property <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableCellElement">here.</a></li>
+    </ul>
+    <hr>
+    <tr><td [colSpan]="2">Span 2 columns</td></tr>
+    <hr>
+    <h3>Using with the property of @Input decorator</h3>
+    <hr>
+    <app-date [thenameoftheparentbindingcomp] ="nameoftheparentbindingcomponent" [apropertyforbinding] = "somearray" (customclick) = "mymessagefromkeyupevent = $event"></app-date>
+    <ul>
+        <li><em>In this example the <code class="emph">"apropertyforbinding"</code> is the date component's custom DOM property we are binding inside the binding component.</em></li>
+        <li><em>This <code class="emph">"apropertyforbinding"</code> is the doorway (through <code class="emph">@Input</code> decorator) for letting the binding components' somearray var inside the date component.</em></li>
+        <li><em>In our example the <code class="emph">binding</code> component's <code class="emph">somearray</code> array is available in the date component through the <code class="emph">@Input</code> decorator in the <code class="emph">date</code> component.</em></li>
+    </ul>
+<h4>How to check who is the parent of the child component?Simple!</h4>
+<ul>
+    <li><em>We have also similarly defined <code class="emph">binding</code> component's <code class="emph">"nameoftheparentbindingcomponent"</code> string var equaling the name of the binding component - <code class="emph">app-bindings</code>.</em></li>
+    <li><em>We have then created the <code class="emph">"thenameoftheparentbindingcomp"</code> <code class="emph">date</code> component's custom DOM property we are binding inside the <code class="emph">binding</code> component, which is  the doorway (through <code class="emph">@Input</code> decorator) for letting the <code class="emph">binding</code> components' <code class="emph">"nameoftheparentbindingcomponent"</code> var inside the date component.</em>
+    <li>Now, inside our date component, through a simple ngif snippet we are checking if thenameoftheparentbindingcomp is true (it is true only if its inside the binding component, because otherwise nameoftheparentbindingcomponent would be undefined).</li>
+</ul> 
+    <hr>
+    <h3>Example 4</h3>
+    <h4>Binding to the innerHTML DOM porperty</h4>
+    <p>"<span [innerHTML]="propertyTitle" class="emph"></span>" is the <i>property bound</i> text.</p>
+    <h2>Attribute Binding</h2>
+    <h3>Difference between HTML and DOM (Document Object Model)</h3>
+    <ul>
+        <li>DOM is a model of objects that represent the structure of a document. It’s indeed a hierarchical structure of HTML elements in memory.</li>
+        <li>HTML is a markup language that is used to represent the DOM in the text. It’s indeed a textual representation of DOM in HTML document.</li>
+        <li>The <span class="emph">HTML attribute value specifies the <code>initial value</code></span>; the <span class="emph">DOM value property is the <code>current value.</code></span></li>
+        <li>See more at <a href="https://www.c-sharpcorner.com/article/attribute-binding-in-angular-6/"> this</a> website.</li>
+    </ul>
+    <hr>
+    <h2>Angular Attribute binding</h2>
+    <ul>
+        <li>Set the value of an attribute directly with  <span class="emph">attribute binding.</span></li>
+        <li><span class="emph">This is the only exception to the rule that a binding sets a target property</span>  and <span class="">the only binding that <code>creates and sets an attribute.</code></span></li>
+        <li><code class="emph">Usually, setting an element property with a property binding is preferable to setting the attribute with a string. However, sometimes there is no element property to bind, so attribute binding is the solution.</code></li>
+        <li>Attribute binding syntax resembles property binding, but instead of an element property between brackets, <span class="emph">start with the prefix <code>attr, followed by a dot (.), and the name of the attribute</code>.</span> </li>
+        <li>You then set the attribute value, using an expression that resolves to a string, or remove the attribute when the expression resolves to null.</li>
+        <li>Sometimes there is no element property to bind, so attribute binding is the solution. Consider the <span class="">ARIA</span> and <span class="emph">SVG</span> which are pure attributes and don't correspond to element properties.</li>
+    </ul>
+    <h3>Example 2.1</h3>
+    <h4>Bind the attributes of an SVG image</h4>
+    <svg width="400" height="180">
+        <rect [attr.x]="50-15" [attr.y]="20-10" [attr.width]="150-95" [attr.height]="150-95" style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" />
+        Sorry, your browser does not support inline SVG.  
+    </svg>
+    <h3>Class binding</h3>
+    <h4>Single Class Binding</h4>
+    <ul>
+        <li>To create a <span class="emph">single class binding</span>, start with the prefix class followed by a dot (.) and the name of the CSS class (for example, <code class="emph"> [class.foo]="hasFoo"</code>).</li>
+        <li>Angular adds the class when the bound expression is truthy, and it removes the class when the expression is falsy (with the exception of undefined).</li>
+    </ul>
+    <h4>Multiple Class Binding</h4>
+    <ul>
+        <li>To create a binding to multiple classes, use a generic <code class="emph">[class] binding without the dot</code>  (for example,  <code class="emph">[class]="classExpr"</code>).</li>
+        <li>The expression can be a <code class="emph">space-delimited string of class names</code>, or you can format it as an object with class names as the keys and truthy/falsy expressions as the values.</li>
+        <li>With object format, Angular will add a class only if its associated value is truthy.</li>
+    </ul>
+    <h4>Example 3</h4>
+    <h4>Single Class Binding</h4>
+    <button [class.myButton]="booldis" (click)="changeboolean();">Toggle Class</button>
+    <h4>Example 4</h4>
+    <h4>Multiple Class Binding</h4>
+    <em>In this example our classesints variable is defined as a sting which contains cinput cinputi classes (see in the ts)</em>
+    <input type="text" [class]="classesints">
+    <h4>Example 5</h4>
+    <p><em>In this example our classesintsob variable is defined as an object which has two classes as object keys: cobj and cobj2. cobj2 is false; hence doesn't apply.</em></p>
+    <input type="text" [class]="classesintsob">
+    <h4>Example 6</h4>
+    <p><em>In this example our we have assigned the booldis boolean values to the object keys (cobj and cobj2 class). The booldis boolean changes upon click</em></p>
+    <button  (click)="changeboolean();">Toggle Multiple Classes</button>
+    <input type="text" [class]="
+    {
+        cobj:booldis,
+        cobj2:booldis
+    }
+    ">
+    <h4>Example 7</h4>
+    <p><em>Another way of inline class binding with multiple classes</em></p>
+    <button  (click)="changeboolean();">Toggle the same Boolean</button>
+    <input type="text" [class]="booldis?'cobj':'cobj2'">
+    <hr>
+    <h3>NgClass</h3>
+    <p><em>The <code class="emph">NgClass</code> directive can be used as an <span class="emph">alternative</span> to direct <code class="emph">[class]</code> bindings.</em></p>
+    <p><em>However, using the above class binding syntax without <code class="emph">NgClass</code> is <span class="emph">preferred because due to improvements in class binding in Angular</span>, <code class="emph">
+    NgClass</code> no longer provides significant value, and <span class="emph">might eventually be removed in the future.</span></em></p>
+    <hr>
+    <h4>Example 8</h4>
+    <p>Add or remove several CSS classes simultaneously with ngClass. Here, again we are toggling the booldis var boolean to assign or delete the divclass and dclass (if false)</p>
+    <button  (click)="changeboolean();">Toggle the Boolean</button>
+    <div [ngClass]="booldis ? 'divclass' : 'dclass'">This div is special</div>
+<h3>Style Binding</h3>
+<h4>Single Style Binding</h4>
+<ul>
+    <li>To create a <span class="emph">single style binding</span>, start with the prefix style followed by a dot (.) and the name of the CSS style property (for example, <code class="emph"> [style.width]="width"</code>).</li>
+    <li>The property will be set to the value of the bound expression, which is normally a string.</li>
+    <li><span class="emph">Optionally</span>, you can add a <span class="emph"> unit extension like em or %,</span> which requires a number type.</li>
+</ul>
+<div style="border-left: blueviolet solid 5px; padding-left: 5px;"><p>Note that a style property name can be written in either dash-case, or camelCase, such as fontSize.</p></div>
+<h4>Multiple Style Binding</h4>
+<ul>
+    <li>If there are multiple styles you'd like to toggle, you can bind to the <code class="emph">[style] property directly without the dot</code>  (for example,  <code class="emph">[style]="styleExpr"</code>).</li>
+    <li>The expression attached to the <code class="emph">[style]</code> binding is most often a string list of styles like <code class="emph">"width: 100px; height: 100px;".</code></li>
+    <li>You can also format the expression as an <span class="emph">object</span>with <span class="emph">style names as the keys and style values as the values</span>, like <code class="emph">curly brackets width: '100px', height: '100px' curly brackets.</code></li>
+</ul>
+<h4>Example 9</h4>
+<h4>Single Style Binding</h4>
+<p [style.fontSize.px]="styleop">Here, through [style.fontSize.px] = "styleop", where the styleop var is set to 25, we have bound the fontsize.</p>
+<h4>Example 10</h4>
+<h4>Multiple Style Binding With a String Expression</h4>
+<p [style]="styleExpr">Here, through [style] = "styleExpr", the styleExpr var equals font-weight:bold; color:purple.</p>
+<h4>Example 11</h4>
+<h4>Multiple Style Binding With an Object Expression</h4>
+<p [style]="styleObj">Here, through [style] = "styleObj", the styleObj var equals curly brackets color: 'blue', fontWeight: 'bold'. Please note, it didnt work with font-weight, but worked with fontWeight.</p>
+<h4>Example 12</h4>
+<h4>Style Binding Dynamically</h4>
+<button  (click)="changeboolean();">Toggle the Boolean</button>
+<p [style]="booldis?styleObj:null">Adding inline style, based on the current booldis bollean value (true or false)</p>
+<h4>Example 13</h4>
+<h4>Use NgStyle to set many inline styles simultaneously and dynamically, based on the state of the component.</h4>
+<button  (click)="changeboolean();ngs();">Toggle the Boolean</button>
+<p [ngStyle]="styleobforngstyle">We are using the ngs() function here to trigger the boolean and change styles. We owuld indeed implement it without the ngs (), by writing the condition inline.</p>
+<div style="border-left: blueviolet solid 5px; padding-left: 5px;">
+    <p>Using the above style binding syntax without NgStyle is preferred because due to improvements in style binding in Angular, NgStyle no longer provides significant value, and might eventually be removed in the future.</p>
+</div>
+<div style="border-left: blueviolet solid 5px; padding-left: 5px;">
+    <p>Read more about style precedence and style binding at <a href="https://angular.io/guide/template-syntax#styling-precedence">Angular's</a> website.</p>
+</div>
+<hr>
+<h2>Event Binding</h2>
+<ul>
+    <li>Event binding allows you to listen for certain events such as <code class="emph">keystrokes, mouse movements, clicks, and touches.</code></li>
+    <li>Read more about event binding at <a href="https://angular.io/guide/template-syntax#event-binding-event">Angular's</a> documentation.</li>
+    <li>Angular event binding syntax consists of a <span class="emph">target event name</span> within <code class="emph">()</code> on the left of an <code class="emph">=</code> sign, and a <code class="emph">"quoted"</code> template statement (such as a function etc.) on the right.</li>
+</ul>
+<h3>Understanding the Target event and Angular's $event object</h3>
+<h4>The Target event</h4>
+<p>In the below example the <code class="emph">Target event</code> is click which is wrapped inside () - (click)</p>
+<h4>$event object</h4>
+<ul>
+    <li><em>$event is a <code class="emph"> special angular object which passes the entire event payload to the component event handler.</code>.Read more at this <a href="https://angular.io/guide/user-input#get-user-input-from-the-event-object">Angular</a> webpage.</em></li>
+    <li><em>In our example the <code class="emph">component event handler</code> is testclickevent() wherein the $event object has been passed inside the html file - testclickevent($event). So this <span class="emph">handler carries information about the click event in our example.</span></em></li>
+    <li>In our ts file we have defined the <span class="emph">handler (the function, the method) - testclickevent().</span></li>
+    <li>In our ts file the testclickevent() function accepts an argument - e (the name is optional - ould've been juk) which is equivalent to the event passed through angular's $event object</li>
+</ul>
+<h4>Example 14</h4>
+<button (click)="testclickevent($event)">Show information about the event. You may see the full list of avilable event attributes in the console. We toggle the clientX attribute below.</button>
+<p><em>clientX shows the exact width coordinates of the mouse click within the button in our example, since we have bound the click event to our button).</em></p>
+<ng-container *ngIf="eventinfo">
+<hr>
+ <em class="emph">
+   {{eventinfo}}
+ </em>
+ <hr>
+</ng-container>
+<h5>You may see some more examples with Angular's $event at their website or their stacblitz at <a href="https://stackblitz.com/angular/qdgjdaymkvj?file=src%2Fapp%2Fapp.component.ts">this</a> webpage.</h5>
+<h3>Custom Events</h3>
+<p>Element events may be the more common targets, but Angular looks <span class="emph">first</span> to see if the name matches an <span class="emph">event property</span> of a known <span class="emph">directive, including <span class="emph" style="font-size: large;">components (<a href="https://angular.io/api/core/Component#description">components are a subset of directives, always associated with a template, unlike other directives</a>)</span></span>.</p>
+<em>A good video explaining the Angular <span class="emph">Directives</span> <a href="https://www.youtube.com/watch?v=dQIMLPNB8W4"> here</a>.</em>
+<ul>
+    <li style="font-weight: bold;">Directives typically raise custom events with an Angular <span class="emph">EventEmitter</span>.</li>
+    <li>The directive creates an <span class="emph">EventEmitter</span> and exposes it as a <span class="emph">property</span>.</li>
+    <li>The directive calls <code class="emph">EventEmitter.emit(payload)</code> to <span class="emph">fire an event</span>, passing in a message payload, <span class="emph">which can be anything.</span></li>
+    <li><span class="emph">Parent directives</span> listen for the event <code class="emph">by binding to this property</code> and <code class="emph">accessing the payload through the $event object.</code></li>
+    <li><strong>Conclusion: EventEmitter Works only within a parent-child communication.</strong> Typically, EventEmitters are used to emit an event from a child directive (such as a child component) through @Ouput decorator to the parent decorator.</li>
+</ul>
+<h4>Example 15</h4>
+<h4>EventEmitter via @Output from the child-Date Component </h4>
+<ul>
+    <li>First, inside our child date component, through the <span class="emph">@Output ()</span> decorator we defined a <span class="emph">customclick</span> <span class="emph"> new Eventemitter()</span></li>
+    <li>within our date component.ts, we emit a new event through the <span class="emph">.emit</span> command.</li>
+    <li>Within our Binding component,html, within the app-date, through <span class="emph">(customclick) = "mymessagefromkeyupevent = $event"</span>, we have bound our <span class="emph">click</span> eventemitter to the <span class="emph">mymessagefromkeyupevent</span> variable, which is defined in our binding.ts.</li>
+    <li>Then, we simply bind our click event inside the bindings to the booldis boolean to toggle the below part when booldis is true.</li>
+</ul>
+<button (click) ="booldis=!booldis">Show message from the child Date Component</button>
+<ng-container *ngIf="booldis">
+<hr>
+<p class="emph">{{mymessagefromkeyupevent}}</p>
+<hr>
+</ng-container>
+<hr>
+<h2>Attribute Directives</h2>
+<p>Read more at <a href="https://angular.io/guide/attribute-directives">Anagulr's</a> website.</p>
+<h3>Directives overview</h3>
+<p>There are three kinds of directives in Angular:</p>
+<ul>
+    <li><span class="emph">Components</span>—directives <span class="emph">with a template.</span></li>
+    <li><a href="https://angular.io/guide/structural-directives"><span class="emph">Structural</span></a> directives— <span class="emph">change</span> the DOM layout by adding and removing DOM elements (such as ngif, ngfor, ngclas etc.).<span class="emph">No template is required.</span></li>
+    <li><span class="emph">Attribute</span> directives—change the appearance or behavior of an element, component, or another directive. <span class="emph">No template is required.</span></li>
+</ul>
+<h3>Creating Custom Attribute Directives</h3>
+<hr>
+<p class="emph">ng g d (or directive) foldername/(optional)directivefilename --skipTests(optional, for skipping a test file). It is also automatically declared in the app.module.ts, which is required.</p>
+<ul>
+    <li>In our Example 16, the <code class="emph">appFirstdirective</code> selector for the firstdirective.directive.ts directive is in fact added as an HTML <span class="emph">attribute</span> to the element.</li>
+    <li>Angular CLI added the <span class="emph">app</span> prefix to the <code class="emph">Firstdirective</code> <span class="emph">selector</span> automatically <span class="emph">to ensure it doesn't conflict with standard HTML attributes</span>.</li>
+    <li>The the brackets <code class="emph">([]) </code> around appFirstdirective make it an attribute <span class="emph">selector for CSS.</span> In Example 16 the color is defined through referencing the appFirstdirective attribute via .class1fromdirective[appFirstdirective]. Read more about CSS attribute selectors at <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors"> this</a> website.</li>
+</ul>
+<hr>
+<h4>Example 16</h4>
+<h4>Creating a simple directive to add classes to a particular element</h4>
+<ol>
+    <li>First we created a directive - firstdirective.directive.ts</li>
+    <li>In our directive file we wrote a code to add classes to nativelements.</li>
+    <li>We added the appFirstdirective <span class="emph">attribute</span> to the paragraph below.</li>
+</ol>
+<p appFirstdirective>Text</p>
+<hr>
+<h4>Respond to user-initiated events via @HostListener</h4>
+<p><span class="emph">@HostListener</span> is a <span class="emph">function (method)</span> decorator that declares a <span class="emph">DOM event</span> to listen for, and provides a handler method to run when that event occurs.
+Read more at <a href="https://angular.io/api/core/HostListener">Angular's</a> website. Read more about method decorators and decorators in general <a href="https://ultimatecourses.com/blog/angular-decorators">here</a>.</p>
+<p class="emph">HostListener is available for any directive - components and attribute directives. It is used in conjunction with a function (method).</p>
+<p appSeconddirective>We will create our second directive to demonstrate this.</p>
+<h4>Example 17</h4>
+<ol>
+    <li>The task is to add classes to a selected text which will be shown inside an element.</li>
+    <li>The element inside which the selected text will be shown, will be <span class="emph">dynamically created in the DOM</span> only if the text is selected. If not, it will be deleted from the DOM. We use ngif and ng-container for this purpose.</li>
+    <li>There is no native event such as selecttext. The problem is that the 'select' event works only with inputs and textarea elements.</li>
+    <li>That is why we use mouseup to achieve the goal.</li>
+    <li>Here we use mouseup event with @Hostlistener in our Seconddirective.directive.ts. Please note that several @Hostlisteners could have been added for the same function e.g. like this <span class="emph"> @HostListener('mouseup')  @HostListener('click')...</span></li>
+    <li>To manipulate the DOM we preferred renderer to elementref as it was in our first example, due to security reasons.</li>
+    <li>The <a href="http://coldfox.ru/article/5ce1e246f7dc2f02ef7ef429/%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC-Renderer2-%D0%B2-Angular">render's </a>addclass method can only add only one class, though.</li>
+    <li>We had a few problems and options for achieving this result.</li>
+    <li>Firstly, the problem was that the attribute directive <span class="emph">appSeconddirective</span> was added to one element, whereas the callback function had to perform certain tasks also with another element (the one to be displayed after a text is selected).</li>
+    <li>A question arises: How to reference an element from a different directive (or component in other cases)?</li>
+    <li>Angular provides its own methods.</li>
+    <ol>
+       <li>First we tried through passing the element refernce to the directive via the <span class="emph">@Input</span>.</li>
+       <li>For this method, first we added a reference variable to the element where the selected text had to be shown, e.g. <span class="emph">#someref</span>.</li>
+       <li>Then, within our 1. first element we bound a property, e.g. <span class="emph">[arandomprop]</span> to the element reference variable, i.e. <span class="emph">someref</span>, like this <span class="emph">[arandomprop]="someref"</span>.</li>
+       <li>Then, within my secondirective, via the <span class="emph">@Input</span> decorator, I decorated the <span class="emph">arandomprop</span> as an elementref, like this <span class="emph">@Input() arandomprop:ElementRef</span> or like this <span class="emph">@Input() arandomprop:HTMLparagraphelement</span>.</li>
+       <li>Then, through calling <span class="emph">this.arandomprop.(nativeElement) (depending on whether it is htmlelemnt or elementref), I was able to reference the exact element.</span></li>
+       <li>However, the problem with this option was that within the <span class="emph">DOM</span>, the bound arandomprop would show <span class="emph">[object HTMLparagraphelement]</span>, like this <span class="emph">arandomprop=[object HTMLparagraphelement]</span>.</li>
+       <li>Then I tried explicitly defining the element reference variable through <span class="emph">@ViewChild</span>.</li>
+       <li>For this method I wrote this <span class="emph">@ViewChild('thereftotheelementtobehighlighted',<code>curly brackets</code>read: ElementRef, static:true <code>curly brackets</code>) thevarreftobeusedinsidebindingts:ElementRef</span>.</li>
+       <li>Then I created another variable inside my bindingts, e.g. <span class="emph">jukovski:ElementRef</span>, which, inside <span class="emph">ngoninit</span> was available, because static was true; hence no need to put inside <span class="emph">ngafterviewinit</span>,but again I would have [ object Object].</li>
+       <li>Read more about when to use <span class="emph">static:false within @Viewchild</span> <a href="https://stackoverflow.com/questions/56359504/how-should-i-use-the-new-static-option-for-viewchild-in-angular-8">here.</a></li>
+       <li>Finally, I decided to go with <span class="emph"><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll">document.querySelector</a></span>.</li>
+       <li>The problem with <span class="emph">document.querySelector was that it would fire before the DOM change</span>; hence would be null.</li>
+       <li>There are various options to detect change, when dealing with document.querySelector, e.g. <span class="emph"> <a href="https://nitayneeman.com/posts/listening-to-dom-changes-using-mutationobserver-in-angular/"></a>MutationObserver</span>, and some other info <a href="https://eager.io/blog/how-to-decide-when-your-code-should-run/">here</a>.</li>
+       <li>In my case it appeared that my DOM was instantly changed, so I needed only a milisecond to wait to call document.querySelector; hence I simply used setTimeout with 1 millisecond, but ther are other <a href="https://stackoverflow.com/questions/5525071/how-to-wait-until-an-element-exists">options.</a></li>
+       <li>Finally, in order to escape empty whitespaces, I used <span class="emph">.replace(/\s/g,"")</span>, about which you may read at <a href="https://www.wikitechy.com/tutorials/javascript/check-for-an-empty-string-in-javascript">this website.</a></li>
+       <li>Also, we could replace mouseup with e.g. mousemove for live text change, but this will be fired any time mouse is moved on the element.</li>
+       <li>Please note that we also used EventEmitter via @Output from a Custom Directive to toggle when to inject the p element into the DOM.</li>
+    </ol>
+</ol>
+<hr>
+<p appSeconddirective (text)="selectedtext=$event" (dbooldis) = "booldisfor2d=$event" [checkiftextiselected]="selectedtext">1. Select this text or part of it to view the result below.</p>
+<ng-container *ngIf="booldisfor2d">
+<hr>
+<p class="juk">{{selectedtext}}</p>
+</ng-container>
+<h4>Example 18</h4>
+<h4>Pass values into the directive with an @Input data binding</h4>
+<p>Here we bind the directive attribute via @Input to the template reference variable.</p>
+<p>Withing the DOM we get [object HTMLParagraphelement], because <a href="https://forum.freecodecamp.org/t/how-do-i-view-what-is-in-object-object/230052/2"> it is the default string representation of an object.</a></p>
+<hr>
+<p [appMythirddirective]='elref' class="emph" style="margin: 0 auto 0 auto; text-align: center;">Hover me.</p>
+<hr>
+<p #elref>The element worked on via mythirddirective.ts</p>
+<hr>
+</div>
+<h3><a href="https://medium.com/madhash/19-things-you-need-to-learn-to-become-an-effective-angular-developer-c0ccfa51222a">CheckList</a></h3>
+<h3>Angular Directive Selectors</h3>
+<p>Source: <a href="https://netbasal.com/angular-directive-selectors-can-do-more-than-you-think-7aefa4e6f30">Medium</a> and <a href="https://angular.io/api/core/HostListener">Angular</a>.</p>
+<p>We may customize the selector, through instead of defining an attribute name and adding it consequently to our elements, by simply defining which elements need to or need not to implement the directive.</p>
+<p>For example:</p>
+<ul>
+    <li><span class="emph">a:not[routerLink]</span> would mean any a href which is does not have a [routerLink].</li>
+    <li>Within our <span class="emph">sixthdirective</span> we have changed the selector to <span class="emph">a:not[routerLink]</span>.</li>
+    <li>Through <span class="emph">@HostBinding</span> we have added <span class="emph">rel</span> and <span class="emph">target</span> properties to each and every element that matches the criteria: <span class="emph">an a href which is not a [routerLink].</span></li>
+    <li>In order to work further with the added properties <span class="emph">rel</span> and <span class="emph">target</span> we can add either @Input or @Attribute decorators.</li>
+</ul>
+ <hr>
+<a href="https://www.youtube.com/">YouTube</a>
+<hr>
+<p style="border-left: brown solid; padding-left: 10px;">We may also change the selector to say <span class="emph">"buttton"</span> to target all buttons.</p>
+<p>We are adding style property with color property color to the below and all buttons through <span class="emph">@HostBinding</span>.</p>
+<button>All buttons are dark purple (#140129) now thanks to the <span class="emph">seventh.directive.ts</span></button>
+<p style="border-left: brown solid; padding-left: 10px;">We may also change the selector to say <span class="emph">"input[appEigth]"</span> to target all inputs which have the <span class="emph">appEigth</span> attribute.</p>
+<p>As you can see in the below example, because the first input has the <span class="emph">appEigth</span> attribute, the <span class="emph">inp</span> class will be added through <span class="emph">seventh.directive.ts</span>'s' <span class="emph">@HostBinding</span>.</p>
+<p>The second input doesn't have the said attribute, therefore, the <span class="emph">inp</span> class won't be added.</p>
+<p>You may see how this approach has been implemented at <a href="https://angular.io/api/core/HostListener">Angular's</a> website</p>
+<ol>
+    <li><input type="text" appEigth>First</li>
+    <li><input type="text">Second</li>
+</ol>
+<hr>
+<p style="border-left: brown solid; padding-left: 10px;">We created another directive: <span class="emph">ninth.directive.ts</span> with the selector<span class="emph">"p[jmurik]"</span> to target all p elements which have the <span class="emph">jmurik</span> attribute.</p>
+<ul>
+    <li>The below p element has the <span class="emph">jmurik</span> attribute.</li>
+    <li>The purpose was to create a span element around the selected text with the class underlint.</li>
+    <li>During the process I learnt about <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node"><span class="emph">Nodes</span></a>, the <a href="https://javascript.info/selection-range"><span class="emph">Range</span> and <span class="emph">Selection</span> objects</a>, </li>
+    <li>I also learnt that <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/getSelection">Window.getSelection()</a> works only for window or document commands, but not for a specific element.</li>
+    <li>That is why, through the <span class="emph">rangei.commonAncestorContainer.nodeName !== "APP-BINDINGS"</span> criteria I filtered only those elements which are not selected along with my jmurik element.</li>
+    <li>I also used StackOverflow's <a href="https://stackoverflow.com/questions/1335252/how-can-i-get-the-dom-element-which-contains-the-current-selection">this</a>, <a href="https://stackoverflow.com/questions/11821037/can-getselection-be-applied-to-just-a-certain-element-not-the-whole-document">this</a> and <a href="https://stackoverflow.com/questions/5964373/is-there-a-difference-between-s-g-and-s-g">this</a> resources.</li>
+</ul>
+<hr>
+<p jmurik>Example: <span class="emph">This is spanned text</span> property of a <span class="emph">yes another spanned text</span> a text inside my p element</p>
+<hr>
+<hr>
+<h2>Two-way binding [(...)]</h2>
+<p>Two-way binding gives your app a way to share data between a component class and its template. Read more at <a href="https://angular.io/guide/two-way-binding">Angular's</a> website.</p>
+<p>Two-way binding does two things:</p>
+<ul>
+    <li>Sets a specific element property.</li>
+    <li>Listens for an element change event.</li>
+</ul>
+<p>Angular offers a special two-way data binding syntax for this purpose, <code class="emph">[()]</code>. The [()] syntax combines the brackets of <span class="emph">property binding, []</span>, with the parentheses of <span class="emph">event binding, ()</span>.</p>
+<p>Below is an example of two way binding <span class="emph">(Banana in a Box)</span> without <span class="emph">NgModel</span></p>
+<p>You <span class="emph">can't apply <a href="https://angular.io/guide/built-in-directives#ngModel">[(ngModel)]</a> </span> to a <span class="emph"> non-form native element or a third-party custom component</span> until you write a suitable value accessor.</p>
+<p>In the below example we did the following, inspired by the example posted <a href="https://angular.io/guide/two-way-binding">here.</a></p>
+<ol>
+    <li>Firstly, we created a directive-myfourthdirective.</li>
+    <li>We made the <span class="emph">appMyfourthdirective</span> directive available, by mentioning it in my binding component html.</li>
+    <li>Because the <span class="emph">appMyfourthdirective</span> does not have any element specific methods, we could and have actually mentioned it anywhere inside the template. In this case, it is mentioned within a wrapper div.</li>
+    <li>My <span class="emph">appMyfourthdirective</span> has three methods: <span class="emph">dec()</span>
+         for decreasing the font, <span class="emph">inc()</span> for increasing the font, and <span class="emph">resize()</span> which sets the <span class="emph">@Input()</span> property <span class="emph">size</span>, limiting its value within the range from 8 to 40, as well as <span class="emph">emits</span> its value upon the execution of eithe dec() or inc(), through the <span class="emph">@Output()</span> property sizeChange.</li>
+    <li>We need to add the suffix <span class="emph">Change</span> to the <span class="emph">@Input</span> bound property to be have a two way binding, just like we have done in our example: <span class="emph">sizeChange.</span></li>
+    <li>Thus, we are having a two way data binding without <a href="https://angular.io/guide/template-reference-variables">NgModel</a>.</li>
+    <li>We have the directive's methods available through <span class="emph"><a href="https://www.youtube.com/watch?v=_8dIXNZYPQo">exportAs</a></span>, which is made available simply by <code class="emph">#myfourthd="myfourthd"</code> <span class="emph">alongside my appMyfourthdirective.</span></li>
+    <li>I have used <span class="emph">ngmodel</span> inside my input to connect to the fontisezepx var.</li>
+    <li>Finally, inside our binding ts, we have defined <span class="emph">fontisezepx</span> with an initial value of 16, linked it to our bound properties.</li>
+    <li>we have also found a quick solution via <span class="emph">(ngModelChange)="changef();"</span> and min and max html tags to limit the input values.</li>
+</ol>
+<h4 [style.font-size.px]="fontisezepx">Example 19 - Resize the text</h4>
+<div appMyfourthdirective [(size)]="fontisezepx" #myfourthd="myfourthd">
+    <button (click)="myfourthd.dec();">-</button>
+    <button (click)="myfourthd.inc();">+</button>
+    <span [style.font-size.px]="fontisezepx">Font-size: {{fontisezepx}}</span>
+    <div>
+    <input type="number" [(ngModel)]="fontisezepx" (ngModelChange)="changef();" style="display: block;" min="8" max="40">    
+    </div>
+    <p [style.font-size.px]="fontisezepx">Resizeable text</p>
+</div>
+<hr>
+<h2>@Input() and @Output() properties</h2>
+<h4><span class="emph">@Input()</span> and <span class="emph">@Output()</span> allow Angular to share data between the <span class="emph">parent context and child directives or components.</span> An @Input() property is writable while an <span class="emph">@Output() property is observable.</span></h4>
+<h4>As we have implemented these properties multiple times in the project, we won't be dedicating a special section for this.</h4>
+<p>Read more at <a href="https://angular.io/guide/inputs-outputs">Angular's</a> website.</p>
+<hr>
+<h2>Template reference variables (#var)</h2>
+<h4>Again, we have implemented these variables to some extent in the project.</h4>
+<h4>Read more at <a href="https://angular.io/guide/template-reference-variables">Angular's</a> website.</h4>
+<hr>
+<h2>Template expression operators</h2>
+<p>The Angular template expression language employs a subset of JavaScript syntax supplemented with a few special operators for specific scenarios, as follows:</p>
+<ol>
+    <li>pipe</li>
+    <li>safe navigation operator</li>
+    <li>non-null assertion operator</li>
+</ol>
+<p>Read more at <a href="https://angular.io/guide/template-expression-operators">Angular's</a> website.</p>
+<h4>The pipe operator (|)</h4>
+<p>This text is converted to uppercase through pipe: {{propertyTitle | uppercase}}</p>
+<p>We have covered most of the pipes at <a routerLink="/hiringassistants">another section of our website (huser).</a></p>
+<h4>The safe navigation operator ( ? ) and null property paths</h4>
+<p>The Angular safe navigation operator, <span class="emph"> ?,</span> guards against <span class="emph">null</span> and <span class="emph">undefined</span> values in property paths.</p>
+<p>In the below example, it protects against a view render failure if <span class="emph">somearray</span> is null.</p>
+<p>My array: {{somearray[115]?.id}}</p>
+<h4>The non-null assertion operator ( ! )</h4>
+<p>Unlike the safe navigation operator, the non-null assertion operator <span class="emph">does not guard against null or undefined</span>. Rather, it tells the TypeScript type checker to <span class="emph">suspend</span> <span class="emph">strict</span> null checks for a specific property expression.
+</p>
+<ul>
+    <li>For our below example, first we created an object called <span class="emp">randomobj</span>.</li>
+    <li>We then strictly defined its type through <span class="emph">interface Randy</span>.</li>
+    <li>There, for our <code class="emph">name</code> we defined its type being <span class="emph">either string or null</span> like this <code class="emph">name?:string | null.</code></li>
+    <li>Within our html, though, we are telling angular that its certainly not a null, through the <span class="emph">!</span></li>
+    <li>Read more about the usage cases <a href="https://medium.com/better-programming/cleaner-typescript-with-the-non-null-assertion-operator-300789388376">here.</a></li>
+</ul>
+<p>The item's color is: {{randomobj.name!.toUpperCase()}}</p>
+<hr>
+<h2>Union type in typescript.</h2>
+<h4>A union type describes a value that can be one of several types.</h4>
+<p>Pipe <code class="emph">(|)</code> is used to separate each type, so for example number | string | boolean is the type of a value that can be a number, a string, <span class="emph">or</span> a boolean.</p>
+<hr>
+<h2>Angular change detection.Angular OnPush Change Detection.</h2>
+<p>Read more about ChangeDetection at <a href="https://www.mokkapps.de/blog/the-last-guide-for-angular-change-detection-you-will-ever-need/">this</a> website.</p>
+<p class="emph">The process of updating the view (DOM) when the data has changed.</p>
+<h4>How Change Detection Works</h4>
+<ul>
+<li><span class="emph">Developer</span> updates the application model.</li>
+<li><span class="emph">Angular </span> syncs the updated model in the view by re-rendering it.</li>
+</ul>
+<h4>Let us take a more detailed look at this process:</h4>
+<ol>
+    <li>Developer updates the data model, e.g. by updating a component binding</li>
+    <li>Angular detects the change</li>
+    <li>Change detection checks <span class="emph" style="font-size: large;">every</span> component in the component tree from top to bottom to see if the corresponding model has changed</li>
+    <li>If there is a new value, it will update the component’s view (DOM)</li>
+    <li>The following GIF demonstrates this process in a simplified way:</li>
+</ol>
+<div>
+    <img src="\assets\images\cd-cycle.gif" alt="ChangeDetection">
+</div>
+<p>This detector compares the <span class="emph">current</span> value with the <span class="emph">previous</span> value of the property. If the value has changed it will set isChanged to true.</p>
+<p class="emph">Change Detection does not perform a deep object comparison, it only compares the previous and current value of properties used by the template.</p>
+<p>Angular patches several low-level browser APIs at startup to be able to detect changes in the application.
+This is done using Angular's <span class="emph">zone.js</span> library which patches APIs such as <span class="emph">EventEmitter</span>, <span class="emph">DOM event listeners</span>, <span class="emph">XMLHttpRequest</span>, fs API in Node.js and <a href="https://github.com/angular/angular/blob/master/packages/zone.js/STANDARD-APIS.md"></a> more.</p>
+<p>By <span class="emph">default</span>, Angular Change Detection checks for all components <span class="emph">from top to bottom</span> if a template value has changed.</p>
+<p>In-depth explantion about this topic can be found <a href="https://indepth.dev/everything-you-need-to-know-about-change-detection-in-angular/">here</a> and <a href="https://indepth.dev/a-gentle-introduction-into-change-detection-in-angular/">here</a>.</p>
+<h3>Change Detection Strategies</h3>
+<h4>Angular provides two strategies to run change detections:</h4>
+<ul>
+    <li>Default</li>
+    <li>OnPush</li>
+</ul>
+<h4>Default Change Detection Strategy change detection strategy is achieved by adding either <code class="emph">changeDetection: ChangeDetectionStrategy.OnPush</code>
+ or <code class="emph">changeDetection: ChangeDetectionStrategy.Default</code> to the component decorator metadata. The default is Default, so need specifically adding it.</h4>
+<h5>Default Change Detection Strategy</h5>
+<ul>
+<li>By default, Angular uses the <code class="emph">ChangeDetectionStrategy.Default</code> change detection strategy.</li>
+<li>This <span class="emph">default strategy</span> checks every component in the component tree <span class="emph">from top to bottom every time
+an event triggers change detection (like user event, timer, XHR, promise and so on).</span> </li>
+<li>This conservative way of checking without making any assumption on the component’s dependencies is  <span class=""></span> dirty checking. </li>
+<li>It can negatively influence your application’s performance in large applications which consists of many components.</li>
+</ul>
+<h5>OnPush Change Detection Strategy</h5>
+<p>We can switch to the <code class="emph">ChangeDetectionStrategy.OnPush</code> change detection strategy by adding the <span class="emph">changeDetection</span> property to the component decorator metadata.</p>
+<p>This change detection strategy provides the possibility to <code class="emph">skip</code> unnecessary checks for <code class="emph">this</code> component and all it’s child components.</p>
+<p style="border-left: blueviolet solid 5px; padding-left: 1rem;">Primitive types like numbers, string, booleans, null and undefined are passed by value.
+Object and arrays are also passed by value but modifying object properties or array entries does not create a new reference and therefore does not trigger change detection on an OnPush component.
+To trigger the change detector you need to pass a new object or array reference instead.</p>
+ <div>
+    <img src="\assets\images\cd-on-push-cycle.gif" alt="OnPush">
+</div>
+<p style="border-left: red solid 5px; padding-left: 1rem;">To prevent change detection bugs it can be useful to build the application using OnPush change detection everywhere by using <span class="emph">only</span> <span class="emph">immutable</span> <span class="emph" style="text-decoration: underline;">objects</span> and <span class="emph" style="text-decoration: underline;">lists</span>. Immutable objects can only be modified by creating a new object <span class="emph"> reference</span> so we can guarantee that:</p>
+<ul>
+    <li>OnPush change detection is triggered for each change</li>
+    <li>we do not forget to create a new object reference which could cause bugs    </li>
+</ul>
+<p style="border-left: red solid 5px; padding-left: 1rem;">By setting the onPush change detection strategy we are signing a contract with Angular that obliges us to work with <span class="emph">immutable</span> objects or <span class="emph">observables.</span></p>
+<p style="border-left: red solid 5px; padding-left: 1rem;">Read more about <span class="emph">immutable and mutable values</span><a routerLink="/javascriptandtypescript"> here</a>.</p>
+
+<h5>Using this strategy, Angular knows that the component only needs to be updated if:</h5>
+<ol>
+    <li>The input reference has changed</li>
+    <li>The component or one of its children triggers an event handler</li>
+    <li>Change detection is triggered manually</li>
+    <li>An observable linked to the template via the async pipe emits a new value</li>
+</ol>
+<p style="font-weight: bold;">1. Input Reference Changes</p>
+<p style="border-left: blueviolet solid 5px; padding-left: 1rem;">In the default change detection strategy, Angular will run the change detector any
+ time <code class="emph">@Input()</code> data is changed or modified.
+Using the OnPush strategy, the change detector is only triggered if a <span class="emph">new reference</span> is passed as <code class="emph">@Input()</code> value.</p>
+<h4>Example 20</h4>
+<ol>
+    <li>We created a simple child component - asimpchild.</li>
+    <li>Within our child component we defined <span class="emph">changeDetection: ChangeDetectionStrategy.OnPush</span>.</li>
+    <li>Within our <span class="emph">asimpchild</span> ts we created an <span class="emph">@Input()</span>  decorating <span class="emph">obfpush</span>.</li>
+    <li>Within our <span class="emph">bindings</span> parent component we created an object <span class="emph">anobforpush</span> which is bound to the <span class="emph">obfpush</span>.</li>
+    <li>Our below button triggers <span class="emph">changeobfpush()</span> function which <span class="emph">changes the reference</span> to the <span class="emph">anobforpush</span> object.</li>
+    <li>Had we <span class="emph">mutated</span> the <span class="emph">anobforpush</span> object through changing the value like this: <span class="emph">anobforpush.name="Juk"</span> <span class="emph">changeDetection: ChangeDetectionStrategy.OnPush</span> would not fire, as <span class="emph">changeDetection: ChangeDetectionStrategy.OnPush</span> detects only reference changes.</li>
+</ol>
+<button (click) ="changeobfpush();">Change the reference to the value</button>
+<button (click) ="changeboolean();">Toggle View</button>
+<app-asimpchild [obfpush] ="anobforpush" [boold]="booldis"></app-asimpchild>
+<h4>Example 21</h4>
+<input type="number" [(ngModel)]="id" disabled>
+<input type="text" [(ngModel)]="name">
+<input type="text" [(ngModel)]="lastname">
+<input type="text" [(ngModel)]="position">
+<button (click) ="changearrbool() ;">Toggle View</button>
+<button (click)="add()">Add</button>
+<app-asimpchild [arrforpush] ="asimparr" [booldo]="boolda" (ido)="id=$event"  (user)="passob($event)"></app-asimpchild>
+<p>To summarise, we did the following:</p>
+<ul>
+    <li>Within our <span class="emph">asimpchild</span> component, we created a table and attached it to a boolean <span class="emph">booldo</span> which either deletes or inserts the table into the <span class="emph">DOM</span> upon <span class="emph">Toggle View</span>.</li>
+    <li>Within our <span class="emph">bindings</span> component ts, we created <span class="emph">asimparr</span> array of an <span class="emph">Asimparr</span> type which is exported to the <span class="emph">asimpchild</span> component.</li>
+    <li>Within our <span class="emph">asimpchild</span> component, through the <span class="emph">@Input()</span> decorator we bound the <span class="emph">asimparr</span> array of the <span class="emph">bindings</span> component to the <span class="emph">arrforpush</span> array of the <span class="emph">asimpchild</span> component.</li>
+    <li>Within our <span class="emph">asimpchild</span> component, we created an <span class="emph">NgFor</span> <span class="emph">structural directive</span> to loop through the <span class="emph">arrforpush</span> array.</li>
+    <li>Within our <span class="emph">asimpchild</span> component, we used <span class="emph">trackBy</span>, about which you may read below.</li>
+    <li>Within our <span class="emph">bindings</span> component, we created four input fields the values of which are <span class="emph"> two-way</span> bound through their respective properties:<span class="emph">id, name, lastname, position</span> which are defined as separate variables within our <span class="emph">bindings</span> component ts.</li>
+    <li>Within our <span class="emph">asimpchild</span> component, through the <span class="emph">gettherowdata(idx, user)</span> method attached to a <span class="emph">click</span> event on the <span class="emph">tr</span> we are passing the <span class="emph">index</span> of the iterated, clicked item by passing it through the <span class="emph">idx</span> argument. Simultaneously, we are passing the iterated object of the clicked row through the <span class="emph">user</span> argument.</li>
+    <li>We then emit the the clicked index and the user object through defining these within the <span class="emph">asimpchild</span> ts by the <span class="emph">@Output</span> decorator and passing these values to the <span class="emph">gettherowdata()</span> method as arguments and emitting.</li>
+    <li>Within our <span class="emph">bindings</span> component, we created the <span class="emph">add</span> method which implements <span class="emph">concat</span> to create a <span class="emph">new reference</span> to the <span class="emph">asimparr</span> array. <span class="emph">Concat</span> is slower than <span class="emph">push</span>, but with <span class="emph">push</span> we are unable to create a new reference (it mutates the data instead), and because our <span class="emph">asimpchild</span> implements <span class="emph">onPush</span> changedetection, we decided to create this new reference through <span class="emph">concat</span>.<span class="emph">concat</span></li>
+</ul>
+<h5>trackBy</h5>
+<p>To avoid extensive operation, you can customize the default tracking algorithm. by supplying the trackBy option to NgForOf. <span class="emph"></span> trackBy takes a function that has two arguments: index and item. If trackBy is given, Angular tracks changes by the return value of the function.</p>
+<p>Read more at <a href="https://angular.io/api/common/NgForOf">Angular's</a> and <a href="https://medium.com/better-programming/improving-angular-ngfor-performance-through-trackby-ae4cf943b878">this websites</a>, or watch the <a href="https://www.youtube.com/watch?v=dEIg-PR4Tew">video</a>.</p>
+<p style="font-weight: bold;">2. An event originated from the component or one of its children.</p>
+<p style="border-left: blueviolet solid 5px; padding-left: 1rem;">For example, when we click on the button, Angular runs a change detection cycle and the view is updated as expected.</p>
+<p style="border-left: blueviolet solid 5px; padding-left: 1rem;">The rule applies only to DOM events.</p>
+<p style="font-weight: bold;">For example, even if we added data in the add() method described above, with <span class="emph">push</span> instead of creating a new reference via <span class="emph">concat</span>, even then, upon an event triggered on the 
+<span class="emph">asimpchild</span> component's <span class="emph">DOM element</span>, such as clicking the row, the changdetection would fire.</p>
+<p style="font-weight: bold;">3. Change detection is triggered manually</p>
+<p>We can manually trigger changedetction via:</p>
+<ol>
+    <li><span class="emph">detectChanges()</span> on <span class="emph">ChangeDetectorRef</span> which tells Angular to run change detection on the component and his children. 
+    It can be used in combination with <span class="emph">detach()</span> to implement local change detection checks.</li>
+    <li><span class="emph">ApplicationRef.tick()</span> which tells Angular to run change detection for the <span class="emph">whole</span> application.</li>
+    <li> <span class="emph">markForCheck()</span> on <span class="emph">ChangeDetectorRef</span> which does <span class="emph">not</span> trigger change detection but <span class="emph">marks all OnPush ancestors as to be checked once</span>, either as part of the current or next change detection cycle. 
+    It will run change detection on marked components even though they are using the OnPush strategy. A good explanation can be found on <a href="https://stackoverflow.com/questions/41364386/whats-the-difference-between-markforcheck-and-detectchanges">Stackoverflow</a></li>
+ </ol>
+<div>
+    <img src="\assets\images\changedetectorref-methods.png" alt="manual change">
+</div>
+ <input type="number" [(ngModel)]="id" disabled>
+<input type="text" [(ngModel)]="name">
+<input type="text" [(ngModel)]="lastname">
+<input type="text" [(ngModel)]="position">
+<button (click) ="changearrbools();">Toggle View</button>
+<app-asimpchild [simpboolo]="simpboolik" (ido)="id=$event"  (user)="passob($event)"></app-asimpchild>
+<p>In the example above we did the following:</p>
+<ul>
+    <li>Firstly, we created a service: <span class="emph">customservice</span></li>
+    <li>Within our service we created an arra: <span class="emph">asarr</span> of <span class="emph">:Asimparr[]</span> type.</li>
+    <li>Within our service we also created a cold observable: <span class="emph">mycobs$</span> of <span class="emph">:Asimparr[]</span> type.</li>
+    <li>We defined a <span class="emph">subscriber function</span>.</li>
+    <li>Our <span class="emph">subscriber function</span> pushes <span class="emph">asarr</span> through <span class="emph">next</span> method.</li>
+    <li>Our <span class="emph">subscriber function</span> implemenets <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch"><span class="emph">try..catch</span></a> statement to <span class="emph">PUSH</span> an <span class="emph">error</span> through the <span class="emph">.error</span> method should an exception occur. Please note, once an <span class="emph">error</span> is pushed, the <span class="emph">observable</span> stops pushing data.</li>
+    <li>Our <span class="emph">subscriber function</span> also has the <span class="emph">complete</span> method Our <span class="emph">which stops the flow of data</span>.</li>
+</ul>
+<p>Within our child component: <span class="emph">asimpchild</span> we did the following:</p>
+<ul>
+<li>We created an array:<span class="emph">myobarr</span> of an <span class="emph">Asimparr[]</span> type.</li>
+<li>We created a subscription: <span class="emph">myobsubscription</span> which has the <span class="emph">Subscription</span> type.</li>
+<li>We injected our <span class="emph">service</span>: <span class="emph">CustomserviceService</span> within the <span class="emph">constructor()</span>: <span class="emph">private servarr:CustomserviceService</span>.</li>
+<li>We implemented the lifecycle hook <span class="emph">OnChanges</span>.</li>
+<li>Within <span class="emph"><a href="https://angular.io/api/core/OnChanges">ngOnChanges</a></span> <span class="emph">changedetection</span> runs immediately after the default change detector has checked data-bound properties (e.g. through @Input() decorator) if at least one has changed.</li>
+<li><span class="emph">ngOnChanges</span> can take <span class="emph">SimpleChanges</span> property which is used to identify the previous value or the current value of a data-bound property.</li>
+<li>In our case we are using <span class="emph"><a href="https://dev.to/nickraphael/ngonchanges-best-practice-always-use-simplechanges-always-1feg">SimpleChanges</a></span> to check the <span>@Input() simpboolo:boolean</span> which is used by our child component to toggle the view.</li>
+<li>Finally, after we have subscribed to our <span class="emph">mycobs$</span> observable and implented <span class="emph">if</span> function to subscribe to it only if the <span>simpboolo</span> is changed and is true, and <span class="emph">unsubscribe</span> if false.</li>
+</ul>
+<p style="border-left: blueviolet solid 5px; padding-left: 1rem;">Read more about SimpleChanges <a href="https://dev.to/nickraphael/ngonchanges-best-practice-always-use-simplechanges-always-1feg"> here</a> and <a href="https://medium.com/@sithummeegahapola/what-is-angular-simplechanges-in-ngonchange-method-2e6b8e7f411d">here</a>.</p>
+<p style="font-weight: bold;"> 4.Working with observables with async</p>
+<p style="border-left: blueviolet solid 5px; padding-left: 1rem;">The async pipe subscribes to an <span class="emph">Observable</span>  or <span class="emph">Promise</span> and returns the <span class="emph">latest value it has emitted.</span> 
+When a <span class="emph">new value is emitted</span>, the <span class="emph">async pipe marks the component to be checked for changes</span>. When the component gets <span class="emph">destroyed</span>, the <span class="emph">async pipe unsubscribes automatically</span> to avoid potential memory leaks.</p>
+<app-justachild [mrp]="servobservable"></app-justachild>
+<p>We simply injected our service in to the binding component and passed the observable through the @Input() decorator.</p>
+<p style="font-weight: bold;">Subjects</p>
+<input type="number" [(ngModel)]="id" [class.errclass]="togforclass" disabled>
+<input type="text" [(ngModel)]="name" [class.errclass]="togforclass">
+<input type="text" [(ngModel)]="lastname" [class.errclass]="togforclass">
+<input type="text" [(ngModel)]="position" [class.errclass]="togforclass">
+<button (click)="passdata();"> Add data</button>
+<button (click)="clearfields();"> Clear fields</button>
+<button (click)= "updatedata();">Update</button>
+<button (click)="delete();">Delete</button>
+<app-achild [mrp2]="servobservable2" (idi)= "id=$event" (clickeduser)="passob($event)"></app-achild>
+<h3>Resources:</h3>
+<ul>
+    <li><a href="https://www.mokkapps.de/blog/the-last-guide-for-angular-change-detection-you-will-ever-need/">1. Main</a></li>
+    <li><a href="https://medium.com/better-programming/change-detection-in-angular-6fb68ca19c95">2</a></li>
+    <li><a href="https://angular.io/api/core/ChangeDetectionStrategy">3</a></li>
+    <li><a href="https://angular.io/api/core/ChangeDetectorRef#usage-notes">4</a></li>
+    <li><a href="https://dzone.com/articles/how-to-use-change-detection-in-angular">5</a></li>
+    <li><a href="https://blog.ninja-squad.com/2018/09/27/angular-performances-part-4/">Good one</a></li>
+    <li><a href="https://www.youtube.com/watch?v=Ol6dFGs0Wxo">Video</a></li>
+</ul>
+<p style="border-left: blueviolet solid 5px; padding-left: 1rem;">Another resource for OnPush Change Detection can be found at <a href="https://netbasal.com/a-comprehensive-guide-to-angular-onpush-change-detection-strategy-5bac493074a4">this</a> website</p>
+<hr>
+<h3>Feature modules</h3>
+<ul>
+    <li>By default we have all of our comlionents, directives and services within <span class="emph">app.module.ts</span>.</li>
+    <li>As we are having more components and features, it is becoming more difficult to maintain within our app.module.ts</li>
+    <li>We may therefore move the components, directives and pipes into a separate <span class="emph">feature module.</span>.</li>
+    <li>We may generate a seperate module by the CLI command: <span class="emph">ng g m foldername/modulename --flat -m app</span>. With this command we are creating a flat feature module named modulename inside the foldername folder (the folder of the component), which is imported into the app.module.ts</li>
+    <li>For instance, we will create such a module: chatmodule.module.ts</li>
+    <li>We may import the components which need to have access to the module directly into our module. In our case it is childforchat component.</li>
+    <li>If we want the <span class="emph">ChildforchatComponent</span> to be available outside our <span class="emph">chatmodule.module.ts</span>, we may use the <span class="emph">Exports</span> array (see inside the module).</li>
+    <li>Because we want to load  <span class="emph">ChildforchatComponent</span> inside our <span class="emph">ChatComponent</span> as a child, we have used the <span class="emph">Exports</span> array.</li>
+    <li>Similraly, because we want to load  <span class="emph">ModalComponent</span> inside our <span class="emph">ChatComponent</span> as a child, we have used the <span class="emph">Exports</span> array.</li>
+    <li>See more <a href="https://www.youtube.com/watch?v=5_DiALgzvCw&t=645s">here</a>.</li>
+</ul>
+<h3>Feature routing modules and shared modules</h3>
+<ul>
+    <li>We may create a <span class="emph">feature routing enabled module</span> either manually or through CLI.</li>
+    <li>With <span class="emph">CLI</span> we have used the command <span class="emph">ng g m chat/chatwithroute --routing</span> where m stands for module, chat is the folder name, chtwithroute is the module name and --routing specifies that we want it to be a routing module.</li>
+    <li>When using the <span class="emph">CLI</span> a subfolder with the module's name will be created and we will have both a module and a routing module. Since I didn't need a module, I deleted it and the sub-folder and only left the routing module.</li>
+    <li>If created manually, we simply create the file adding <span class="emph">--routing</span> to the file name, import <span class="emph">NgModule, Routes, RouterModule</span>, withing <span class="emph">NgModule</span> we import <span class="emph">[RouterModule.forChild(routes)]</span> and reexport <span class="emph">[RouterModule].</span></li>
+    <li>See more <a href="https://www.youtube.com/watch?v=puscOjMyouc">here</a>.</li>
+    <li>Because we want to lazy load <span class="emph">ChatModule</span>, we have defined this within our <span class="emph">app-routing.</span>We have also given a path: chat with an outlet function to lazy load the module.</li>
+    <li>We have then moved all the related components: <span class="emph">ChildforchatComponent and ChatComponent</span> to our feature routing module: <span class="emph">Chatwithroute-routing.</span>.</li>
+    <li>We move the route definitions as well as the associated guards to our <span class="emph">ChatwithrouteRoutingModule.</span></li>
+    <li>Now we need to import our <span class="emph">ChatwithrouteRoutingModule</span> into our feature module: <span class="emph">ChatmoduleModule</span>.</li>
+    <li>IMPORTANT: within our app.module.ts we need to make sure that our feature module:ChatmoduleModule and <span class="emph"> any feature module are imported before AppRoutingModule</span>. Oteherwise we may have <a href="https://youtu.be/puscOjMyouc?t=440">problems.</a></li>
+</ul>
+<h3>Shared modules</h3>
+<ul>
+    <li>Because our <span class="emph">ModalComponent</span> is loaded into several components, we have created a <span class="emph">shared module:shared.module.ts</span>, wherein we have imported the <span class="emph">ModalComponent</span>, and have imported the <span class="emph">shared module:shared.module.ts</span> into our <span class="emph">chatmodule.module.ts</span>.</li>
+    <li>Please note that a component <span class="emph">can only be declared for one NgModule</span>. That is why have only declared <span class="emph">ModalComponent</span> within our <span class="emph">shared module:shared.module.ts</span> and <span class="emph">exported</span> it in the <span class="emph">exports: []</span> array.</li>
+    <li>Similarly, we have moved the <span class="emph">CommonModule</span> which is responsible for common directives such structural directives etc. (<span class="emph">ngfor, ngif etc.</span>), into our <span class="emph">shared module:shared.module.ts</span></li>
+    <li>Please note that we have removed all references of the above components from our app module and app routing module.</li>
+    <li>We have also moved the references to our <span class="emph">ChatModule</span> from our app.module.</li>
+    <li>Through CLI, a shared module can be generated just like any module. In our case: <span class="emph">ng g m shared(folder name)/shared(module name) --flat -m chat/chatmodule.</span> the last part (-m chat/chatmodule) automatically imports the module into our chatmodule.</li>
+    <li>See more <a href="https://www.youtube.com/watch?v=HFRAL5Msa_o">here</a>.</li>
+</ul>
+<h3>Angular preloading and lazy-loading modules.</h3>
+<p>In Angular there are three module loading strategies:</p>
+<ol>
+    <li>Eager Loading (the default behaviour)</li>
+    <li>Lazy Loading</li>
+    <li>Preloading</li>
+</ol>
+<p style="font-weight: bold;">1.Eager Loading (the default behaviour)</p>
+<p>All modules need must be downloaded before the applications starts. AppModule is always eagerly loaded.</p>
+<p style="font-weight: bold;">2.Lazy Loading</p>
+<p>Lazy Loaded modules are loaded on demand when the user navigates to the routes in these modules.</p>
+<p style="font-weight: bold;">2.Preloading</p>
+<p>Lazy Loaded modules are preloaded and are downloaded in the background.</p>
+<h4>Lazy Loading</h4>
+<p>There two requirements for lazy loading:</p>
+<ol>
+    <li>All the routes in the module should have the same route prefix.</li>
+    <li>The module should not be referenced in any other module, otherwise it will be eagerly loaded.</li>
+    <li>In our case we have lazy loaded the <span class="emph">chatmodule, settingsmodule, signinmodule, which all have their feature outing modules.</span></li>
+    <li>We have deleted the references to these modules from our <span class="emph">app.module and app-routing.module</span>.</li>
+    <li>We have defined the path to these modules in our <span class="emph">app-routing</span>.</li>
+    <li>Read more at <a href="https://angular.io/guide/lazy-loading-ngmodules">Angular's</a> website. You may see the tutorial <a href="https://www.youtube.com/watch?v=75XFBIKLPQY&t=433s">here.</a></li>
+    <li>For <span class="emph">routes</span> with <span class="emph">children</span> watch <a href="https://www.youtube.com/watch?v=BkLqyr4VHmw&t=148s">this</a></li>
+</ol>
+<p>Example 22</p>
+<p>We will be using an auxilliary route to our chatmodule which will be lazy loaded.</p>
+<button [routerLink]="['', {outlets:{modal:'chat'}}]">Chat</button>
+<h4>Preloading</h4>
+<ul>
+    <li>Also called <span class="emph">eager lazy loading.</span></li>
+    <li>First, the app.module and the eager loaded modules are loaded.</li>
+    <li>Then, the modules configured to preload are loaded in the background.</li>
+</ul>
+<h5>Configuration</h5>
+<ol>
+    <li>Within our <span class="emph">app.routing NgModules imports array, within the forRoot method</span> we add the configuration object within curly brackets: <span class="emph">preloadingStrategy: PreloadAllModules</span></li>
+    <li>If we want to explicitly declare that we do not want preloading we could add in the same place <span class="emph">preloadingStrategy: NoPreloading</span></li>
+    <li>See more <a href="https://www.youtube.com/watch?v=ceMsvxyuc6Q">here.</a></li>
+    <li>Now, <span class="emph"></span> all our <span class="emph">lazy modules (only lazy modules can be preloaded)</span> will be preloaded.</li>
+</ol>
+<h4>Custom Preloading Strategy</h4>
+<p>We need this when we want only certain lazy modules to preload, not all</p>
+<h5>Configuration</h5>
+<ol>
+    <li>First we need a service for this: <span class="emph">custompreloading</span>.</li>
+    <li>Within our <span class="emph">custompreloading</span> service we will <span class="emph">implement</span> <span class="emph">PreloadingStrategy</span></li>
+    <li>We then implement the PreloadingStrategy interface (preload...).</li>
+    <li>The <span class="emph">fn</span> function parametre preloads a given module.</li>
+    <li>To specify whether a lazy loaded module to be preloaded or not we need to include a setting within the <span class="emph">app.routing</span> routing of the lazy loaded module.</li>
+    <li>We want to preload the settingsmodule.</li>
+    <li>Within our lazy loading route we add an object called <span class="emph">data</span> (a property of route) wherein a property will be passed: <span class="emph">decideprelprop</span> which if <span class="emph">true</span> will make the module preload, else, not.</li>
+    <li>Within our <span class="emph">custompreloading</span> service implementation we will first check whether the given route has the <span class="emph">data</span> property and whether the property value (<span class="emph">decideprelprop</span>) is <span class="emph">true.</span> </li>
+    <li>If we the above criteria are true, we will preload the module by simply <span class="emph">return fn()</span> which is of an <span class="emph">Observable</span> type.</li>
+    <li>Because the return type of <span class="emph">fn()</span> is of an <span class="emph">Observable</span> type, if any of the above conditions are <span class="emph">false</span>, we will create a simple observable of a null type, through the <span class="emph">of</span> method which will indicate that we do not want to preload our module.</li>
+    <li>Finally, within our <span class="emph">app.routing NgModules imports array</span>, we  will replace <span class="emph">PreloadAllModules</span> with our <span class="emph">custompreloading</span> service.</li>
+    <li>See more <a href="https://www.youtube.com/watch?v=oiqrYF0cWCw">here</a>.</li>
+</ol>
+<p style="font-weight: bold;">Resources</p>
+<ol>
+    <li><a href="https://www.youtube.com/watch?v=75XFBIKLPQY">Lazy Loading</a></li>
+    <li><a href="https://www.youtube.com/watch?v=ceMsvxyuc6Q">Preloading</a></li>
+    <li><a href="https://www.youtube.com/watch?v=oiqrYF0cWCw">Custom Preloading</a></li>
+</ol>
+<hr>
+<h3>Angular custom pipes</h3>
+<p>Pipes in are a great way to transform and format data right from your templates. We have already implemented <a routerLink="/hiringassistants">standard pipes</a> earlier.</p>
+<ol>
+    <li>We will create a custom pipe within our shared folder, simply by creating a new ts file <span class="emph">the name of which must include .pipe</span>.</li>
+    <li>In our case this will be <span class="emph">customp.pipe.ts file</span>, within which we will have a <span class="emph">class</span> named <span class="emph">CustomPipe</span> which we will <span class="emph">export</span> to use in other components, which will implement an interface called <span class="emph">PipeTransform</span>.</li>
+    <li><span class="emph">PipeTransform</span> interface has one method: <span class="emph">transform()</span> which has its first argument as the value to be tansformed, and the arguments as options.</li>
+    <li>In our example we want to <span class="emph">return</span> the corresponding letters to a number variable with two <span class="emph">options: lowerletters or capitalletters.</span></li>
+    <li>We bound the option variables: <span class="emph">options: lowerletters or capitalletters</span> to the <span class="emph">selvalue</span> variable and set its default value to lowerletters</li>
+    <li>Within the <span class="emph">customp.pipe.ts file</span> we decorate our <span class="emph">CustomPipe</span> with the <span class="emph">@Pipe decorator</span> and give it a name, in our case it is <span class="emph">numbertoletter</span>.</li>
+</ol>
+<select [(ngModel)]="selvalue">
+    <option *ngFor="let os of optionsarr" [value]="os">{{os}}</option>
+</select>
+<input type="number" [(ngModel)]="valtolet" min="1" max="26">
+<p *ngIf="valtolet">{{valtolet | numbertoletter:selvalue}}</p>
+<hr>
+<h3>@Hostlistener, @Hostbinding, @Host and exportAs</h3>
+<h4>@Hostlistener</h4>
+<p>In Angular, the <span class="emph">@HostListener() function decorator </span> allows you to handle events of the <span class="emph">host</span> element in the directive class.</p>
+<p>For the below example we hav created the fifthfirective</p>
+<h4>Example 23</h4>
+<p>Here, we are getting the element name of the event's target: the button element that <span class="emph">hosts</span> the directive. </p>
+<button appFifthdirective>Click</button>
+<p>Read more at <a href="https://angular.io/api/core/HostListener">Angular's</a> website, <a href="https://www.digitalocean.com/community/tutorials/angular-hostbinding-hostlistener">here</a> and <a href="https://dzone.com/articles/what-are-hostbinding-and-hostlistener-in-angular">here.</a></p>
+<h4>@Hostbinding</h4>
+<p><span class="emph">@HostBinding</span> lets you set the <span class="emph"> property </span> on <span class="emph">the DOM element or component</span> that <span class="emph">hosts</span> the directive.</p>
+<h4>Example 24</h4>
+<p>Here we are simply setting the style property of the below paragaraph. Through HostBinding we set <span class="emph">paracolor</span> variable corresponding to the style color property, then made two HostListeners to change the <span class="emph">paracolor</span> property  equivalent  to style.color.</p>
+<p>We are similarly adding or removing <span class="emph">testc</span> class through the set <span class="emph">classy:boolean</span>.</p>
+<p>Because after removing the <span class="emph">testc</span> class we are having an empty <span class="emph">class</span> DOM property, we are using <span class="emph">Renderer2's</span> <span class="emph">removeAttribute</span> method as a quick solution.</p>
+<p>We have also defined a <a routerLink="/javascriptandtypescript">getter</a> property <span class="emph">juk</span> () which corresponds to the <span class="emph">juk</span> class. We could have also written a logic to add it depending on a condition. Read more about this and other thing <a href="https://angular.io/api/core/HostBinding#hostPropertyName">here.</a></p>
+<hr>
+<p appFifthdirective style="font-weight: bold;">Hover me</p>
+<p>See more examples of implementing <span class="emph">@HostBinding</span> in the sixth to eigth directives.</p>
+<hr>
+<h4>exportAs</h4>
+<p>Read more <a href="https://debugmode.net/2020/06/28/why-use-exportas-property-in-angular/">here.</a></p>
+<p><span class="emph">exportAs</span> property of a <span class="emph">directive</span> helps working with public methods of a directive. We have already implemented (look for exportAs above).</p>
+<ul>
+    <li>In order to demonstrate this we will create our <span class="emph">tenth.directive.ts</span></li>
+    <li>Within our <span class="emph">tenth.directive.ts</span> we will create a logic for changing the background color of the host element on mouseover on and delete the style on mouseleave through <span class="emph">@Hostlistener</span></li>
+    <li>Now, we want to make the <span class="emph">changeColor</span> or any other property of <span class="emph">ninth.directive.ts</span> available in this template.</li>
+    <li>For the moment, we want to reference the <span class="emph">ninth.directive.ts</span>'s <span class="emph">changeColor</span> method via our below button.</li>
+    <li>We have therefore simply defined a reference variable: <span class="emph">#tent</span> just and only <span class="emph">once</span>, <span class="emph">alongside my directive attribute</span> like this: <span class="emph">#tent = "highlighter"</span>.</li>
+    <li>And from our below button we are referencing the said method via <span class="emph">ninth.directive.ts</span>tent.changeColor('azure'). Azure is the argument which we supply into the <span class="emph">ninth.directive.ts</span>'s <span class="emph">changeColor(argument)</span> method.</li>
+</ul>
+<hr>
+<p [appTenth]="backcolor" #tent = "highlighter">My host element for the <span class="emph">tenth.directive.ts</span></p>
+<hr>
+<hr>
+<button (click) = "tent.changeColor('azure')">The button utilising the directive's method</button>
+<hr>
+<h2>Angular Dependency Injection</h2>
+<p>Read more at <a href="https://angular.io/guide/dependency-injection">Angular's</a> website.</p>
+<p style="border-left: red solid 5px; padding: 0 5px;">Dependencies are services or objects that a <span class="emph">class</span> needs to perform its function. DI is a coding pattern in which a <span class="emph">class</span> asks for <span class="emph">dependencies from external sources</span> rather than creating them itself.</p>
+<p style="border-left: red solid 5px; padding: 0 5px;">The DI framework lets you <span class="emph">supply</span> data to a <span class="emph">component</span> from an <span class="emph">injectable service class</span>, defined in its own file.</p>
+<h3>Create an injectable service class</h3>
+<ol>
+    <li>Angular CLI: <span class="emph">ng generate service foldername/serviceclassname</span>.</li>
+    <li>We will create the <span class="emph">justaserv.service.ts</span></li>
+    <li>The <span class="emph">@Injectable()</span> decorator marks it as a service that <span class="emph">can be injected</span>, but Angular can't actually inject it anywhere until you configure an Angular dependency injector with a provider of that service.</li>
+    <li>By default, our service will have the parametre <span class="emph">providedIn: 'root'</span> where <span class="emph">root</span> means the root module.</li>
+    <ol>
+        <li style="font-weight: bold;">Option 2</li>
+        <li>We could have left <span class="emph">@Injectable()</span> empty.</li>
+        <li>Within any module's NgModule's <span class="emph">providers</span> parametre provide (register) the service, to provide the service to a particular module.</li>
+        <li>Import the service.</li>
+        <li>Inject the service in the respective component.</li>
+    </ol>
+    <ol>
+        <li style="font-weight: bold;">Option 3</li>
+        <li>Leave <span class="emph">@Injectable()</span> empty.</li>
+        <li>Within a particular component's @Component decorator's <span class="emph">providers</span> parametre provide (register) the service.</li>
+        <li>Import the service.</li>
+        <li>Inject the service in the respective component.</li>
+    </ol>
+    <li>We may also register the service within a  <span class="emph">@Directive.</span></li>
+    <li>You may examine more about <span class="emph">providers, instance handling etc.</span> on <a href="https://www.youtube.com/watch?v=-ai4ofSmL6s&t=86s">YouTube.</a></li>
+    <li>You may check which is the <span class="emph">root</span>module by looking into the <span class="emph">main.ts</span>. In our example it is <span class="emph">... .bootstrapModule(AppModule)</span> our <span class="emph">AppModule</span>.</li>
+    <li>You may watch a great video at <a href="https://www.youtube.com/watch?v=iKU4USKEcuY">YouTube</a> about this.</li>
+</ol>
+<h3>@Self, @Optional or @Host</h3>
+<p>Read more at <a href="https://medium.com/frontend-coach/self-or-optional-host-the-visual-guide-to-angular-di-decorators-73fbbb5c8658">Medium,</a> at <a href="https://angular.io/guide/hierarchical-dependency-injection">Angular's</a> website, as well as watch the video on <a href="https://www.youtube.com/watch?v=esWI7GD72Ok">YouTube</a>.</p>
+<h2>Shopping Cart Project</h2>
+<h3>Folders and Data</h3>
+<ol>
+    <li>We created principal <span class="emph">shop</span> folder.</li>
+    <li>Under <span class="emph">shop</span> folder we created <span class="emph">cart</span> folder with its <span class="emph">module</span> folder for feature modules.</li>
+    <li>Under <span class="emph">shop</span> folder we created <span class="emph">interface</span> folder with <span class="emph">interface.ts</span> for interfaces.</li>
+    <li>Within our <span class="emph">justaerv.service.ts</span> we have set the data source for the shop, which is delivered as an observable.</li>
+    <li>Under my <span class="emph">shared</span> folder I have also created the <span class="emph">validatequantity.pipe.ts</span> pipe for validating the the stock availability data.</li>
+    <li>Under my <span class="emph">shared</span> folder I have also created the <span class="emph">itemquantitymodule.module.ts</span> feature module which imports the <span class="emph">definp.directive.ts</span> directive, the <span class="emph">validatequantity.pipe.ts</span> pipe and the <span class="emph">itemquantity.component</span>.</li>
+</ol>
+<h3>Cart</h3>
+<p>Within our <span class="emph">cart.component.html</span> we have set the structure of the below list of the products.</p>
+<h4>Design</h4>
+<p>I have used css <a href="https://www.w3schools.com/css/css_grid.asp" class="emph">CSS Grid Layout</a> for my <span class="emph">wrapper</span> div.</p>
+<p>Through <a href="https://autoprefixer.github.io/" class="emph">Autoprefixer</a> I have optimised my <span>wrapper</span> style to generate fallback css in case if <span class="emph">CSS Grid</span> is not supported by a few older browsers.</p>
+<p>For my <span class="emph">call_for_action</span> div, I have used <a href="https://www.w3schools.com/css/css3_flexbox.asp" class="emph">CSS Flexbox</a>.</p>
+<p>The basic difference between <span class="emph">CSS Grid Layout</span> and <span class="emph">CSS Flexbox Layout</span> is that flexbox was designed for layout in one dimension - either a row or a column. Grid was designed for two-dimensional layout - rows, and columns at the same time.</p>
+<hr>
+<h4>Animations</h4>
+<hr>
+<h5>Creating Animations</h5>
+<ol>
+   <li>I have created a seperate folder within my shared folder: <span class="emph">myanimations.</span></li>
+   <li>Within my <span class="emph">myanimations.</span> folder I have created two simple <span class="emph">.ts</span> files: <span class="emph">enterleave.ts</span> and <span class="emph">shake.ts</span>, wherein I have defined my animations.</li>
+   <li>Within our <span class="emph">enterleave.ts</span> and <span class="emph">shake.ts</span> we have defined several <span class="emph">const</span>s and <span class="emph">exported</span> to make them available to our components, directives.</li>
+   <li>In particular, within <span class="emph">enterleave.ts</span> we have defined <span class="emph">elheader</span>, <span class="emph">elng</span> and <span class="emph">page</span>, and within our <span class="emph">shake.ts</span> we have defined and <span class="emph">exported</span> the <span class="emph">shake</span> <span class="emph">const</span>.</li>
+   <li>These <span class="emph">const</span>s define our animations.</li>
+   <li>Within our <span class="emph">shake.ts</span>:</li>
+   <ol>
+       <li><span class="emph">shake</span> does the following:</li>
+       <ul>
+           <li>First and foremost we have we have named our animation within the <span class="emph">trigger()</span> function, and named it <span class="emph">shake</span>.</li>
+           <li>The <span class="emph">trigger()</span> function collects the states and transitions, and gives the animation a name, so that you can attach it to the triggering element in the HTML template.</li>
+           <li>The <span class="emph">trigger()</span> function takes two arguments: the name, which in our case is <span class="emph">shake</span>, and the second argument of <span class="emph">array</span> type, wherein the animation transitions and states are defined.</li>
+           <li>Through the <span class="emph">state()</span> function we are defining various states <span class="emph">to call at the end</span> of each <span class="emph">transition.</span></li>
+           <li>The <span class="emph">state()</span> function takes two arguments: a unique name like <span class="emph">normal</span> and a <span class="emph">style()</span> function.</li>
+           <li>Our <span class="emph">normal</span> is basically a state without any style which we have created to help in detecting a state change.</li>
+           <li>Within the <span class="emph">style()</span> function we can write any css styles we want to arrive at at the end of the transition. <span class="emph">style()</span> function accepts multiple css properties within an <span class="emph">object</span> inside the function.</li>
+           <li>We have defined the <span class="emph">shakestate</span> state, for which the final state is <span class="emph">transform: "translate3d(0, 0, 0)"</span>.</li>
+           <li>We have also defined the animation <span class="emph">transition</span> to specify the changes that occur <span class="emph">between one state and another over a period of time.</span></li>
+           <li>The <span class="emph">transition()</span> function accepts two arguments: the <span class="emph">first argument</span> accepts an expression that <span class="emph">defines the direction between two transition states</span>, and the <span class="emph">second argument</span> accepts one or a series of <span class="emph">animate()</span> steps.</li>
+           <li>In our case, the first argument of <span class="emph">transition()</span> defines the directions and state changes, which are <code class="emph">'normal <=> shakestate, :enter'</code>.
+           The <code class="emph">'normal <=> shakestate'</code> means that our transition takes place both from <span class="emph">normal</span> to <span class="emph">shakestate</span>, and from <span class="emph">shakestate</span> back to <span class="emph">normal</span>.</li>
+           <li>The <span class="emph">:enter</span> and <span class="emph">:leave</span> are aliases for the <span class="emph">void => *</span> and <span class="emph">* => void</span> transitions.</li>
+           <li>The <span class="emph">:enter</span> transition runs when a the HTML element to which the animation is attached enters the DOM, and <span class="emph">:leave</span> runs when the element leaves the page. These are most commonly used along with <span class="emph">*ngIf or *ngFor </span>.</li>
+           <li>In our example, within our <span class="emph">transition()</span> function, the second state change is <span class="emph">:enter</span> which means that the transition() will also work work when an element enters the page.</li>
+           <li>The second argument of the <span class="emph">transition()</span> function is the <span class="emph">animate()</span> function.</li>
+           <li>The <span class="emph">animate()</span> function takes two arguments: <span class="emph">1. (required) duration and delay (linear and etc.)</span> and <span class="emph">2. (optional) styles.</span></li>
+           <li>You can also use the <span class="emph">animate()</span> function to define the <span class="emph">keyframes()</span> function for multi-step animations. These <span class="emph">keyframe</span> definitions are placed in the second argument of the animate() function.</li>
+           <li><span class="emph">Keyframes([])</span>Allows a sequential change between styles within a specified time interval. Use within animate().Uses array syntax.</li>
+           <li>The optional <span class="emph">offset</span> value for a style within <span class="emph">keyframes([])</span>specifies a percentage of the total animation time at which that style is applied.</li>
+           <li>The <span class="emph">second argument: a function call to either style() or <span class="emph">keyframes()</span></span> returns a collection of CSS style entries to be applied to the parent animation. When <span class="emph">null,</span> uses the styles from the destination state.</li>
+           <li>Within our <span class="emph">shake.ts</span>'s <span class="emph">keyframes([])</span>'s we have set the steps through which, within 0.75s the animation goes to the <span class="emph">normal</span> state from <span class="emph">shakestate</span> or backwords, as well as when an HTML element <span class="emph">enters</span> the DOM.</li>
+           <li>Similarly, we have set the transition steps when an HTML element <span class="emph">leaves</span> the page.</li>      
+        </ul>
+   </ol>
+   <li>Within our <span class="emph">enterleave.ts</span>:</li>
+   <ol>
+       <li><span class="emph">elheaderanime</span> does the following:</li>
+       <ul>
+           <li>Within the <span class="emph">transition()</span> we have defined the <span class="emph">:enter</span> for the entry transition from <span class="emph">style</span> with an opacity of 0 to an opacity of 1, within 0.3s.</li>
+           <li>Within the <span class="emph">transition()</span> for the <span class="emph">:enter</span> transition we are basically initially hiding the element and transitioning to the style of the state (which is undefined) which is active. <span class="emph">:enter</span> is equivalent to <span class="emph">"void=>*'"</span> </li>
+           <li>We are similarly doing the same for <span class="emph">:leave</span>.</li>
+           <li>In practice, our <span class="emph">elheaderanime</span> animation triggered only on refresh as wrokaround for not showing the header before the other elements.</li>
+        </ul>
+   </ol>
+  <ol>
+    <li><span class="emph">elnganime</span> is similar to the above animation, and is used for my data delivered through an <span class="emph">observable</span> within ngfor elements in <a routerLink="/hiringassistants">Hiringassistants</a>  and this page's ngfor.</li>
+  </ol>
+  <ol>
+    <li><span class="emph">pageanime</span> does the following:</li>
+    <ul>
+        <li>It is used within our <span class="emph">app.component.html</span> for animating the <span class="emph">router-outlet</span>.</li>
+        <li>A good guide about router animations can be found <a href="https://fireship.io/lessons/angular-router-animations/" class="emph">here</a>.</li>
+        <li>We have used the <span class="emph">* <=> *</span> wildcard syntax to apply the default animation to all routes. Conversely, we had to add <span class="emph">, {{"data: { animation: 'routeState' }"}} </span> along the routh path within <span class="emph">app-routing.module.ts.</span></li>
+        <li>When an animation is triggered we have access to the <span class="emph">previous page</span> via the <span class="emph">:leave</span> selector, and the <span class="emph">current page</span> via the :enter selector. We can <span class="emph">query</span> these elements to style and animate them.</li>
+        <li><a class="emph" href="https://angular.io/api/animations/query">query()</a> finds one or more <span class="emph">inner elements </span> within the current element that is being animated within a sequence. </li>
+        <li>We first hide both pages, then define animations to fade in the new page via <span class=":enter"></span>.</li>
+    </ul>
+  </ol>
+</ol>
+<hr>
+<h4>Implementing Animations</h4>
+<p>For the animations to work we do the following:</p>
+<ol>
+    <li>We have imported <span class="emph">BrowserAnimationsModule</span> into our <span class="emph">app.module.ts</span> and included it in the <span class="emph">imports</span> array.</li>
+    <li>Then, we have added the animation metadata property to our <span class="cart.component.ts">'s @Component decorator and imported the <span class="emph"></span>shake</span> and <span class="emph">elng</span> <span class="emph">const</span>s: <span class="emph">animations: [ shake, elng ].</span>
+    These animations are for the cart component's <span class="emph">special_note</span> element, and the <span class="emph">ngfor</span> generated elements and data delievered through an observable, to make the appearance smooth.</li>
+    <li>We have also added the same animation metadata to our <span class="emph">app.component.ts</span> for each route's <span class="emph">header</span> and the <span class="emph">router-outlet</span> animations: <span class="emph">animations: [ shake, elng ]</span>.</li>
+    <li>We have added an animation to the <span class="emph">header</span>, because it used to appear slightly sooner than the the <span class="emph">ngfor</span> generated elements and data delivered through observables.</li>
+    <li>We have likewise added the animation metadata to our <span class="emph">hiringassistant.component.ts</span> for animating the news <span class="emph">ngfor</span> generated element: <span class="emph">animations: [ elng ]</span>.</li>
+</ol>
+<p>Then:</p>
+<ol>
+    <li>When you've defined an animation <span class="emph">trigger</span> for a component, you can attach it to an element in that component's template by wrapping the <span class="emph">trigger name </span> in brackets and preceding it with an <span class="emph"> @ </span>symbol.</li>
+    <li>Then, you can bind the  <span class="emph">trigger</span> to a template expression using standard Angular property binding syntax.</li>
+    <li>Having said this, we have attached the <span class="emph">@elnganime</span> animation to the carts image div, so that it doesn't mess up with the <span class="emph">shake</span> animation.</li>
+    <li>Because we are not using specific states for <span class="emph">@elnganime</span>, there is no need for <span class="emph">state binding</span> and brackets.</li>
+    <li>We have similarly added <span class="emph">@elheaderanime</span> to the header within our <span class="emph">app.component.html</span>.</li>
+</ol>
+<hr>
+<p>For the <span class="emph">shake</span> animation :</p>
+<ol>
+    <li>If we didn't track the state of the specific element within the ngfor, all the elements within the ngfor would animate.</li>
+    <li>The workaround is to create an object which would store the states.</li>
+    <li>We have therefore defined the <span class="emph">states</span> as an <span class="emph">object (an array of objects)</span> within our <span class="emph">cart.component.ts</span>.</li>
+    <li>Within <span class="emph">ngOnInIt</span> we are creating an <span class="emph">array</span>  of custom objects for each of <span class="emph">myproducts</span> array through the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map" class="emph">map</a> method.</li>
+    <li>We are creating the custom <span class="emph">Object</span> through the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map" class="emph">Object.create()</a> method.</li>
+    <li>Thus, my new array <span class="emph">states</span> is populated with custom objects of quantity equal to the <span class="emph">myproducts</span>, and has properties: <span class="emph">animestate</span> with a default value of  "normal, and the <span class="emph">bool</span> property with the default value of "false".</li>
+    <li>I have created the <span class="emph">definp.directive.ts</span> directive to handle various tasks for my cart. I have named my directive <span class="emph">defzero</span> and added the <span class="emph">defzero</span> attribute to my <span class="emph">itemquantity.component.html</span>'s "item_q" input element.</li>
+    <li>Within my <span class="emph">cart.component.html</span> I have attached my <span class="emph">shake</span> animation to my "special_note" span element and bound it to the state: <span class="emph">[@shake] = "states[i].animestate"</span>, as we need to track the animation's state change for the animation to work properly.</li>
+    <li>I have passed the <span class="emph">states</span>, the loops iteration number: <span class="emph">i</span> and the specific iteration (the item) to my <span class="emph">itemquantity.component</span> as <span class="emph">@input</span> bound properties.</li>
+</ol>
+<hr>
+<p>For the <span class="emph">pageanime (for route animation)</span> state management:</p>
+<ol>
+    <li>I have wrapped my <span class="emph">router-outlet</span> with a div element and attached my <span class="emph">@pageanime</span> animation to it.</li>
+    <li>I have assigned a template reference variable to my <span class="emph">router-outlet</span>: <span class="emph">#goutlet</span>: <span class="emph">#goutlet="outlet</span>.</li>
+    <li>I have bound my <span class="emph">@pageanime</span> animation to the <span class="emph">prepareRoute()</span> method of <span class="emph">app.component.ts</span> and passed the router-outlet reference variable: <span class="emph">goutlet</span> like this: <span class="emph">[@pageanime]="prepareRoute(goutlet)"</span>.</li>
+    <li>The <span class="emph">prepareRoute()</span> method detects when the router's state changes. See excellenet explanations <a href="https://fireship.io/lessons/angular-router-animations/">here</a> and <a href="https://medium.com/@tanya/angular4-animated-route-transitions-b5b9667cd67c"></a> here</li>
+    <li>Finally, please note that for the route animation to work, the components need to be of an <span>absolute</span> positioning, with the parent component being of a <span class="emph">relative</span> positioning.</li>
+</ol>
+<hr>
+<p style="border-left: red solid 5px; padding: 0 5px;">Watch about Angular animations <a href="https://www.youtube.com/watch?v=mVqQDEtRBwA&t=265s">here.</a>
+You may find the documentation <a href="https://angular.io/guide/animations">here.</a> Read more about route animations <a href="https://indepth.dev/in-depth-guide-into-animations-in-angular/">here</a> and <a href="https://stackblitz.com/edit/angular-p2vuku?file=src%2Fapp%2Fapp.component.html">here.</a></p>
+<hr>
+<ng-template #myContainer></ng-template>
+<hr>
+<h4>Shopping Functionality</h4>
+<ol>
+    <li>
+        <span style="font-weight: bold;">Observables and Data Flow</span>
+        <br>
+        <ol>
+            <li>I have injected the <span class="emph">JustaservService</span> service into my <span class="emph">constructor</span> and defined it as <span class="emph">products</span>.</li>
+            <li>Within my <span class="emph">justaserv.service.ts</span>, I have defined the <span class="emph">products</span> array of a <span class="emph">Products</span> type which has been defined within my <span class="emph">shopin.ts</span>
+                under the <span class="emph">interfaces</span> sub-folder of my <span class="emph">shop</span> folder.</li>
+            <li>I have then created the <span class="emph">myob$ observable</span> of a <span class="emph">Products</span> type, put some error handling, <span class="emph">nexted</span> it.</li>
+            <li>Within my <span class="emph">cart.component.ts</span> I have created the <span class="emph">myproducts</span> array of a <span class="emph">Products</span> type.</li>
+            <li>I have also created my <span class="emph">prodobserver</span> of the same type. I have defined the observer separately just for ease of reading.</li>
+            <li>After defining <span class="emph">prodsubscription</span> as a <span class="emph">subscription</span>, I have subscribed to my observable.</li>
+            <li>Finally, within my <span class="emph">ngOnDestroy()</span> I have wrote a logic for unsubscribing to avoid memory leaks.</li>
+        </ol>
+    </li>
+    <li>
+        <span style="font-weight: bold;">Handling Number of Items and input validation functionality</span>
+        <br>
+        <ol>
+            <li>I have created the <span class="emph">definp.directive.ts</span> directive, named my directive <span class="emph">defzero</span>, added the <span class="emph">defzero</span> attribute to my <span class="emph">itemquantity.component.html</span>'s input element with the class name: "item_q".</li>
+            <li>Through <span class="emph">@HostListener</span> we are listening to the parent element's <span>focusout</span> event to validate and change if necessary the input value: <span class="emph">@HostListener("focusout", ["$event.target.value"])</span>.</li>
+            <li>The <span class="emph">@HostListener</span> decorates the <span class="emph"> setdefault()</span> function which takes as an argument the <span>$event.target.value(the input value)</span>: <span class="emph">setdefault(e:any)</span>. You may see the step by step explanation in the code.</li>
+            <li>Within the <span>itemquantity.component.html</span>'s same input element, through two-way binding, we have bound the @input bound <span class="emph">states</span>'s arrays <span class="emph">i</span>nth (the index of the ngfor iteration) <span class="emph">animestate</span> and <span class="emph">bool</span> properties: <span class="emph">[(shabadaba)]="states[i].animestate" [(spbool)]="states[i].bool"</span>.</li>
+            <li>We have also bound the <span>[availability]</span> attribute to the product's particular item (the item object's quantity property within ngfor) to get the qunatity of available products within the directive: <span class="emph">[availability]="item?.quantity"</span>.</li>
+            <li>Within our <span class="emph">definp.directive.ts</span>, through the <span class="emph">inc()</span> function we do the following: check if the input value property is 
+            less than the available quantity: <span class="emph"> if (this.y'<'this.availability)</span>, and if yes, increment the the input element's value property: <span class="emph">this.renderer.setProperty(this.el.nativeElement,"value", ++this.y)</span>. If not, we emit the <span class="emph">true</span> value. The state's bool property is used within our <span class="emph">validatequantity.pipe.ts</span> pipe for deciding on whether or not to show the special note and decide the text (only 2 left and etc.).
+            </li>
+            <li>We have written a similar logic for the <span class="emph">dec()</span> functionality. The inc) and dec() functions are exported through <span class="emph">exportAs</span></li>
+        </ol>
+    </li>
+    <li>
+        <span style="font-weight: bold;">Loading the cart component which is defined within our lazy and preloaded feature module:shopmodule</span>
+        <br>
+        <p style="border-left: red solid 5px; padding: 0 5px;">The above view of the cart component which is loaded via the shopmodule is achieved through <span class="emph">"<ng-template #myContainer></ng-template>"</span>. The code implementation can be found in the binding.component.ts.</p>
+    </li>
+</ol>
+
+
+<h2>NgModules</h2>
+<p>Angular apps are <span style="font-weight: bold;">modular</span> and Angular has its own modularity system called <span class="emph">NgModules</span>. </p>
+<p style="font-style:italic">NgModules are containers for a cohesive block of code dedicated to an application domain, a workflow, or a closely related set of capabilities.</p>
+<p>They can <span style="font-weight: bold;">contain components, service providers, and other code files whose scope is defined by the containing NgModule.</span></p>
+<p>They can <span class="emph">import functionality</span> <span style="font-weight: bold;">that is</span> <span class="emph">exported</span> from other <span style="font-weight: bold;">NgModules</span>, and <span style="font-weight: bold;">export</span> selected functionality <span style="font-weight: bold;">for use by other NgModules</span>.</p>
+<hr>
+<p style="font-weight: bold;"><span class="emph">Every</span> Angular app has <span class="emph">at least one NgModule class</span>, the <span class="emph">root module</span>, which is conventionally named <span class="emph">AppModule</span> and resides in a file named app.module.ts. <span class="emph">You launch your app by bootstrapping the root NgModule</span>.</p>
+ <hr>
+<p>While a <span style="font-weight: bold;">small application might have only one NgModule</span>, most apps have many more <span class="emph">feature modules</span>.</p>
+<p>The root NgModule for an app is so named because it can include child NgModules in a hierarchy of any depth.</p>
+<h3>NgModule metadata</h3>
+<p>An NgModule is defined by a <span style="font-weight: bold;">class</span> <span class="emph">decorated</span> with <span class="emph">@NgModule()</span>.</p>
+<p>The <span class="emph">@NgModule() decorator is a function</span> that takes a single metadata <span class="emph">object</span>, whose properties describe the module. The most important properties are as follows:</p>
+<ol>
+    <li><span class="emph">declarations</span>: The <span style="font-weight: bold;">components</span>, <span style="font-weight: bold;">directives</span>, and <span style="font-weight: bold;">pipes</span> that <span style="font-weight: bold;">belong</span> to this NgModule.</li>
+    <li><span class="emph">exports</span>: The subset of <span style="font-weight: bold;">declarations</span> that should be <span style="font-weight: bold;">visible and usable in the component templates of other NgModules</span>.</li>
+    <li><span class="emph">imports</span>: Other <span style="font-weight: bold;">modules</span> whose <span style="font-weight: bold;">exported</span> <span class="emph">classes</span> are needed by <span class="emph">component templates declared in this NgModule</span>.</li>
+    <li><span class="emph">providers</span>: <span style="font-weight: bold;">Creators of services that this NgModule contributes to the global collection of services</span>; they <span style="font-weight: bold;">become accessible in all parts of the app</span>. (You can also specify providers at the component level.)</li>
+    <li><span class="emph">bootstrap</span>: The main application view, called the root component, which hosts all other app views. Only the root NgModule should set the bootstrap property.</li>
+</ol>
+<hr>
+<p>Read more at <a href="https://angular.io/guide/architecture-modules">Angular's</a> website.</p>
+<hr>
+<h3>What classes should I add to the <span class="emph">declarations</span> array?</h3>
+<p>Add declarable <span style="font-weight: bold;">classes—components, directives, and pipes—to</span> a declarations list. They're the only classes that you can add to declarations.</p>
+<p>Declare these classes <span class="emph">in exactly one module</span> of the application. <span style="font-weight: bold;">Declare them in a module if they belong to that particular module</span>.</p>
+<hr>
+<h3>What should I import?</h3>
+<p>Import NgModules whose <span class="emph">public (exported) declarable classes</span> you need to <span class="emph">reference in this module's component templates</span>.</p>
+<p>This always means importing <span class="emph">CommonModule</span> from @angular/common for access to the Angular directives such as NgIf and NgFor. You can import it directly or from another NgModule that re-exports it.</p>
+<p>Import <span class="emph">FormsModule</span> from @angular/forms if your components have <span class="emph">[(ngModel)]</span> two-way binding expressions.</p>
+<p>Import <span class="emph">shared and feature modules</span> when this module's components incorporate their components, directives, and pipes.</p>
+<p>Import <span class="emph">BrowserModule</span> <span style="font-weight: bold;">only in the root AppModule.</span></p>
+<hr>
+<h3>What if I import the same module twice?</h3>
+<p>That's not a problem. When three modules all import Module 'A', Angular evaluates Module 'A' once, the first time it encounters it, and doesn't do so again.</p>
+<p>That's true at whatever level A appears in a hierarchy of imported NgModules.</p>
+<p style="font-style: italic;">When Module 'B' imports Module 'A', Module 'C' imports 'B', and Module 'D' imports [C, B, A], then 'D' triggers the evaluation of 'C', which triggers the evaluation of 'B', which evaluates 'A'. When Angular gets to the 'B' and 'A' in 'D', they're already cached and ready to go.</p>
+<p style="font-style: italic;">Angular <span class="emph">doesn't like NgModules with circular references</span>, so <span class="emph">don't let Module 'A' import Module 'B', which imports Module 'A'</span>.</p>
+<hr>
+<h3>What should I export?</h3>
+<p>Export declarable classes that components in other NgModules are able to reference in their templates.</p>
+<p>These are your public classes. If you don't export a declarable class, it stays private, visible only to other components declared in this NgModule.</p>
+<p>You can export any declarable <span class="emph">class—components, directives, and pipes</span>—<span style="font-weight: bold;">whether it's declared in this NgModule or in an imported NgModule</span>.</p>
+<p>You can re-export entire imported NgModules, which effectively re-export all of their exported classes. <span style="font-weight: bold;">An NgModule can even export a module that it doesn't import</span>.</p>
+<hr>
+<h3>Can I re-export classes and modules?</h3>
+<h4 class="emph">Absolutely.</h4>
+<p>NgModules are a great way to selectively aggregate classes from other NgModules and re-export them in a consolidated, convenience module.</p>
+<p>An NgModule can re-export entire NgModules, which effectively re-exports all of their exported classes. Angular's own BrowserModule exports a couple of NgModules like this:</p>
+<p><code>exports: [CommonModule, ApplicationModule]</code></p>
+<p style="font-style: italic;">An NgModule can export a combination of its own declarations, selected imported classes, and imported NgModules.</p>
+<h3>How do I restrict service scope to a module?</h3>
+<p>Suppose a module requires a customized HttpBackend that adds a special header for all Http requests.</p>
+<p>If another module elsewhere in the application also customizes HttpBackend or merely imports the HttpClientModule, it could override this module's HttpBackend provider,
+  losing the special header. The server will reject http requests from this module.</p>
+<p>To avoid this problem, import the HttpClientModule only in the AppModule, the application root module.</p>
+<hr>
+<p class="emph">As a general rule, import modules with providers exactly once, preferably in the application's root module. That's also usually the best place to configure, wrap, and override them.</p>
+<p>So for example: <span class="emph">BrowserAnimationsModule</span>, <span class="emph">BrowserModule</span>, <span class="emph">HttpClientModule</span> need to be imported exactly once, preferably in the application's root module.</p>
+<hr>
+<p style="border-left: red solid 5px; padding: 0 5px;">Read more at <a href="https://angular.io/guide/ngmodule-faq">Angular's</a> website.</p>
+<p style="border-left: red solid 5px; padding: 0 5px;">Watch a very informative video at <a href="https://www.youtube.com/watch?v=oqZ4-ULwfbc">YouTube</a></p>
+<h3>Route Guards</h3>
+<h3>Angular backend configuration</h3>
+<h3>Angular Interfaces and Models</h3>
+<h3>Forms and Validation (Reactive Forms and Validators)</h3>

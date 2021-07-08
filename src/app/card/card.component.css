@@ -1,0 +1,20 @@
+.card{
+padding: .5rem 1rem;
+border: 1px dashed #ccc;
+margin-bottom:1rem;
+}
+.card>h2 {
+margin-bottom: .5rem;
+}
+.buttons{
+margin-bottom: .5rem;
+}
+.text{
+font-size: 1.5rem;
+}
+.text.orange{
+color:#ff7f50;
+}
+.text.green{
+    color:#3c8447;
+}

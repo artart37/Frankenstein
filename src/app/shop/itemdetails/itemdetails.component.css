@@ -1,0 +1,95 @@
+.container {
+    display: grid;
+    grid-template-columns: 30% 67.5%;
+    grid-column-gap: 2.5%;
+    height: auto;
+    min-height: 450px;
+    box-sizing: border-box;
+}
+.container * {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.product_image {
+    width: auto;
+    height: auto;
+}
+.product_image > img {
+    width: 100%;
+    height: auto;
+}
+.prodname {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+}
+.price {
+    font-size: 1.5em;
+    font-weight: bold;
+    display: block;
+    color: #E91E63;
+    padding: 40px 0;
+}
+.special_note{
+    font-size: 0.7em;
+    color: rgb(1, 0, 2);
+    display: block;
+    font-weight: 400;
+  }
+  .category {
+    display: inline-block;
+    font-weight: bold;
+    text-transform: capitalize;
+    padding: 10px 5px 0 0;
+  }
+  .categoryname {
+    font-weight: bold;
+    text-transform: capitalize;
+    display: inline-block;
+    color: #5700fa;
+  }
+  .modal-footer{
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  .modal-footer>span{
+    margin: 0;
+    padding: 0;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    color: #0f0009;
+    font-size: 1em;
+  }
+  .actions{
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    margin-top: 20px;
+    max-width: 70%;
+    grid-column-gap: 5px;
+  }
+  .cartviewdetails, .vdcheckout{
+    padding: 1em;
+    font-weight: bold;
+    border: none;
+    font-size: 1em;
+    overflow-wrap: break-word;
+    background-color: #f1f1f1;
+    outline: none;
+    cursor: pointer;
+    position:relative;/* We use relative positioning for here, because our vcheckmark element is absolutely positioned, and otherwise it would be absolutely positioned somewhere down there */
+    background-position: right bottom;
+  }
+  .vdcheckout:hover, .plus:hover:enabled, .minus:hover:enabled {
+    background-color:  #ebe7e7;
+  }
+  .vcheckmark {
+    visibility:hidden;
+    position: absolute;
+    content: url(/assets/images/tick.png);
+    width: 25px;
+    height: auto;
+    left: 0;
+    top: 25%;/* Because our button here is a bit larger   */
+  }

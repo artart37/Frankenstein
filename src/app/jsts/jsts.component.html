@@ -1,0 +1,90 @@
+<div style="margin:auto auto 10% auto">
+<h1>Property getters and setters</h1>
+<i>Read more at <a href="https://www.w3schools.com/js/js_object_accessors.asp">W3school</a> and <a href="https://javascript.info/property-accessors">this</a> website.</i>
+<p>Getters and Setters are essentially <span class="emph">JavaScript Object Accessors</span>.</p>
+<p><span class="emph">Getters</span> and <span class="emph">setters</span> allow you to define Object Accessors (Computed Properties).</p>
+<h2>JavaScript Getter (The get Keyword)</h2>
+<h3>Example 1</h3>
+<p>This example uses a <span class="emph">fulldetails</span> property to <span class="emph">get</span> the value of the <span class="emph">firstName</span>, <span class="emph">lastName</span> and <span class="emph">country</span> properties of the <span class="emph">person</span> object.</p>
+<h4>Below, our <span contenteditable="emph">fulldetails</span> property of the <span class="emph">person</span> object is defined inside the object.</h4>
+<p class="emph">{{person.fulldetails}}</p>
+<hr>
+<h4>Below, our <span contenteditable="emph">ex3getter</span>property is referencing the <span class="emph">fulldetails</span> property of the <span class="emph">person</span> object outside the <span class="emph">person</span> object.</h4>
+<h3>Example 3</h3>
+<p style="font-weight: bold; color: cyan;">{{ex3getter}}</p>
+<p>Getters <span class="emph">should return</span> a value.</p>
+<hr>
+<h2>JavaScript Setter (The set Keyword)</h2>
+<h3>Example 2</h3>
+<p>This example uses a <span class="emph">setfulldetails</span> property to <span class="emph">set</span> the value of the <span class="emph">firstName</span> property of the <span class="emph">person</span> object and <span class="emph">set</span> it from "John" to "Johny the Great".</p>
+<button (click)="clickf();">Click to pass a value to the setter</button>
+<h4>Below, our <span class="emph">setfulldetails</span> property of the <span class="emph">person</span> object is defined inside the object and sets the <span class="emph">firstName</span> upon click.</h4>
+<p class="emph">{{person.firstName}}</p>
+<h3>Example 4</h3>
+<h4>Below, our <span class="emph">ex4setter</span> property of is defined outside the <span class="emph">person</span> object and sets the <span class="emph">lastName</span> upon click.</h4>
+<p class="emph">{{person.lastName}}</p>
+<p>Setters <span class="emph">cannot return</span> a value.</p>
+<hr>
+<h3>Important Notes</h3>
+<ul>
+    <li>Setters require exactly one param, e.g. set something(param)..., whereas getters dont't have any.</li>
+</ul>
+<hr>
+<h1>Primitive types vs Reference types</h1>
+<p class="emph">In JavaScript, a variable may store two types of values: primitive and reference.</p>
+<h2>Primitive types</h2>
+<ol>
+    <li>Numbers,</li>
+    <li>booleans,</li>
+    <li>strings,</li>
+    <li>bigInt,</li>
+    <li>undefined, and</li>
+    <li>symbols</li>
+</ol>
+<p>are all primitive types which are passed by value. </p>
+<p>If the value is a <span class="emph">primitive value</span>, when you <span class="emph">access the variable</span>, you manipulate the <span class="emph">actual value</span> 
+ stored in that variable. In other words, the variable that stores a <span class="emph">primitive value</span> is <span class="emph">accessed by value</span>.</p>
+<hr>
+<h2>Reference types</h2>
+<ol>
+    <li>Objects,</li>
+    <li>dates,</li>
+    <li>arrays, and</li>
+    <li>functions</li>
+</ol>
+<p>are also passed by value, but the <span class="emph">value is a copy of a reference</span>. Arrays, functions and dates are essentially the same objects under the hood.</p>
+<p>Unlike a primitive value, when you manipulate an object, you work on the <span class="emph">reference of that object</span>, rather than the actual object. It means a variable that stores an object is <span class="emph">accessed by reference</span>.</p>
+<h3>Read more at <a href="https://www.javascripttutorial.net/javascript-primitive-vs-reference-values/">this</a> and <a href="https://medium.com/better-programming/intermediate-javascript-whats-the-difference-between-primitive-values-and-object-references-e863d70677b">this</a> websites.</h3>
+<hr>
+<h2>The Difference Between Immutable and Mutable Data</h2>
+<h3><span class="emph">Primitive values</span> are <span class="emph">immutable</span> and <span class="emph">object references</span> are <span class="emph">mutable</span>.</h3>
+<p style="font-style: italic;">All <span class="emph">primitives</span> are <span class="emph">immutable</span>, i.e., they cannot be altered. It is important not to confuse a primitive itself with a variable assigned a primitive value. The variable may be reassigned a new value, but the existing value can not be changed in the ways that objects, arrays, and functions can be altered.</p>
+<p>Copying a <span class="emph">reference</span>, implicitly creates a shared instance. After a copy, two variables then refer to a single instance of the data, so <span class="emph">modifying data in the second variable also affects the original</span>.</p>
+<h1>JavaScript Switch</h1>
+<p>The <span class="emph">switch</span> statement evaluates a given<span class="emph">expression</span>, <span class="emph">matching the expression's value to a case clause,</span> and executes statements associated with that case, as well as statements in cases that follow the matching case.</p>
+<p>We provide the <span class="emph">expression</span> to be compared within <span class="emph">switch(expression)</span>.</p>
+<p>Inside each case we add <span class="emph">break</span> to <span class="emph">break</span> the execution of the <span class="emph">Switch Case</span>.</p>
+<p>If we do not <span class="emph">break</span>, the <span class="emph">Switch Case</span> will <span class="emph">not compare the expression against</span>the given case <span class="emph">after</span> the <span class="emph">case</span> inside of which we do not have <span class="emph">break</span>.</p>
+<p>The <span class="emph">default</span> case is when <span class="emph">non of the cases</span> matches the given <span class="emph">expression</span>.</p>
+<p>Finally, it is not necessary to add <span class="emph">break</span> inside the last <span class="emph">case</span>, as there is no other <span class="emph">case</span>following it.</p>
+<p>In the below example, through the <span class="emph">switchdet()</span>, we are matching the <span class="emph">selectedvalue</span> against the given <span class="emph">cases</span>, and if a match is found, assign the <span class="emph">colors</span> variable a color from the <span class="emph">demoarr</span> array <span class="emph">color</span> property.</p>
+<p style="font-weight: bold; color: brown;">The below example is for demonnstration only. We could have used ngswitch or other approaches for a shorter code.</p>
+<h3>Example 5</h3>
+<select [(ngModel)]="selectedvalue" (ngModelChange)="switchdet()">
+    <option *ngFor="let fruititem of demoarr" [value]="fruititem?.fruit">{{fruititem?.fruit}}</option>
+</select>
+<h4 *ngIf="selectedvalue">{{selectedvalue}} is {{colors}}</h4>
+<h1>Javascript delete operator</h1>
+<p>The JavaScript <span class="emph">delete</span> operator removes a property from an object</p>
+<p>Read more <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete">here</a>.</p>
+<p>Please note that it simply makes the said property empty - the length remains the same if it is an array (see in the console). We are using <span class="emph">safe navigation operator ?</span> to preempt errors. See more <a routerLink="/bindings"></a></p>
+<h3>Example 6</h3>
+<ul>
+    <li *ngFor="let item of demoarr">{{item?.fruit}} is {{item?.color}}</li>
+</ul>
+<button (click)="deletefruit();">Delete the first Fruit</button>
+<button (click)="deletecolor();">Delete the first Color</button>
+<hr>
+<h2>TypeScript Classes</h2>
+<p>Read <a href="https://www.tutorialspoint.com/typescript/typescript_classes.htm#:~:text=TypeScript%20is%20object%20oriented%20JavaScript,for%20this%20concept%20called%20class">here.</a></p>
+</div>

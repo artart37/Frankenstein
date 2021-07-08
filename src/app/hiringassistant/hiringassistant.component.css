@@ -1,0 +1,58 @@
+.pure-table{border-collapse:collapse;border-spacing:0;empty-cells:show;border:1px solid #cbcbcb}.pure-table caption{color:#000;font:italic 85%/1 arial,sans-serif;padding:1em 0;text-align:center}.pure-table td,.pure-table th{border-left:1px solid #cbcbcb;border-width:0 0 0 1px;font-size:inherit;margin:0;overflow:visible;padding:.5em 1em}.pure-table thead{background-color:#e0e0e0;color:#000;text-align:left;vertical-align:bottom}.pure-table td{background-color:transparent}.pure-table-odd td{background-color:#f2f2f2}.pure-table-striped tr:nth-child(2n-1) td{background-color:#f2f2f2}.pure-table-bordered td{border-bottom:1px solid #cbcbcb}.pure-table-bordered tbody>tr:last-child>td{border-bottom-width:0}.pure-table-horizontal td,.pure-table-horizontal th{border-width:0 0 1px 0;border-bottom:1px solid #cbcbcb}.pure-table-horizontal tbody>tr:last-child>td{border-bottom-width:0}
+.someclass{color:#9b17cf}
+.ui-grid-a {
+    font-family: Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.7em;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    color: #333;
+    text-shadow: none;
+    display: block;
+    overflow: hidden;
+}
+.ui-link{
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    text-shadow: none;
+}
+.block{
+ -webkit-tap-highlight-color: rgba(0,0,0,0);
+text-shadow: none;
+position: relative;
+margin: 0;
+border: 0;
+float: right;
+min-height: 1px;
+box-sizing: border-box;
+width: 50%;
+padding: 5px;
+height: auto;
+max-height: 214.75px;
+font-family: Arial,sans-serif;
+}
+.article-img{
+-webkit-tap-highlight-color: rgba(0,0,0,0);
+text-shadow: none;
+font-weight: 400;
+color: #38c;
+border: 0;
+height: auto;
+width: 100%;
+object-fit: cover;
+display: block;
+transition: opacity 1s,filter 1s;
+border-width: 0;    
+}
+.article-text {
+ -webkit-tap-highlight-color: rgba(0,0,0,0);
+color:#f2f2f2;
+line-height: normal;
+font-size: 12px;
+text-shadow: none;
+font-weight: 400;
+position: absolute;
+bottom: 0;
+padding: 10px;
+background-color: rgba(0,0,0,.41);
+margin: 0 0 5px;
+width: -webkit-calc(100% - 30px);   
+}

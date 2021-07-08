@@ -1,0 +1,38 @@
+<!-- We add the ? sign safety operator (see more in bindings) because initially, we dont have an array of added items -->
+<div class="containerwrapper" *ngIf="addedproducts?.length>0; else elseTemplate">
+    <h1>My Cart</h1>
+        <div class="container" *ngFor="let item of addedproducts, let customarraysindex = index, trackBy:trackbyID">
+            <section class="prodimg">
+                <img src="{{item.selecteditem.image}}" alt="{{item.selecteditem.product}}">
+            </section>
+            <div class="contentwrapper">
+                <section class="content">
+                    <h1>{{item.selecteditem.product}}</h1>
+                    <p>{{item.selecteditem.description}}</p>
+                </section>
+                <div class="actionsection">
+                    <app-itemquantity [states]="item?.currstate" [item]="item?.selecteditem" [val]="item?.quantity" [parentcomp]="basketcomp" [index] ="customarraysindex"></app-itemquantity>
+                    <span class="special_note" *ngIf="item?.selecteditem.quantity | validatequantity:item.currstate.bool" [@shake] = "item.currstate.animestate">{{item?.selecteditem.quantity | validatequantity: item.currstate.bool | uppercase}}</span>         
+                    <section class="itemprice">
+                        <span>{{item.selecteditem.price * item.quantity + " " + item.selecteditem.currency}}</span>
+                    </section>
+                    <section class="deleteitemcontiner">
+                        <span class="deleteitem" (click)="deleteitem(customarraysindex)"></span>
+                    </section>
+                </div>
+            </div>
+      </div>
+      <section class="final">
+          <span class="totit">Total:</span>
+          <span class="totfig">{{totalnumber}}</span>
+          <button class="checkout">Checkout</button>
+      </section>
+</div>
+<ng-template #elseTemplate>
+    <section class="emptycartsection">
+        <span class="emptytext">Your cart is currently empty.</span>
+        <p class="returntoshoppar">
+            <a routerLink="/shopping" class="returntoshopbut">Return to shop</a>
+        </p>
+    </section>   
+</ng-template>

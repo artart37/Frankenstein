@@ -1,0 +1,85 @@
+<h1>A Page for Candidates</h1>
+<p>{{message}}</p>
+<!-- <div>
+    <button [routerLink]="['/candidate/user']">Go to users page</button>
+</div> -->
+<!-- NGIF -->
+<button (click) = "togglewelcometext();">Toggle welcome text</button>
+<button (click) = "atogglewelcometext();">Toggle with another method</button>
+<div *ngIf="toggle; else juk">
+    <p>Hello everyone</p>
+</div>
+<ng-template #juk>
+ <p>Welcome text is deleted from the DOM</p>
+</ng-template>
+
+<div *ngIf="atoggle; then anothermethodofdisplayingwithif; else anothermethodofdeletingfromdomwithif"></div>
+<ng-template #anothermethodofdisplayingwithif>
+    <p>Hello everyone (alternative) </p>
+</ng-template>
+<ng-template #anothermethodofdeletingfromdomwithif>
+    <p>Another method for deleting  with ngIF structural directive</p>
+</ng-template>
+<!-- NGSWITCH Combined with two ways binding -->
+<input type="text" [(ngModel)]="color">
+<div [ngSwitch]="color">
+    <p *ngSwitchCase="color" [ngStyle]="{
+        'color': color,
+        'font-weight':'bold'
+}">You picked {{color}}
+</p>
+<p *NgSwitchDefault>Color Switch</p>
+</div>
+<hr>
+<h2>Child Element (candiatable) Starts</h2>
+<!-- $event is for the function parametre here -->
+<app-canditable (childevent)="message=$event" [candi]="candidateusers" (greetevent)="greet($event)" (sendcandidate)="inunid=$event" (updateselectref)="updateselect()"></app-canditable>
+<h2>Child Element Ends</h2>
+<hr>
+<button (click)="callviech()">Call a Child Function via View Child</button>
+<hr>
+<button (click)="refreshdata();">Refresh Users</button>
+<hr>
+<div>
+    <div style="float: left; width: 33.33%;">
+        <h5>ViewChild ref parent element binded placeholder</h5>
+        <p>{{inname}}</p>
+        <input #nameRef type="text" [placeholder]="inname">
+        <h5>Changed the color with view elementref</h5>
+        <input type="text" #useridref>
+        <h5>Used Output for comparison</h5>
+        <p>{{inunid}}</p>
+        <input type="text" [(ngModel)]="inunid">
+    </div>
+    <div style="width: 33.33%; float: left;">
+        <h5>Displaying selected line of users (via functions, from the child's input array)</h5>
+        <p>Full Name: {{innameo}}</p>
+        <input type="text" [(ngModel)]="innameo" (ngModelChange)="changename()">
+        <p>User ID: {{inuserido}}</p>
+        <input type="text" [(ngModel)]="inuserido" (ngModelChange)="changeUserid()">
+        <p>Unique ID: {{inunido}}</p>
+        <input type="text" [(ngModel)]="inunido" (ngModelChange)="changeunin()">
+    </div>
+    <div style="width: 33.33%; float: left;">
+        <h5>Displaying selected line of users (from the parent array)</h5>
+        <p>Full Name: {{candidateusers[idxxo?idxxo:0].name}}</p>
+        <input type="text" [(ngModel)]="candidateusers[idxxo?idxxo:0].name">
+        <p>User ID: {{candidateusers[idxxo?idxxo:0].userid}}</p>
+        <input type="text" [(ngModel)]="candidateusers[idxxo?idxxo:0].userid">
+        <p>Unique ID: {{idxxo?idxxo+1+ '' + candidateusers[idxxo?idxxo:0].userid :1 + '' + candidateusers[idxxo?idxxo:0].userid}}</p>
+        <input type="text" [(ngModel)]="idxxo?idxxo+1+ '' + candidateusers[idxxo?idxxo:0].userid :1 + '' + candidateusers[idxxo?idxxo:0].userid">
+    </div>
+</div>
+<hr style="float: none; width: 100%; margin-top: 15px; display: inline-flex;">
+<h3>Viewchildren for when we have the child several times in our home element</h3>
+<h5 style="color: blueviolet;">{{vchldrmsg}} + (The number is dynamically viewed)</h5>
+<h5>For more information about the methods and possibilities look in to the viewchildrenref inside afterviewinit and the console</h5>
+<hr>
+<app-canditable (childevent)="message=$event" [candi]="candidateusers" (greetevent)="greet($event)" (sendcandidate)="inunid=$event" (updateselectref)="updateselect()"></app-canditable>
+<hr>
+<h2>ContentChild and ContentChildren</h2>
+<app-canditable (childevent)="message=$event" [candi]="candidateusers" (greetevent)="greet($event)" (sendcandidate)="inunid=$event" (updateselectref)="updateselect()">
+<div class="randomtext">
+    <h5 style="color: purple;">Hi am just a random text injected to the child component from the parent</h5>
+</div>
+</app-canditable>

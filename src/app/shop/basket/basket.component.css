@@ -1,0 +1,290 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
+/* https://thappamark.com/quote.php */
+.containerwrapper{
+    position: relative;
+    margin: 0 1%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between; 
+}
+.container {
+    /* 
+    max-height: 162.36px;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: normal;
+     */
+    width: 100%;
+    max-width: 980px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient:horizontal;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:row;
+            flex-direction:row;
+    border: 1px solid #0e0d0d;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    margin: 0 0 10px;
+}
+.prodimg{
+    /* 
+    max-height: 160.36px;
+    background-color: lightgreen;
+    display: inline-block; */
+    -webkit-box-flex: 1;
+        -ms-flex: 1 20%;
+            flex: 1 20%;
+    height: auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+.prodimg img{
+    width: 100%;
+    height: auto;
+}
+.contentwrapper {
+    -webkit-box-flex: 1;
+        -ms-flex: 1 80%;
+            flex: 1 80%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    /* max-height: 160.36px;
+    display: inline-block; */
+    /* background: aqua;
+    vertical-align: top; */
+}
+.content{
+    -webkit-box-flex: 1;
+        -ms-flex: 1 80%;
+            flex: 1 80%;
+    border-right: 1px solid #0e0d0d;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.actionsection{
+    -webkit-box-flex: 1;
+        -ms-flex: 1 20%;
+            flex: 1 20%;
+}
+.content h1, p {
+    margin:0; 
+}
+.itemprice{
+    margin: 0 auto;
+    padding: 5px 0;
+}
+.itemprice span {
+    display: block;
+    text-align: center;
+    font-size: 1.8em;
+}
+.deleteitemcontiner{
+    cursor: pointer;
+    width: 100%;
+    max-width: 157.19px;
+}
+.deleteitem{
+    background: url(/assets/images/delete.png) no-repeat;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: 25px;
+    height: 25px;
+    background-size: cover;
+    margin: 0 auto;
+    display: block;
+}
+.containerwrapper h1, .emptytext {
+    font-size: 2em;
+    font-weight: 400;
+    color: #000000;
+}
+.emptytext {
+    width: calc(100% - 40px);/*The 40px is the basket icon sections width to match with the Candy agents title */
+    display: block;
+    margin: 0 0 1em 0;
+}
+.emptycartsection{ 
+    position: relative;
+    text-align: center;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    min-height: 500px;
+}
+.returntoshoppar {
+    margin: 0 0 1em 0;
+    width: calc(100% - 40px);/*The 40px is the basket icon sections width to match with the Candy agents title */
+}
+.returntoshopbut{
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 0.5714rem 1rem;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    outline: none;
+    overflow: hidden;
+    z-index: 1;
+    color: #464646;
+    background-color: #f8f9fb;
+    border-color: #f8f9fb;
+    background: transparent;
+    border: 1px solid #2b2b2b;
+    text-transform: uppercase;
+    color: #2b2b2b;
+    text-decoration: none;
+}
+.returntoshopbut:hover{
+    border-color: black;
+    background: #000000;
+    color: #fff;
+}
+.special_note{
+    font-size: 0.7em;
+    color: rgb(238 11 80);
+    display: block;
+    font-weight: 400;
+    padding: 5px 0;
+  }
+  .final{
+    width: 100%;
+    max-width: 980px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient:horizontal;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:row;
+            flex-direction:row;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    margin: 0 0 10px;
+}
+.totfig, .totit {
+   font-size: 1.5em;
+}
+.totfig{
+    flex: 1;
+    padding:0 0 0 5px;
+}
+.checkout {
+    padding: 1em;
+    font-weight: bold;
+    border: none;
+    font-size: 1em;
+    overflow-wrap: break-word;
+    background-color: #f1f1f1;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    background-position: right bottom;
+    width: 40%;
+}
+@media screen and (max-width: 780px) {
+    .contentwrapper {
+        -webkit-box-flex: 1;
+            -ms-flex: 1 100%;
+                flex: 1 100%;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+    }
+    .contentwrapper h1{
+        font-size: 1.4em;
+    }
+    .container {
+        margin: 0 0 25px;
+    }
+    .content{
+        -webkit-box-flex: 1;
+            -ms-flex: 1 100%;
+                flex: 1 100%;
+        border-right: none;
+        max-height: 78px;
+        overflow: hidden;
+        border-bottom: 1px solid #0e0d0d;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        overflow-y: scroll;
+    }
+    .prodimg {
+        -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
+        height: 78px;
+    }
+    .prodimg img{
+        width: auto;
+        height: 78px;
+    }
+    .itemprice {
+        display: inline-block;
+        padding: 0;
+        width: calc(100% - 43.62px);
+        vertical-align: middle;
+    }
+    .deleteitemcontiner{
+        display: inline-block;
+        vertical-align: middle;
+        padding: 9px;
+        width: auto;
+        max-width: 36px;
+    }
+    .deleteitem {
+        width: 18px;
+        height: 18px;
+        display: inline-block;
+        margin:0;
+    }
+    .itemprice span{
+        font-size: 1.4em;
+    }
+    .special_note{
+        margin-left: -104px;
+        position: absolute;
+        padding:0;
+
+    }
+
+}
+@media screen and (max-width: 340px) {
+    .itemprice span{
+        font-size: 1.2em;
+    }
+    .deleteitem {
+        width: 18px;
+        height: 18px;
+    }
+}

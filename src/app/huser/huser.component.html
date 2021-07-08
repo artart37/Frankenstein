@@ -1,0 +1,145 @@
+<h2>Provided by the Service in thehiringassistantservice.service.ts </h2>
+<p>{{hiringassistservice[0].hiringassistantname}}</p>
+<!-- Subscribing to the observable through the async pipe. Learn more at https://medium.com/angular-in-depth/the-best-way-to-unsubscribe-rxjs-observable-in-the-angular-applications-d8f9aa42f6a0 -->
+<p>Seconds {{everysecond | async}} </p>
+<div><code>observable|async</code>: Time: {{ time | async }}</div>
+<!-- https://medium.com/@chameeradulanga87/sharing-data-between-angular-components-f76fa680bf76 -->
+<h1>Getting the data of the clicked Hiring Assistant through a shared service (implementing BehaviourSubject in the service)</h1>
+<p>Here is it how it works</p>
+<ol>
+    <li>In the hiringassistantservice.service.ts I have defined private messagec BehaviorSubject of type Object,
+     because in my array of hiring assistants I have objects representing each line of data for each hiring assistant.</li>
+     <li>In the hiringassistantservice.service.ts I then convert the Behaviorsubject in to the messageco$ variable of Observable bia the command asObservable.</li>
+     <li>I create a method for emitting data to the service which is calles send sendMessage() which passes harray of type Object through emitting via next method.</li>
+     <li>In my hiringassistant.component.ts I create a sendData method which has the argument hirs which can be found in the iringassistant.component.html.
+         The hirs is the object representing the particular line (object) which is caugth within the loop and passed to the sendData</li>
+     <li>The sendData then takes the hirs object, puts it as an argument in the sendMessage method of the service.</li>
+     <li>The SendMessage method takes the hirs argument and sends to the service.</li>
+     <li>We then susbscribe to the messageco$ observable in the huser.component.ts</li>
+     <li>While subscribing we use the take(1) method of the rxjs to take only up to 1 emission of the observable. We therefore, dont need any unsubscription logic.</li>
+     <li>While subscribing we define the messageh local variable of the huser being assigned to the nextvalue of the subscription.</li>
+     <li>Now the messageh is the nextavlue Object emitted by the BehaviorSubject converted into an observable.</li>
+     <li>In the huser Html we simply bind the messageh variable object within the HTML</li>
+</ol>
+<ng-container *ngIf="messageh!==undefined && messageh.length !== 0;else errmss">
+<h3>You are viewing the data for the hiring assistant with id = {{routeparam}}</h3>   
+<form>
+    <input type="number" value="{{routeparam}}" placeholder="ID">
+    <input type="number" value="{{messageh[routeparam-1].hirid}}" placeholder="Random ID">
+    <input type="text" value="{{messageh[routeparam-1].hiringassistantname}}" placeholder="Full Name">
+    <input type="text" value="{{messageh[routeparam-1].areaofexpertise}}" placeholder="Area of expertise">
+    <button>Submit</button>
+</form>
+<button (click)="goprevious()">Previous</button>
+<button (click)="gonext()">Next</button>
+<hr> 
+<button (click)="backPage()"> Back</button>
+</ng-container>
+<ng-template #errmss>
+    <h2>No user has been selected.</h2>
+</ng-template>
+<hr>
+<h1>Routes</h1>
+<ol></ol>
+<li>To get information from a route: Import ActivatedRoute and ParamMap to your <pre><code>{{"import {Router, ActivatedRoute, ParamMap } from '@angular/router';"}}</code></pre></li>
+<li>Inject an instance of ActivatedRoute by adding it to your application's <pre><code>{{"constructor (private route: ActivatedRoute,) {}"}}</code></pre></li>
+<li>Access the paramatres of the route<pre><code>{{"ngOnInit() {this.route.paramMap.subscribe(params => {console.log(params)})"}}</code></pre></li>
+<h1>Child Routes</h1>
+<p>When <span class="emph">some routes may only be accessible and viewed within other routes</span> it may be appropriate to create them as <span class="emph">child routes</span>.</p>
+<p>You may see the implementation of the child routes in the app routing ts.</p>
+<button (click)="showOverview();">View Profile Overview</button>
+<button (click)="contactHirassistant();">Contact the Hiring Assistant</button>
+<h3>Display of Children Compaonents</h3>
+<p>In our app routing ts we have specified that the Overview and Contact routes corresponding to their respective components are children to the hiringassistants/:id path corresponding to the 
+HuserComponent component, and are to be displayed <span class="emph"> only from</span> the hiringassistants/:id route inside the HuserComponent.</p>
+<p>To specify exactly the place where the child components should be displayed we make use of the router-outlet directive. Below is placed the router-outlet</p>
+<div style="color: blueviolet; font-weight: bold;">
+<router-outlet></router-outlet>
+</div>
+<hr>
+<h3>Auxiliary Routes and Named Router Outlets</h3>
+<p>First, what are auxiliary routes? <span class="emph">These are just plain routes like the primary route that was mapped to the router-outlet component.</span>
+But instead, <strong>auxiliary routes are mapped to a different outlet</strong> which <span class="emph"> must be named</span> (unlike the primary outlet).</p>
+<h4>Practical use cases of auxiliary routes</h4>
+<p>Read more at <a href="https://blog.bitsrc.io/lazy-loading-auxiliary-routes-with-angular-why-and-how-9ceb2ddc6cae">this</a> and <a href="https://blog.angular-university.io/angular2-router/">this</a> websites.</p>
+<ul>
+<li>The top-level menu.</li>
+<li>The side menu that often is a subsection of the top menu.</li>
+<li>An aside on the right maybe displaying a playlist of lessons.</li>
+<li>Popup dialogs for editing a list detail, that you want to keep upon during navigation.</li>
+<li>A chat window that stays opened during navigation</li>
+</ul>
+<h4>Why are Auxiliary Routes useful?</h4>
+<ul>
+    <li>For providing our users the ability to access or toggle portions of the page via the URL. That means you can link your application’s users to deep parts of your application with a simple URL, without them having to click anywhere.</li>
+    <li>We can also reduce the initial loading time by lazy loading the routes in the same way as we would do with normal full-page routes.</li>
+</ul>
+<div>
+<button [routerLink]="['/', {outlets:{modal: 'settings'}}]">Settings</button>
+<button [routerLink]="['/', {outlets: {modal: 'signin' }}]">Sign in</button> 
+</div>
+<h4>Routing to the Auxiliary (secondary) route</h4>
+<p>General routerlink syntaxis would work. </p>
+<h3>Query Params</h3>
+<p>Query parameters allow you to pass optional parameters to a route such as pagination information.</p>
+<p>We would also need it for example to indicate the authrotites o fthe user, e.g. allowedit=true,1 and etc.</p>
+<p>For example, on a route with a paginated list, the URL might look like the following to indicate that we've loaded the second page:</p>
+<pre>
+    <code>localhost:3000/product-list?page=2</code>
+</pre>
+<p>You may read more about query parametres at <a href="https://angular-2-training-book.rangle.io/routing/query_params">this</a> and <a href="https://angular.io/api/router/NavigationExtras">this</a> websites.</p>
+<!-- No need for the =  sign, angular addsit before the param -->
+<button [routerLink]="['/search']" [queryParams]="{searchresult: 'queryparam'}">Query Param</button>
+<button (click)="gotoSearch()">Programtically</button>
+<!-- https://www.youtube.com/watch?v=c_XZV6NNa5k -->
+<!-- https://www.youtube.com/watch?v=kb6yzYqOPig -->
+<hr>
+<h3>Route Guards</h3>
+<p>Angular’s route guards are interfaces which can tell the router whether or not it should allow navigation to a requested route.</p>
+<p>There are five different types of guards and each of them is called in a particular sequence. The router’s behavior is modified differently depending on which guard is used. The guards are:</p>
+<p>Route Guards return true (when the navigation is allowed), false (when navigation is not allowed) or urlTree (the current navigation ends and a new navigation is created in accordance with the set tree of links).</p>
+<ul>
+<li>CanActivate</li> 
+<li>CanActivateChild</li> 
+<li>CanDeactivate</li> 
+<li>CanLoad</li> 
+<li>Resolve</li> 
+</ul>
+<p><a href="https://angular.io/guide/router">Angular Website</a></p>
+<h4>Creating Guards</h4>
+<p>The command line for creating guards is:</p>
+<pre>
+    <code>
+        ng g guard foldername/(optional)guardfilename --skipTests(optional, for skipping a test file)
+    </code>
+</pre>
+<h4>Implementation with the Chat Component</h4>
+<div>
+<h4>CanActivate</h4>
+<p>Guards return either <code class="emph">true</code> if the user can access a route or <code class="emph">false</code> if they can’t.</p>
+<p>They can also return an <code class="emph">Observable</code> or <code class="emph">Promise</code> that later on resolves to a boolean in case the guard can’t answer the question straight away, 
+ for example it might need to call an API. Angular will keep the user waiting until the guard returns <code class="emph">true</code> or <code class="emph">false</code>.</p>
+<h4>OnlyLoggedInUsersGuard</h4>
+<p>The most typical use case for the <code class="emph">CanActivate</code> guard is some form of checking to see if the user has permissions to view a page.</p>
+<p>Normally in an Angular application we would have a <code class="emph">service</code> which holds whether or not the current user is logged in or what permissions they have.</p>
+<p>Read more abou this example at <a href="https://codecraft.tv/courses/angular/routing/router-guards/">this</a> website.</p>
+<p>In this example:</p>
+<ol>
+    <li>We created a service through ng g s login --skipTests</li>
+    <li>In our service we wrote a simple function: <code class="emph">userisloggedin</code> of a boolean type, which always returns false.<span class="emph">In a real life scenario, we would have written a logic for returning either true or false.</span></li>
+    <li>We injected thes service into our testguard.guard.ts (see inside the constructor) which implemented the <code class="emph">canActivate</code> route guard.</li>
+    <li>The logic behind this example is disallowing non logged users.</li>
+</ol>
+<button [routerLink]="['/', {outlets:{modal:'chat'}}]">CanActivate</button>
+</div>
+<div>
+<h4>CanActivateChild</h4>
+<p>Interface that a class can implement to be <code class="emph">a guard deciding if a child route can be activated</code>.</p>
+<p>If all guards return true, navigation will continue. If any guard returns false, navigation will be cancelled.</p>
+<p>If any guard returns a UrlTree, current navigation will be cancelled and a new navigation will be kicked off to the UrlTree returned from the guard.</p>
+<p>The Angular <code class="emph">CanActivateChild</code> guard runs before we navigate to a child route.</p>
+<button routerLink="/candidate">CanActivateChild</button>
+</div>
+<button [routerLink]="['/', {outlets:{modal:'chat'}}]">CanDeactivate</button>
+<button [routerLink]="['/', {outlets:{modal:'chat'}}]">CanLoad</button>
+<button [routerLink]="['/', {outlets:{modal:'chat'}}]">Resolve</button>

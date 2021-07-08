@@ -1,0 +1,763 @@
+<h1>Angular Reactive Forms</h1>
+<p>Reactive forms provide a <span class="emph">model-driven</span> approach to handling <span class="emph">form inputs</span> whose <span class="emph">values change over time</span>.</p>
+<h2>Overview</h2>
+<p>Reactive forms use an explicit and <span class="emph">immutable</span> approach to managing the state of a form at a given point in time.</p>
+<p>Reactive forms are built around <a routerLink="/observables" class="emph">observable</a> streams, where form inputs and values are provided as streams of input values, which can be accessed synchronously.</p>
+<h2>Setup</h2>
+<p>Register the <span class="emph">reactive forms module</span> in your app. We have therefore imported <span class="emph">ReactiveFormsModule</span> within our app.module.ts and included it in the imports array.</p>
+<h2>FormControl</h2>
+<ol>
+    <li>Generate a new <span class="emph">FormControl</span> instance and save it in the component.</li>
+    <li>Register the <span class="emph">FormControl</span> in the template.</li>
+</ol>
+<h3>Generate a new <span class="emph">FormControl</span> instance and save it in the component.</h3>
+<ol>
+    <li>I have imported <span class="emph">FormControl</span> in my forms.component.ts and defined the <span class="emph">name</span> of the first control as "<span class="emph">email</span>"" 
+        and created a new instance of <span class="emph">FormControl</span> just like this: <span class="emph">email = new FormControl('');</span>.</li>
+    <li>The initial value of the <span class="emph">FormControl</span> named <span class="emph">email</span>, is an empty string.</li>
+</ol>
+<h3>Register the control in the template</h3>
+<ol>
+    <li>Update the template with the form control using the formControl binding provided by FormControlDirective, which is also included in the ReactiveFormsModule.</li>
+    <li>In the below example we just added: <span class="emph">[formControl]="email"</span>.</li>
+</ol>
+<div class="form-group">
+    <label>E-mail:</label>
+    <input type="text" [formControl]="email">
+</div>
+<h3>Displaying a form control value</h3>
+<ol>
+    <li>Through the <span class="emph">valueChanges </span> <span style="font-weight: bold;">observable</span> where you can listen for changes in the form's value in the template using <span class="emph">AsyncPipe</span> or in the component class using the <span class="emph">subscribe()</span> method.
+     You may see the console log log changed values upon input.</li>
+     <li>With the <span class="emph">value</span> property, which gives you a snapshot of the current value. See the value here: <span class="emph">{{email.value?email.value:"type something in the input"}}</span></li>
+</ol>
+<h3>Replacing a form control value</h3>
+<p>Reactive forms have methods to change a control's value <span style="font-weight: bold;">programmatically</span>, which gives you the flexibility to update the value <span style="font-weight: bold;">without user interaction.</span></p>
+<p>setValue() method on the control group helps doing this.</p>
+<div class="form-group">
+    <label>Name:</label>
+    <input type="text" [formControl]="name">
+    <button type="submit" (click)="updatename()">Set Value to the Name field</button>
+</div>
+<hr>
+<h2>Grouping form controls</h2>
+<p>Reactive forms provide two ways of <span style="font-weight: bold;">grouping</span> multiple <span style="font-weight: bold;">related controls</span> into a single input <span style="font-weight: bold;">form.</span></p>
+<p>A form <span class="emph">group</span> defines a form with a <span style="font-weight: bold;">fixed set of controls</span> that you can <span style="font-weight: bold;">manage together.</span> You can also <span style="font-weight: bold;">nest</span> form groups to create more complex forms.</p> 
+<p>A form array defines a <span class="emph">dynamic form</span>, where you can <span style="font-weight: bold;">add and remove controls at run time</span>. You can also <span style="font-weight: bold;">nest</span> form arrays to create more complex forms.</p>
+<h3>Setup</h3>
+<ol>
+    <li>Create a <span class="emph">FormGroup</span> instance.</li>
+    <li>Associate the FormGroup model and view.</li>
+    <li>Save the form data.</li>
+</ol>
+<h3>Create a FormGroup instance</h3>
+<ol>
+    <li>We a created a property in the component class named <span class="emph">usergroup</span> and set the property to a new form group instance, just like this <span class="emph">{{"usergroup = new FormGroup ({})"}}</span></li>
+    <li>To initialize the form group, within our <span class="emph">FormGroup</span> we provided an object of named keys mapped to their control: <span class="emph">fullname: new FormControl(""),</span> and <span class="emph">role: new FormControl("")</span>.</li>
+</ol>
+<h3>Associate the FormGroup model and view</h3>
+<ol>
+    <li>A <span class="emph">form group tracks the status and changes for each of its controls</span>, so <span class="emph">if one of the controls changes</span>, the <span class="emph">parent control also emits a new status or value change.</span></li>
+    <li>In the below example we just added: <span class="emph">[formGroup]="usergroup"</span> within the <span class="emph">form</span> tag.</li>
+    <li>When <span class="emph">FormControl</span> is encapsulated within <span class="emph">FormGroup</span>, for controls we use <span class="emph">formControlName</span> instead of <span class="emph">[FormControl]</span> within our html file.</li>
+</ol>
+<hr>
+<p style="font-weight: bold;">{{usergroup.value | json}}</p>
+<hr>
+<form [formGroup]="usergroup" (ngSubmit) = "onSubmit()">
+    <label for="userfullname">Full name:</label>
+    <input type="text" id="userfullname" formControlName="fullname">
+    <label for="userrole">Role:</label>
+    <input type="text" id="userrole" formControlName="role">
+    <button>Save</button>
+</form>
+<h3>Save Form Data</h3>
+<ol>
+    <li>In a real scenario you want to <span style="font-weight: bold;">capture</span> the <span style="font-weight: bold;">form</span> value and make <span style="font-weight: bold;">available</span> for further <span style="font-weight: bold;">processing outside the component</span>.</li>
+    <li>The <span style="font-weight: bold;">FormGroup</span> directive listens for the <span style="font-weight: bold;">submit</span> event <span style="font-weight: bold;">emitted by the form element</span> and emits an <span style="font-weight: bold;">ngSubmit</span> event that you can <span style="font-weight: bold;">bind to a callback function</span>.</li>
+    <li>For this purpose we use the <span class="emph">(ngSubmit)</span> event listener within the form tag, alongside the <span class="emph">[formGroup]="usergroup"</span>.</li>
+    <li>You may see the result in console.</li>  
+</ol>
+<p style="font-weight: bold; color: brown;">The button in the snippet above also has a disabled binding attached to it to disable the button when profileForm is invalid. You aren't performing any validation yet, so the button is always enabled.</p>
+<h3>Creating nested form groups</h3>
+<ol>
+    <li>Form groups can accept both individual form control instances and other form group instances as children. </li>
+    <li>Create a nested group. when creating a <span style="font-weight: bold;">nested group,</span> we will use <span style="font-weight: bold;">formGroupName</span> within the nested element, instead of <span style="font-weight: bold;">[formGroup]</span>.</li>
+    <li>Group the nested form in the template.</li>
+</ol>
+<hr>
+<form [formGroup]="nestedgroup" (ngSubmit) = "onSubmitNest()">
+    <h4>Personal Details</h4>
+    <label for="userfirstname">First name:</label>
+    <input type="text" id="userfirstname" formControlName="firstname">
+    <br>
+    <label for="userlastname">Last name: </label>
+    <input type="text" id="userlastname" formControlName="lastname">
+    <div formGroupName="contactdetails">
+        <h4>Contact Details</h4>
+        <label for="useraddress">Address: </label>
+        <input type="text" id="useraddress" formControlName="address">
+        <br>
+        <label for="userphone">Telephone: </label>
+        <input type="tel"id="userphone" formControlName="phone">
+        <br>
+        <label for="useremail">E-mail:</label>
+        <input type="email"id="useremail" formControlName="email">
+    </div>
+    <button type="submit" [disabled]="!nestedgroup.valid">Submit Nested Form</button>
+</form>
+<hr>
+    <p class="emph">"Nested Group's json formatted object is" {{randomprop | json}}</p>
+<hr>
+<h3>Updating parts of the FormGroup's data model</h3>
+<ol>
+    <li>In order to update the <span class="emph">FormGroup</span> controls' values we use the <span style="font-weight: bold; color: brown;">setValue()</span> and <span style="font-weight: bold; color: brown;">patchValue()</span> methods.</li>
+    <li>The <span style="font-weight: bold; color: brown;">setValue()</span> cannot exclude some controls - all controls of the <span class="emph">FormGroup</span> need to be mentioned and updated. Indeed, as shown above, if we apply the <span style="font-weight: bold; color: brown;">setValue()</span> on an individual <span class="emph">FormControl</span>, it will still work.</li>
+    <li>On the other hand, <span style="font-weight: bold; color: brown;">patchValue()</span> is a lot easier on that part - it can update only one or some of the controls of the <span class="emph">FormGroup.</span></li>
+</ol>
+<h4>Example - updating the above form</h4>
+<hr>
+<button type="button" (click)="setFormControls()">Update the above form controls through setValue()</button>
+<button type="button" (click)="patchFormControls()">Update the above form controls through patchValue()</button>
+<hr>
+<h2>Using the FormBuilder service to generate controls</h2>
+<p> The <span class="emph">FormBuilder</span> <span style="font-weight: bold;">service</span> provides convenient methods for generating controls.</p>
+<ol>
+    <li>Import the <span class="emph">FormBuilder</span> class.</li>
+    <li>Inject the <span class="emph">FormBuilder</span> service.</li>
+    <li>Generate the form contents.</li>
+</ol>
+<h3>Import the FormBuilder class</h3>
+<p>We have imported the FormBuilder class from the @angular/forms package.</p>
+<h3>Inject the FormBuilder service</h3>
+<p>The <span class="emph">FormBuilder service</span> is injected as a dependency by adding it to the component <span class="emph">constructor</span>.</p>
+<h3>Generate form controls</h3>
+<ol>
+    <li>The FormBuilder service has three methods: <span class="emph">control()</span>, <span class="emph">group()</span>, and <span class="emph">array()</span>.</li>
+    <li>These are factory methods for generating instances in your component classes including form controls, form groups, and form arrays.</li>
+</ol>
+<h4>The <span class="emph">control()</span>, <span class="emph">group()</span> and <span class="emph">array()</span>methods</h4>
+<p>We use the <span class="emph">group()</span> method with the same object to define the properties in the model.</p>
+<p>The value for each <span class="emph">control</span> name <span class="emph">is an array</span> containing the initial value as the first item in the array.</p>
+<ol>
+    <li>First we generate a FormGroup. Click the button and see the console. <button type="submit" (click)="generateFormGroup()">Generate a FormGroup</button>.</li>
+    <li>We then generate a FormControl. Click the button and see the console. <button type="submit" (click)="generateFormControl()">Generate a FormControl</button>.</li>
+</ol>
+<p>Below is a more complicated version:</p>
+<hr>
+<!-- An error is thrown if you're using the ReactiveFormsModule and a <form>-element without a FormGroup bound to it via [formGroup]="myForm" -->
+    <h5>{{arealformgroup.value | json}}</h5>
+    <h5>Checked: {{publiccurrent}}</h5>
+    <form class="formstyle" [formGroup]="arealformgroup">
+     <fieldset>
+        <legend>Hiring Assistant Personal Details</legend>
+        <section class="firstsection" formGroupName="firstgroupsection">
+            <label for="hirefirstname">First Name:</label>
+            <input type="text" id="hirefirstname" name="hirefirstname" formControlName="hirefirstname">
+            <label for="hirelastname">Last Name:</label>
+            <input type="text" id="hirelastname" name="hirelastname" formControlName="hirelastname">
+            <label for="hirephone">Phone:</label>
+            <input type="text" id="hirephone" name="hirephone" formControlName="hirephone">
+            <label for="hireemail">Email:</label>
+            <input type="email" id="hireemail" name="hireemail" formControlName="hireemail"> 
+        </section>
+     </fieldset>
+     <fieldset>
+            <legend>Employment Status</legend>
+        <div class="secondsection" formGroupName="secondgroupsection">
+            <section>
+                <!-- formControlName and radio type inputs need to have the same name. In such a case we need to have the value attribute, if the inputs are within form tag-->
+                <input type="radio" id="hireemployed" name="hirestatus" value="hireemployed" formControlName="hirestatus">
+                <label for="hireemployed">Employed</label>
+                <input type="radio" id="hireunemployed" name="hirestatus" value="hireunemployed" formControlName="hirestatus">
+                <label for="hireunemployed">Unemployed</label>
+            </section>
+            <section style="text-align: right;">
+                <input type="radio" id="hiremanager" name="hiremanagementstatus" value="hiremanager" formControlName="hiremanagementstatus">
+                <label for="hiremanager">Manager</label>
+                <input type="radio" id="hirenonmanager" name="hiremanagementstatus" value="hirenonmanager" formControlName="hiremanagementstatus">
+                <label for="hirenonmanager">Non-Manager</label>      
+            </section>    
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Experience</legend>
+        <div class="experience" formGroupName="thirdgroupsection">
+            <section class="expfirst">
+                <label for="employer">Company:</label>
+                <input type="text" id="employer" name="employer" formControlName="employer">
+                <label for="position">Position:</label>
+                <input type="text" id="position" name="position" formControlName="position">
+            </section>
+            <section class="expsecond">
+                <label for="startdate">Start Date:</label>
+                <mat-form-field>
+                 <!-- We use the type text, as the date type would also generate a datepicker which is compatibale not in all browsers. See more here https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date -->
+                    <input type="text" id="startdate" name="startdate" matInput [matDatepicker]="startdatepicker" formControlName="startdate">
+                    <mat-datepicker-toggle matSuffix [for]="startdatepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startdatepicker></mat-datepicker>
+                </mat-form-field>
+                <ng-container *ngIf="!publiccurrent">
+                    <label for="enddate">End Date:</label>
+                    <mat-form-field>
+                        <input type="text" id="enddate" name="enddate"  matInput [matDatepicker]="enddatepicker" formControlName="enddate">
+                        <mat-datepicker-toggle matSuffix [for]="enddatepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #enddatepicker></mat-datepicker>
+                    </mat-form-field>
+                </ng-container>
+                <mat-checkbox type="checkbox" name="current" id="current" value="current" formControlName="current">Current Employer</mat-checkbox>
+            </section>
+        </div>
+    </fieldset>
+    </form>
+<ol>
+    <li>First, I declared an empty <span class="emph">arealformgroup</span> property.</li>
+    <li>Within my <span class="emph">makeformgroup()</span> method, I built the <span class="emph">FormGroup</span> through the <span class="emph">FormBuilder</span>.</li>
+    <li>I added my <span class="emph">makeformgroup()</span> method to my ngOnInIt() hook to initialise the <span class="emph">FormGroup</span>.</li>
+    <li>Within my <span class="emph">arealformgroup FormGroup</span> built with the <span class="emph">FormBuilder</span>, I have nested three other <span class="emph">FormGroups</span> built with the the <span class="emph">FormBuilder</span>: <span class="emph">firstgroupsection</span>, <span class="emph">secondgroupsection</span> and <span class="emph">thirdgroupsection</span>.</li>
+    <li>I declared a simple <span style="font-weight: bold;">getter</span> <span class="emph">publiccurrent()</span> which stores the <span style="font-weight: bold;">arealformgroup FormGroup</span>'s <span class="emph">private</span> control: <span style="font-weight: bold;">current</span>'s value.</li>
+    <li>Another way would be declaring a public FormControl property and connecting it to the <span class="emph">current</span>, but seemed a bit extraordinary (I commented it out in the ts). This alternative option would still be correct, as the <span style="font-weight: bold;">arealformgroup FormGroup</span>'s <span class="emph">private</span> control: <span style="font-weight: bold;">current</span> also accepts an object within the array. See an example <a href="https://stackoverflow.com/questions/48632615/formarray-with-nested-group-of-controls-in-reactive-form-with-angular-5">here.</a></li>
+    <li>Finally, I have connected the <span class="emph">arealformgroup FormGroup</span> built with the <span class="emph">FormBuilder</span>, and the controls to the HTML elements.</li>
+    <li>I have also imported the <span style="font-weight: bold;">material</span> datepicker and checkbox modules within <span class="emph"><span class="emph"></span>myforms.module.ts</span>, which is lazy loaded.</li>
+</ol>
+<hr>
+<h2>FormBuilder vs new FormControl() or new FormGroup()</h2>
+<p style="font-weight: bold;">The form builder is a service that does the same things as form-group, form-control and form-array.</p>
+<p>So basically saying that FormBuilder is a service that is trying to help us reduce boiler-plate code. Read more <a href="https://stackoverflow.com/questions/56015702/angular-form-builder-vs-form-control-and-form-group">here.</a></p>
+<hr>
+<h2>Validating form input</h2>
+<p>Form validation is used to ensure that user input is complete and correct.</p>
+<ol>
+    <li>Import a validator function in your form component.</li>
+    <li>Add the validator to the field in the form.</li>
+    <li>Add logic to handle the validation status.</li>
+</ol>
+<h3>Import a validator function in your form component</h3>
+<p>Import the <span class="emph">Validators</span> class from the @angular/forms package.</p>
+<h3>Make a field required</h3>
+<ol>
+    <li>In the below example, we generate a form through FormBuilder within ngOnInIt through the makevalidatedform() function. Within the function, <span class="emph">anotherrandomformgroup</span> is being initialized.</li>
+    <li>We add the Validators.required static method as the second item in the array for all controls, except for candiphone within the same function.</li>
+    <li>We add the <span class="emph">required attribute</span> to the required controls (all, except for candiphone).</li>
+    <li>We create a random <span class="emph">formvalproperty</span> which becomes equal to the Form Value upon submit, through the submitvalidatedform() function.</li>
+    <li>We directly get the Form status through the <span class="emph">anotherrandomformgroup.status</span> below.</li>
+    <li>The Submit the Form button is disabled because <span class="emph">anotherrandomformgroup</span> is invalid due to the <span class="emph">required</span>form controls, and because we have binded the disbaled attribute to the form validity: <span class="emph">[disabled]="!anotherrandomformgroup.valid"</span>.</li>
+    <li>After you fill out the <span class="emph">required</span>form controls, the form becomes valid and the Submit the Form button is enabled.</li>
+</ol>
+<p>Form status: <span class="emph">{{anotherrandomformgroup.status}}</span></p>
+<p>Submit the Form when valid: <span class="emph">{{formvalproperty | json}}</span></p>
+<form [formGroup]="anotherrandomformgroup" (ngSubmit)="submitvalidatedform()">
+    <h4>Candidate Personal Details</h4>
+    <label for="candidatefirstname">First name:*</label>
+    <input type="text" id="candidatefirstname" formControlName="candifirstname" required>
+    <br>
+    <label for="candidatelastname">Last name:*</label>
+    <input type="text" id="candidatelastname" formControlName="candilastname" required>
+    <div formGroupName="candicontactdetails">
+        <h4>Contact Details</h4>
+        <label for="candidateuseraddress">Address:*</label>
+        <input type="text" id="candidateuseraddress" formControlName="candiaddress" required>
+        <br>
+        <label for="candidateuseremail">E-mail:*</label>
+        <input type="email"id="candidateuseremail" formControlName="candiemail" required>
+        <br>
+        <label for="candidatephone">Phone:</label>
+        <input type="email"id="candidatephone" formControlName="candiphone">
+    </div>
+    <button type="submit" [disabled]="!anotherrandomformgroup.valid">Submit the Form</button>
+</form>
+<hr>
+<h2>Creating dynamic forms</h2>
+<p><span class="emph">FormArray</span> is an alternative to <span class="emph">FormGroup</span> for managing <span class="emph">any number</span> of <span class="emph">unnamed</span> controls.</p>
+<p>You <span style="font-weight: bold;">don't need to define a key for each control by name</span>, so this is a great option if you don't know the number of child values in advance.</p>
+<ol>
+    <li>Import the <span class="emph">FormArray</span> class.</li>
+    <li>Define a <span class="emph">FormArray</span> control.</li>
+    <li>Access the FormArray control with a <span class="emph">getter</span> method.</li>
+    <li>Display the form array in a template.</li>
+</ol>
+<h3>Import the FormArray class</h3>
+<p>Import the FormArray class from @angular/forms to use for type information.</p>
+<h3>Define a FormArray control</h3>
+<p>You can initialize a form array with any number of controls, from zero to many, by defining them in an array.</p>
+<hr>
+<!-- An error is thrown if you're using the ReactiveFormsModule and a <form>-element without a FormGroup bound to it via [formGroup]="myForm" -->
+    <h5>{{dynamicform.value | json}}</h5>
+    <!-- <h5>Checked: {{publiccurrentdynamic}}</h5> -->
+    <div class="formstyle" [formGroup]="dynamicform">
+     <fieldset>
+        <legend>Hiring Assistant Personal Details</legend>
+        <section class="firstsection" formGroupName="dyfirstgroupsection">
+            <label >First Name:</label>
+            <input formControlName="dyhirefirstname">
+            <label>Last Name:</label>
+            <input formControlName="dyhirelastname">
+            <label>Phone:</label>
+            <input formControlName="dyhirephone">
+            <label>Email:</label>
+            <input type="email" formControlName="dyhireemail">
+        </section>
+     </fieldset>
+     <fieldset>
+            <legend>Employment Status</legend>
+        <div class="secondsection" formGroupName="dysecondgroupsection">
+       <!-- formControlName and radio type inputs need to have the same name. In such a case we need to have the value attribute, if the inputs are within form tag-->
+       <!-- In order to make the label of radio type input clickable, we include the input inside the label tag -->
+            <section>              
+                <label><input type="radio" value="dyhireemployed" formControlName="dyhirestatus">Employed</label>           
+                <label><input type="radio" value="dyhireunemployed" formControlName="dyhirestatus">Unemployed</label>
+            </section>
+            <section style="text-align: right;">             
+                <label><input type="radio" value="dyhiremanager" formControlName="dyhiremanagementstatus">Manager</label>               
+                <label><input type="radio" value="dyhirenonmanager" formControlName="dyhiremanagementstatus">Non-Manager</label>      
+            </section>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Experience</legend>
+        <div class="experience" formArrayName="dythirdgroupsectionarray">
+            <ng-container *ngFor="let experience of experiencearray.controls, let i = index" [formGroupName]="i">
+                <section class="expfirst">
+                    <label>Company:</label>
+                    <input formControlName="dyemployer">
+                    <label>Position:</label>
+                    <input formControlName="dyposition">
+                </section>
+                <section class="expsecond">
+                    <mat-form-field class="expsecondinpitems">
+                        <mat-label>Start Date:</mat-label>
+                        <input matInput [matDatepicker]="dystartdatepicker" formControlName="dystartdate">
+                        <mat-datepicker-toggle matSuffix [for]="dystartdatepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #dystartdatepicker></mat-datepicker>
+                    </mat-form-field>
+                    <ng-container *ngIf="!this.experiencearray.controls[i].get('dycurrent').value">
+                        <mat-form-field class="expsecondinpitems">
+                            <mat-label>End Date:</mat-label>
+                            <input matInput [matDatepicker]="dyenddate" formControlName="dyenddate">
+                            <mat-datepicker-toggle matSuffix [for]="dyenddate"></mat-datepicker-toggle>
+                            <mat-datepicker #dyenddate></mat-datepicker> 
+                        </mat-form-field>
+                    </ng-container>
+                    <mat-checkbox formControlName="dycurrent" class="expsecondcheckitems">Current Employer</mat-checkbox>
+                </section>
+                <button mat-raised-button color="accent" (click)="removeexperiance(i)">Remove Experience</button>
+                <hr>
+            </ng-container>
+        <ng-container *ngIf="experiencearray?.length==0">
+                <h3 style="text-align: center;">I do not have recorded experience.</h3>
+        </ng-container>        
+        </div>
+    </fieldset>
+    <p>
+       <a class="addexp" (click)="addexperience()">Add Experience</a> 
+    </p>
+</div>
+<ol>
+    <li>The above container is pretty much the same as the one above shown in the <span class="emph">FormBuilder</span> section.</li>
+    <li>The first difference is that we dont use the form tag, as we don't need it with <span class="emph">ReactiveFormsModule</span>. Hence, we don't need attributes like <span class="emph">name</span>, <span class="emph">id</span>, <span class="emph">type (for material controls, and text type controls)</span> or <span class="emph">value (only left with the radio type)</span>.</li>
+    <li>The other difference is that the above form is dynamic.</li>
+    <li>First, I declared an empty <span class="emph">dynamicform</span> property.</li>
+    <li>Within my <span class="emph">makedynamicformgroup()</span> method, I built the <span class="emph">dynamicform</span> FormGroup through the <span class="emph">FormBuilder</span>.</li>
+    <li>My <span class="emph">makedynamicformgroup()</span> function builds the dynamic FormGroup and the function is then referenced in the <span class="emph">ngOnInIt()</span>.</li>
+    <li>For my experience section, within the <span class="emph">dynamicform</span> FormGroup, I created the <span class="emph">dythirdgroupsectionarray</span> FormArray <span class="emph">Object</span>, within which I have created a <span class="emph">FormGroup</span> of the dynamic controls.</li>
+    <li>I created a <span class="emph">getter</span> to store information about the FormGroup's dythirdgroupsectionarray array: <span class="emph">experiencearray</span>.</li>
+    <li>Then I created a method: <span class="emph">addexperience</span> which adds a <span class="emph">FormGroup</span>  <span style="font-weight: bold;">control</span> to the getter property <span class="emph">experiencearray</span>.</li>
+    <li>I also created a method for removing the group of controls at a specified index: <span class="emph">removeexperiance</span>.</li>
+    <li>Within the containing element I have specified: <span class="emph">formArrayName="dythirdgroupsectionarray"</span>.</li>
+    <li>Inside my containing element, I have specified the <span class="emph">experiencearray.controls</span> which returns an array of <span class="emph">FormGroups</span>.</li>
+    <li>Through <span class="emph">ngfor</span> I loop over the <span class="emph">experiencearray.controls</span> array (an array of FormGroup controls.)</li>
+    <li>When I add an experience, a <span class="emph">FormGroup</span> specified within my <span class="emph">addexperience</span> method, is added to the <span class="emph">dythirdgroupsectionarray</span> array through the <span class="emph">experiencearray</span> getter.</li>
+</ol>
+<hr>
+<h2>Validating inputs in reactive forms</h2>
+<p>In a reactive form, the source of truth is the component class.</p>
+<p><span style="font-weight: bold;">Instead of adding validators through attributes in the template</span>, you add <span class="emph">validator functions</span> directly to the form control model in the component class.</p>
+<hr>
+<h3>Validator functions</h3>
+<hr>
+<ol>
+    <li><span style="font-weight: bold;">Sync validators</span>: Synchronous functions that take a control instance and immediately return either a set of validation errors or null. You can pass these in as the second argument when you instantiate a FormControl.</li>
+    <li><span style="font-weight: bold;">Async validators</span>: Asynchronous functions that take a control instance and return a Promise or Observable that later emits a set of validation errors or null. You can pass these in as the third argument when you instantiate a FormControl.</li>
+</ol>
+<hr>
+<h3>Built-in validator functions</h3>
+<p>You can choose to write <span class="emph">your own validator functions</span>, or you can use some of Angular's <span style="font-weight: bold;">built-in validators</span>.</p>
+<hr>
+<p>The <span class="emph">same built-in validators that are available as attributes in template-driven forms, such as required and minlength</span>, are all available to use as functions from the Validators class.</p>
+<p>For a full list of <span class="emph">built-in validators</span>, see the <a href="https://angular.io/api/forms/Validators">Validators</a> API reference.</p>
+<p>In order to add a <span style="font-weight: bold;">built-in </span> <span class="emph">validator</span>, we simply add it as the second argument in the control.For example: <span style="font-weight: bold;">new FormControl("", Validators.required)</span> (the same would be, had we created the control through a FormBuilder).</p>
+<p>If we want to add  <span style="font-weight: bold;">several built-in </span> <span class="emph">validators</span>, we need to add these as the second argument, within an array. For example: new FormControl("", <span style="font-weight: bold;">[</span>Validators.required,Validators.minLength(4)<span style="font-weight: bold;">]</span>).</p>
+<p>While we need to add <span style="font-weight: bold;">validation attributes</span> to our HTML with <a href="https://angular.io/guide/form-validation#validating-input-in-template-driven-forms">Template-driven forms</a>, we <span class="emph">do not need to add HTML validation attributes in case of reactive forms,</span> but these <span class="emph">attributes</span> are still advised by Angular's website to <span class="emph">be retained to for accessibility purposes.</span></p>
+<hr>
+<h3>Custom Validations</h3>
+<p>A custom Angular <span style="font-weight: bold;">Validator</span> is essentially a function which is passed directly to the <span style="font-weight: bold;">FormControl</span> or to the <span style="font-weight: bold;">FormGroup</span>.</p>
+<p>An excellent video for custom validators can be found <a href="https://www.youtube.com/watch?v=pa9S8_3Rs8A">here</a> and you may read more in the <a href="https://angular.io/guide/form-validation#defining-custom-validators">Official Documentation</a>.</p>
+<h4>Template-driven forms</h4>
+<p>For template-driven forms, Angular uses <span style="font-weight: bold;">directives</span> to match these attributes with <span style="font-weight: bold;">custom</span> <span style="font-weight: bold;">validator functions</span> in the framework.</p>
+<h4>Reactive forms</h4>
+<p>While we are not adding a custom Angular <span style="font-weight: bold;">template-driven</span><span style="font-weight: bold;">Validator</span> now, we will still create a <span style="font-weight: bold;">directive</span> to define our custom validation function:</p>
+<ol>
+    <h5>A directive for my custom validation</h5>
+    <li>I created my <span class="emph">CustomvalidationDirective</span> through Angular's CLI and added it to my <span class="emph">feature module</span>.</li>
+    <li>Because I have lots of feature modules, Angular requires stating the module to which we want to add the generated directive. We have therefore added it just like this: <span class="emph">ng g d shared (the folder to be added to)/customvalidation (directive name) -m (the command for specifying the module to be added to) myforms (folder name)/modules (subfolder name)/myforms(my feature module name) --skipTests</span>.</li>
+    <h5>The custom validation function</h5>
+    <li>Within my <span class="emph">CustomvalidationDirective</span> directive, firstly, I define my validation function: <span class="emph">armenianlastname</span>.</li>
+    <li>We need to export this function to make it available for import by <span>myforms</span> component. We therefore create the function and export it: <span style="font-weight: bold;">export function armenianlastname(){{"{}"}}</span>.</li>
+    <li>Next thing we need to take into account is that a <span class="emph">custom validator function</span> <span style="font-weight: bold;">takes an argument</span>: <span class="emph">control</span> of an <span class="emph">AbstractControl</span> type. <span class="emph">This is the control we want the validation function to validate.</span></li>
+    <li>We therefore add the default argument to my validator function just like this: <span class="emph">export function armenianlastname(control:AbstractControl){{"{}"}}</span>.</li>
+    <li>Another important thing to consider is the the custom validation function <span class="emph">return (p.s. the function must return something)</span> type. It retruns either <span class="emph">null</span> or a <span class="emph">ValidationErrors</span> <span class="emph">object</span> <span style="font-weight: bold;">which ( the ValidationErrors object) is key and value pair</span>.</li>
+    <li>We have therefore also adhered to this return type <span style="font-weight: bold;"></span>requirement: <span class="emph">export function armenianlastname(control:AbstractControl): ValidationErrors | null{{"{}"}}</span>.</li>
+    <li>We can therefore well replace <span class="emph">ValidationErrors</span> with <span class="emph">{{"{[key:string]:any}"}}</span> or the Angular's built-in interface <span class="emph">ValidatorFn</span>. I have choosed the first one and changed the code to: <span class="emph">export function armenianlastname(control:AbstractControl): {{"{[key:string]:any}"}} | null{{"{}"}}</span>. However, it would work either of the discussed ways.</li>
+    <li>Then we simply create a <span class="emph">const</span> named <span style="font-weight: bold;">lastnamecontrolschangedvalue</span> which is equal to the custom-validating <span class="emph">control's</span> <span style="font-weight: bold;">value</span>, just like this: <span class="emph">const lastnamecontrolschangedvalue:string = control.valueChanges</span>. We know that the lastname control's value is of a <span style="font-weight: bold;">string types</span>, and therefore, also defined the type of the const as string.</li>
+    <li>Then, through my <span class="emph">lastthreelettersofthelastname</span> const I am getting the last 3 charachters of my <span style="font-weight: bold;">lastnamecontrolschangedvalue</span>. I have also converted these last 3 charachters to lowercase, so that the matching process becomes easier: <span class="emph">const lastthreelettersofthelastname = lastnamecontrolschangedvalue.slice(-3).toLocaleLowerCase()</span>.</li>
+    <li>Then, within an <span class="emph">if else function</span>, I have wrote a logic to <span style="font-weight: bold;">check whether the last three charachters are either "yan" or "ian"</span> - if yes, then we <span class="emph">return null</span>, which means there is <span class="emph">no error</span> and the validation is passed.</li>
+    <li>Because I am using my custom validation alongside another validation (required in this case), in order not to have two validation error messages at the same time when the field is empty, within my if function I also added a logic for returning <span class="emph">null</span> (no error) for my custom validation if the field is empty: <span class="emph">if(lastthreelettersofthelastname === "" || lastthreelettersofthelastname =="yan" || lastthreelettersofthelastname=="ian")...</span> </li>
+    <li>In case if the validation is not passed (the else part of the if function), I will <span class="emph">return</span> an object of a <span class="emph">{{"{[key:string]:any}"}}</span> type.In our particular case, I will <span class="emph">return {{"{'lastnameerror':true}"}}</span>.</li>
+    <li>Thus, with our logic, we <span class="emph">return either null (no errors) or an of a {{"{[key:string]:any}"}} prototype (for validation errors)</span>.</li>
+    <li>Then, I only add the custom validation function <span class="emph">armenianlastname</span> to my <span class="emph">stepapplication</span> FormGroup's <span class="emph">personal</span> sub FormGroup's <span class="emph">lastname</span> control as a validator, indeed also importing it from my directive.</li>
+</ol>
+<h5>Error Messages</h5>
+<p>There are control properties like <span class="emph">touched, untouched, valid, invalid, pristine, dirty,</span> etc that comes as a part of AbstractControl API.</p>
+<ul>
+    <li><span class="emph">errors</span> Returns the particular (e.g. errors.required) error object.</li>
+    <li><span class="emph">touched</span> The field has been touched.</li>
+    <li><span class="emph">untouched</span> The field has not been touched yet.</li>
+    <li><span class="emph">valid</span> The field content is valid.</li>
+    <li><span class="emph">invalid</span>The field content is not valid.</li>
+    <li><span class="emph">pristine</span>The field has not been modified yet.</li>
+    <li><span class="emph">dirty</span>The field has been modified.</li>
+</ul>
+    <ol>
+        <li>In a reactive form, you can always access any form control through the <span class="emph">get</span> method on its parent group, but sometimes it's useful to define getters as shorthand for the template.</li>
+        <li>Having said this, I have defined several <span class="emph">getters</span> for my <span class="emph">stepapplication</span> FromGroup's sub FromGroups's controls and one had been defined for my FormArray earlier: <span style="font-weight: bold;">stfirstname, stlastname, stemail, stfavailablein, stcv</span> and <span class="emph">exparray</span>.</li>
+        <li>I have defined the getters to make life easier and the code tidier.</li>
+        <li>Because in the below example I am using <span class="emph">Material</span> forms, <span class="emph">mat-error</span> and <span class="emph">mat-hint</span> are available.</li>
+        <li>Within <span class="emph">mat-error</span>, through <span class="emph">ng-if</span> I am retrieving the error messages through the <span class="emph">controlgetter.errors?.validationobjectname</span>.</li>
+        <li>Within my <span class="emph">ng-if</span>, through <span class="emph">touched</span> and <span class="emph">dirty</span>, I have specified the error message to appear only when the field has been touched or modified. The logic could've been another one.</li>
+        <li>For <span class="emph">minLength</span> the validation error name is <span class="emph">minlength</span> instead of <span class="emph">minLength</span>.</li>
+        <li><span class="emph">Material's</span> <span class="emph">mat-hint</span> disappears when <span class="emph">mat-error</span> appears.</li>
+    </ol>
+<p>Error messages could have also been stored within an object, and an object oriented approach be used with reusable error messages. See a tutorial <a href="https://www.youtube.com/watch?v=AvqP3FblMA8&t=292s">here</a>.</p>
+<h5>Cross-Field Validation.</h5>
+<p>A <span class="emph">cross-field validator</span> is a <span class="emph">custom validator</span> that <span style="font-weight: bold;">compares the values of different fields in a form and accepts or rejects them in combination</span>.</p>
+<p>See more at Angular's <a href="https://angular.io/guide/form-validation#cross-field-validation">Official Docs</a> or <a href="https://www.youtube.com/watch?v=m6imvYpP_Js&t=409s">this</a> video tutorial.</p>
+<ol>
+    <li>Within my <span class="emph">CustomvalidationDirective</span> I have created the <span class="emph">experiencecrossfield</span> validation function.</li>
+    <li>I followed the steps described above for <span class="emph">custom validation functions</span>.</li>
+    <li>Please note that to evaluate the dependent controls in a single custom validator, you must perform the validation in a common <span class="emph">ancestor</span> control: in the below discussed case<span class="emph">the FormGroup</span>.</li>
+    <li>I wanted to create a cross-field validation for my experience array, which would do the following:</li>
+        <ol>
+            <li>Check if we have the <span class="emph">company</span> and <span class="emph">position</span> controls within my experience array.</li>
+            <li>In case if we do have controls, in case if <span class="emph">company</span> control is not empty, require <span class="emph">position</span> and vice-versa.</li>
+            <li>In case if we do not have controls, no validation rules are applied.</li> 
+            <li>Also, if I have both an empty company and position, allow adding new experience only if the previous one is properly filled in (company and position).</li>
+        </ol>
+    <li>For this purpose I did the following:</li>
+    <ol>
+        <li><span style="font-weight: bold;">As with other custom validations</span>, I have created a <span class="emph">custom validation function</span>, named <span class="emph">experiencecrossfield</span>.</li>
+        <li>Within my <span class="emph">experiencecrossfield</span> <span style="font-weight: bold;">custom validation function</span> I have set out the logic.</li>
+        <li>Please note that because the <span class="emph">cross-field validation function</span> is applied to the experience array's respective <span class="emph">FormGroup</span>, within my <span class="emph">experiencecrossfield</span> function, the argument is the respective <span class="emph">FormGroup</span>, rather than <span class="emph">control</span>.</li>
+        <li>TWithin my <span class="emph">experiencecrossfield</span> function I defined <span class="emph">companycontrol</span> and <span class="emph">positioncontrol</span> which represent my controls: <span style="font-weight: bold;">const companycontrol = group.get("company"), const companycontrol = group.get("positioncontrol")</span></li>
+        <li>Then follows my logic through if else function to return either <span class="emph">positionval</span> or <span class="emph">companyval</span> errors or <span class="emph">null</span>. Also, when its null, I mark the controls as UNTOUCHED, so that the controls do not show errors INSTANTLY when they return back t normal.</li>
+        <li>Because by default, the error messages are shown when the <span class="emph">control</span> is invalid and either the user has interacted with (touched) the element or the parent form has been submitted, <span class="emph">mat-error</span> won't work with <span class="emph">cross-field validation function</span> applied to the <span class="emph">FromGroup</span>.</li>
+        <li>To override this behaviour, I have used <span class="emph">errorStateMatcher</span> property of the <span class="emph">matInput</span></li>
+        <li>For my custom logic, i needed a way to track which step I am currently in. I have therefore added and bound the <span class="emph">(selectionChange)</span> event within my <span class="emph">mat-horizontal-stepper</span> and boud it to my custom method to retrieve the step details: <span class="emph">(selectionChange)="selectionChange($event)"</span>.</li>
+        <li>Within my <span class="emph">selectionChange</span> method I added a logic which assigns <span class="emph">true</span> to my <span class="emph">experiencestep</span> property if the previous step was our expreience step, e.g. if <span class="emph"> e.previouslySelectedIndex===1</span> then <span class="emph">this.experiencestep=true</span>.</li>
+        <li>I have therefore, added the <span class="emph">errorStateMatcher</span> property to company and position <span class="emph">matInput</span>s: <span style="font-weight: bold;">[errorStateMatcher]="exp.hasError('companyval') && (exp.get('company').touched || experiencestep)?errorMatcher:null"</span> and <span style="font-weight: bold;">[errorStateMatcher]="exp.hasError('positionval') && (exp.get('position').touched || experiencestep)?errorMatcher:null"</span>.
+        These tell the <span class="emph">errorStateMatcher</span> to equal either to <span class="emph">errorMatcher</span> if the specific error has been found and the control is touched or the next step is selected (through tracking the value of the above mentioned <span class="emph">selectionChange</span>), or null if not.</li>
+        <li><span class="emph">Stepper</span> takes into account <span class="emph">interacted</span> property of step when calculating <span class="emph">error status</span> for control. Once you move from one step to another it becomes true, which results in my case in red titles when navigated back. Therefore, within my <span class="emph">selectionChange</span> function I have manually set the <span class="emph">interacted</span> property to false if the selectedindex is the xperience step: <span style="font-weight: bold;">e.selectedIndex==1?e.selectedStep.interacted=false:null</span>. See more <a href="https://stackoverflow.com/questions/57445739/angular-7-material-stepper-reactive-form-reset-not-working">here</a>.</li>
+        <li>Also, having added the <span class="emph">[stepControl]</span> (allows tracking each mat-step) to each of my mat-steps, and equaling to the particular top level AbstractControl (i.e., in our case these are the respective personal, experience and final formgroups and formarray), within my <span class="emph">selectionChange</span>, within the same if <span class="emph"> e.previouslySelectedIndex===1</span>,
+         I loop over all controls, and  check if we had navigated away from my experience step, mark all experience controls as touched to make the control errors visible. See more <a href="https://github.com/angular/angular/issues/12281">here</a>.</li>  
+        <li><span class="emph">errorMatcher</span> is a property we have named within our myforms.component.ts, which returns a new instance of the <span style="font-weight: bold;">class</span> we have named <span class="emph">CustomErrorStateMatcher</span> which implements <a href="https://material.angular.io/components/input/overview#changing-when-error-messages-are-shown" class="emph">ErrorStateMatcher.</a>object. The <span style="font-weight: bold;">class</span> named <span class="emph">CustomErrorStateMatcher</span>
+        is defined within our <span class="emph">myforms.component.ts</span>, but it could have <a href="https://stackoverflow.com/questions/55684699/use-errorstatematcher-as-directive">well been defined within a directive</a> and reused.</li>
+        <li>An <span class="emph">ErrorStateMatcher</span> must implement a <span class="emph">single</span> method <span class="emph">isErrorState</span>.</li>
+        <li><span class="emph">isErrorState</span> takes the <span style="font-weight: bold;">FormControl</span> for <span style="font-weight: bold;">this</span> <span class="emph">matInput</span> as well as the <span class="emph">parent form</span> and <span style="font-weight: bold;">returns a boolean indicating whether errors should be shown. (true indicating that they should be shown, and false indicating that they should not.)</span></li>
+        <li>In my case, first I defined a const which gets the parent form's experience array: <span style="font-weight: bold;">const experiencearray = form.control.get("fgrouparray").get([1]) as FormArray</span>.</li>
+        <li>Then I defined a const which is either true or false if the form exists and the form is submitted <span style="font-weight: bold;">const isSubmitted = !!(form && form.submitted)</span>.</li>
+        <li>Then I check whether or not my control is touched or dirty or whether the form is submitted and whether the expreincearray is valid, and if it returns true, we return the error: return !!((control.touched || control.dirty || control.parent.touched || isSubmitted) && experiencearray.invalid).</li>
+        <li>Once an error is returned, we may see it within our <span class="emph">mat-error</span>.</li>
+        <li>Finally, to disallow adding a new experience if the previous ones are empty, I added the given logic to my <span class="emph">addexp()</span>. Only if the previous controls are not empty, a new FormGroup of company and position controls is allowed to be added to my experience array.</li>
+        <li>Additionally, I make every added new experience controls (company and position), as well as the first experience controls (after adding a new experience) required.</li>
+        <li>Within the same if else logic of my <span class="emph">addexp()</span> function I did the following:</li>
+        <ol>
+            <li>In case if the previous controls are empty, I set a <span class="emph">required</span> validator directly (not to the FormGroup) to my previous company and position controls: <span class="emph">previouspanycontrol.setValidators(Validators.required)</span> and <span class="emph">previoustioncontrol.setValidators(Validators.required)</span>.</li>
+            <li>Please note that <span class="emph">setValidators</span> wipes out all the other validators. In  our case this is not a problem, because we didnt have other validators on our <span class="emph">controls</span> (only on the FormGroup as described above), but had we had others, there is workaround for adding validators, which can be found <a href="https://medium.com/ngx/3-ways-to-implement-conditional-validation-of-reactive-forms-c59ed6fc3325">here.</a></li>
+            <li>After adding the required validators through <span class="emph">setValidators</span>, I needed to trigger the <span class="emph">updateValueAndValidity()</span> method to update the errors and display these. Otherwise, the errors wouldn't display.</li>
+            <li>Finally, because by default errors are displayed only when the control is invalid and either the user has interacted with (touched) the element or the parent form has been submitted, in case if the previous controls are empty I marked the current position and company controls as touched to display the errors instantly, without the user touching these, through <span class="emph">markAsTouched()</span>.</li>
+            <li>Last but not least, if its the first position and company controls being added (adding after removing), I clear the required validators</li>
+            <li>And finally, within my HTML I added another condition to the ngif of my <span class="emph">mat-error</span> for the error messages to appear also when the required validator is on the control (aside from the custom cross-field validation, only when touched or dirty):<span class="emph">exp.hasError('companyval') || (exp.get('company').errors?.required && (exp.get('company').touched || exp.get('company').dirty))</span> and <span class="emph">exp.hasError('companyval') || (exp.get('position').errors?.required && (exp.get('position').touched || exp.get('position').dirty))</span></li>
+        </ol>
+        <li>In order to create a <span class="emph">cross-field Validator</span>, I have found out other methods as well: see more <a href="https://medium.com/ngx/3-ways-to-implement-conditional-validation-of-reactive-forms-c59ed6fc3325">here.</a></li>
+    </ol>
+</ol>
+ <h3>Step by Step Application Form</h3>
+<ol>
+    <li>Firstly, we have created the method <span class="emph">stepappi()</span> method which assign a <span class="emph">FormGourp</span>, created through <span class="emph">FormBuilder</span>, to my <span class="emph">stepapplication</span> property of a <span class="emph">FormGroup</span> type.</li>
+    <li>I then run the <span class="emph">stepappi()</span> method within my ngOnInIt().</li>
+    <li>I wanted to quickly create a <span class="emph">stepper</span>. That is why I have used <span class="emph">Angular Material's</span> ready-made stepper. See more <a href="https://www.youtube.com/watch?v=uo5VhgloOpI&list=PLC3y8-rFHvwilEuCqFGTL5Gt5U6deIrsU&index=18">here</a> and <a href="https://material.angular.io/components/stepper/overview">here.</a></li>
+    <li>I could well customize <span class="emph">Angular Material's</span> <span class="emph">stepper</span>. See more <a href="https://www.mokkapps.de/blog/how-i-built-a-custom-stepper-wizard-using-angular-material-cdk/">here.</a> </li>
+    <li><span class="emph">Angular Material's</span> <span style="font-weight: bold;">stepper</span> has many options, inluding <span class="emph">disallowing further steps</span>, or <span class="emph">displaying error on the step if there is an error</span> (I have chosen the latter for this example). See more on the above resources.</li>
+    <li>Because I am using a <a href="https://material.angular.io/components/stepper/overview#using-a-single-form" class="emph">Single Form</a> stepper, I will need to encapsulate the <span>subgroups</span> within a <span class="emph">FormArray</span>.</li>
+    <li>Therefore, my <span class="emph">stepapplication</span> FormGroup has a <span class="emph">FormArray</span> which wraps two nested formgroups and one nested FormArray with their corresponding controls.</li>
+    <li>I use <span class="emph">getters</span> to return the controls and the array for experience: exparray.</li>
+    <li>For <span class="emph">Angular Material's</span> <span style="font-weight: bold;">stepper</span>, I created an <span class="emph">ng-container</span> for my <span class="emph">stepapplication</span> parent Formgroup.</li>
+    <li>The encapsulating FormArray for the nested controls needs to be added to the <span class="emph">mat-horizontal-stepper</span>: formArrayName="fgrouparray" when using <span class="emph">Angular Material's</span> <span style="font-weight: bold;">stepper</span>.</li>
+    <li>Then, for each <span class="emph">mat-step</span> I need to add <span class="emph">stepControl</span> and in case if we have (we do) a single form (with nested groups and arrays), I also add the <span class="emph">formGroupName</span> equaling to the particular index of the array: <span class="emph">e.g. formGroupName="0"</span>, as well as the <span class="emph">[stepControl]</span> equaling to the particular <span style="font-weight: bold;">group or array</span> name which in our case if essentially an item of the encapsulating Formarray: <span class="emph">fgrouparray</span>.</li>
+    <li>To make life easier, for the <span class="emph">FormGroups</span> of my encapsulating Formarray: <span class="emph">fgrouparray</span>, I have again defined getters and wrote these as names for my FormGroups:<span class="emph">[stepControl]="personal" and [stepControl]="final"</span> and <span class="emph">[stepControl]="exparray"</span> for my experience FormArray.</li>
+    <li>In order to customize my <span class="emph">input</span> with a <span class="emph">file</span> type, I did the following:</li>
+        <ol>
+            <li>I added a <span class="emph">label</span>, providing the <span class="emph">for</span> attribute (broseCV).</li>
+            <li>I created an <span class="emph">input</span> element with an <span class="emph">id</span> attribute with a name same as the <span class="emph">label's</span> <span class="emph">for</span> attribute (browseCV).</li>
+            <li>I then added a <span class="emph">fileinput</span> css class to my <span class="emph">input</span> to make it invisible and with a with of 0px.</li>
+            <li>Also, I added a <span class="emph">fileinputlable</span> css class to my <span class="emph">label</span> to position it.</li>
+            <li>Because I am using material style, I simply encapsulated both the label and the input within my material button.</li>
+        </ol>
+</ol>
+<li>I have added <span class="emph">built-in</span> and <span class="emph">custom</span> <span class="emph">Validator</span> to my <span class="emph">stepapplication</span> FormGroup's controls.</li>
+<li>Then I followed the above discussed steps for my <span style="font-weight: bold;">experience </span> <span class="emph">FormArray</span>.</li>
+<li>I wanted to have a <span class="emph">visualisation</span> whenever there is an error in <span class="emph">Validation</span> of formfields in a particular step in a <span class="emph">Angular Material's</span> <span style="font-weight: bold;">stepper</span>.See the simple guide <a href="https://material.angular.io/components/stepper/overview#error-state">here.</a></li>
+<li>Please note that it is also possible to <span class="emph">prevent the next step</span> if there is an error in validation with <span class="emph">Angular Material's</span> <span style="font-weight: bold;">stepper</span>. You may see more at the above links (official docs and a YouTube tutorial).</li>
+<li>For the purpose of visualising the errors, I have simply added <span class="emph">provide: STEPPER_GLOBAL_OPTIONS, useValue: {{"{showError: true}"}}</span> within my <span class="emph">myforms.module.ts.</span>, and added <span class="emph">errorMessage="Errors"</span>(this is optional) to my <span class="emph">mat-step</span>. Instead of <span style="font-weight: bold;">Errors</span> it could have been another text, an object or a function.</li>
+<li>Then, I wanted to added a <span class="emph">cross-field validation</span> for my <span class="emph">experience</span> array as described above.</li>
+<li>For my <span class="emph">Final</span> step I did the following:</li>
+<ol>
+    <li>For my <span class="emph">availablein</span> control, I have implemented the basic required validation.</li>
+    <li>For my <span class="emph">cv</span> control, I have done the following:</li>
+    <ol>
+        <li>Firstly, I have created a container div for my CV button, as well as for my filename section, to align these side by side. My container has <span class="emph">css flex layout</span> and a class name: <span class="emph">browsecvcontainer</span>.</li>
+        <li>I have defined <span class="emph">selectedfile</span> of a <span class="emph">File</span> type, with a default value as null.</li>
+        <li>I have made my <span class="emph">cv</span> control equal to <span class="emph">selectedfile</span>.</li>
+        <li>I have defined <span class="emph">filelist</span> of a <span class="emph">Filelist</span> type.</li>
+        <li>Within my <span class="emph">browseCV</span> file type input, I have bound the <span class="emph">change event</span> to my method: <span class="emph">trackfile</span>: <span style="font-weight: bold;">trackfile(change)="trackfile($event)"</span>.</li>
+        <li>For my <span class="emph">selected filename</span> HTML section, I have created a seperate section with an <span class="emph">ngif</span> bound to the <span class="emph">fileisselected</span> boolean getter property.</li>
+        <li>I have also created a custom getter which returns the name of the file from <span class="emph">selectedfile</span>.</li>
+        <li>For my <span class="emph">selected filename</span> section, I have used <span class="emph">Material Chips</span>. You may find the details <a href="https://material.angular.io/components/chips/overview">here.</a></li>
+        <li>Within my <span class="emph">mat-chip</span> @Input decorated property and bound it to my custom <span class="emph">removable</span> property with a default value <span class="emph">true</span>: <span style="font-weight: bold;">[removable]="removable"</span></li>
+        <li>The <span class="emph">[removable]</span> @Input decorated property determines whether or not the chip displays the remove styling and emits <span class="emph">(removed)</span> events.</li>
+        <li>I have also added the <span class="emph">(removed)</span> @Output decorated event and bound it to my custom method: <span class="emph">removefile()</span>.</li>
+        <li>The <span class="emph">removefile()</span> method does the following:</li>
+         <ol>
+             <li>Assigns null to the <span class="emph">filelist</span>, and the above referenced getters update accordingly.</li>
+             <li>It also updates the control value assigning <span class="emph">null</span> as its value through <span class="emph">this.stcv.patchValue(null)</span> and updating the value and validity data through the <span class="emph">updateValueAndValidity</span> method so that the <span class="emph">required</span> validation would get triggered.</li>
+         </ol>
+        <li>I have bound the <span class="emph">change</span> event within my input to the <span class="emph">trackfile</span> method which accepts the event as an argument($event) just like this: <span class="emph">(change)="trackfile($event)"</span>.</li>
+        <li>Within my <span class="emph">trackfile</span> function I have done the following:</li>
+        <ol>
+            <li>Firstly, I assign the event's target file to my <span class="emph">selectedfile</span> which had been mentioned as a control value for my cv control.</li>
+            <li>Then I have assigned the allowed extensions to my <span class="emph">allowedextensions</span> const.</li>
+            <li>I have assigned the <span class="emph">selectedfile</span>'s' name's extension to the const <span class="emph">filetype</span>.</li>
+            <li>I have also defined a <span class="emph">fileextmatch</span> variable through let, which is a boolean tracking further whether or not the <span class="emph">selectedfile</span>'s' extension matches the <span class="emph">filetype</span>.</li>
+            <li>Through a for loop I then check if the file extension is one of the allowed extensions, if so, assigning the fileextmatch true, or assigning false if not.</li>
+            <li>I also assign the <span class="emph">selectedfile</span>'s size to my <span class="emph">filesize</span> const.</li>
+            <li>Through if function and <span class="emph">setErrors</span> method I assign <span class="emph">filetypeError</span> or <span class="emph">filesizeError</span> with a true value or a null value (if the size and type are ok).</li>
+            <li>I also nullify the control value if there is a size or type error through <span class="emph">this.stcv.patchValue(null)</span></li>
+            <li>Because <span class="emph">setError wipes all previous errors</span>, I only set the type error to true, if the size error is absent.</li>
+            <li>Through <span class="emph">e.target.files.length>0</span> I check if a file is selected and only then assigning the new value to the control. Otherwise, when I cancel the browse window, the selected file would disappear.</li>
+            <li>I use changedetector's markForCheck to explicitly tell angular that the view has changed to trigger so that the view can be checked again: <span class="emph">this.cd.markForCheck()</span>.</li>
+        </ol>
+        <li>Please note that the <span class="emph">change</span> event is triggered only when a <span class="emph">new</span> file is selected, and doesn't trigger when the same file is selected. The workaround would be to nullify the input value on (click). I have defined the <span class="emph">nullifyValue</span> method, which I dont use.</li>
+        <li>Because I have wrapped my <span class="emph">file type input</span> within a button, it is not marked as <span class="emph">touched</span> when clicked.</li>
+        <li>I have therefore written a logic for triggering the <span class="emph">required</span> validation only when the control is either <span class="emph">dirty</span> or when we have navigated away from my <span class="emph">final</span> mat-step: <span class="emph">stcv.errors?.required && (stcv.dirty || finalstep)</span></li>
+        <li>Within my <span class="emph">selectionChange</span> method I added a logic which assigns <span class="emph">true</span> to my <span class="emph">finalstep</span> property if the previous step was our final step: <span class="emph">e.previouslySelectedIndex===2?this.finalstep=true:null;</span>.</li>
+        <li>I have replicated mat-hint and mat-error styles through my <span class="emph">custommathint</span> and <span class="emph">custommaterror</span> css classes.</li>
+        <li>I have wrapped my  <span class="emph">replicated mat-hint</span> within an ng-container and show the hints only when the errors are not displayed. I have taken my error displaying logic into a getter: <span class="emph">cvhasdisplayederrorsgetter</span> to make life easier.</li>
+        <li>I have also bound my <span class="emph">cvhasdisplayederrorsgetter</span> getter to the <span class="emph">normalmatborder</span> and <span class="emph">errormatborder</span> classes to toggle between the normal and mat-error color bottom border: <span class="emph">[class]="cvhasdisplayederrorsgetter?'normalmatborder':'errormatborder'"</span></li>
+        <li>I have also boudn the <span class="emph">disabled</span> property to the <span class="emph">stepapplication</span>'s validity.</li>
+        <li>I have also replicated the <span class="emph">mat-error and mat-hint</span> animation, which you may find in <span class="emph">materrorhint.ts</span> in my shared/animations folder.</li>
+        <h5>Submitting the form</h5>
+        <ol>
+            <li>Because I do not use HTML <span class="emph">form</span> tag, the event listener <span class="emph">(ngSubmit)</span> won't work.</li>
+            <li>That is why I have bound the <span class="emph">click event</span> of my <span class="emph">Submit</span> button to my <span class="emph">submitapplication()</span> function, which should handle submitting the form: <span style="font-weight: bold;">(click)="submitapplication()"</span>.</li>
+            <li>Conversely, I could have well used the <span class="emph">form</span> attribute instead of my ng-container and used the the event listener <span class="emph">(ngSubmit)</span>.</li>
+            <li>It is advised to send the form's <span class="emph">file</span> explicitly set as of a <span class="emph">FormData</span> object type.</li>
+            <li><span class="emph">FormData</span> object <a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects">lets you compile a set of key/value pairs to send using XMLHttpRequest</a>.</li>
+            <li>Within my <span class="emph">submitapplication()</span> function I have defined a variable: <span class="emph">cvfileasformdata</span> being a <span class="emph">new</span> <span class="emph">FormData</span> object: let cvfileasformdata:FormData  = new FormData;</li>
+            <li>Then I <span class="emph">append</span> to my <span class="emph">FormData</span> object like this: cvfileasformdata: cvfileasformdata.append("cv", this.selectedfile, this.selectedfile.name). However, the same appending would need to be done for each and every control manually, which would be a problem for large forms. I have therefore used a reusable function: <span class="emph">convertJsontoFormData</span>, the details of which can be found at the bottom of my ts. See the <span class="emph">submitapplication()</span> and below for more details.</li>
+            <li>The next step would be submitting the form to the server, but I would need to make a server for that.</li>
+            <li>Hit the Submit button and see in the console.</li>
+            <li>For more information:</li>
+                <ol>
+                    <li><a href="https://www.youtube.com/watch?v=YkvqLNcJz3Y">An excellent video tutorial.</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">A great resource about FormData.</a></li>
+                    <li><a href="https://www.techiediaries.com/angular-formdata/">A good tutorial.</a></li>
+                    <li><a href="https://stackoverflow.com/questions/52966001/inspect-formdata-object-with-console-log">About some FormData problems.</a></li>
+                    <li><a href="https://www.itsolutionstuff.com/post/file-upload-with-angular-reactive-forms-exampleexample.html">A simple tutorial on submitting a form with a file through FormData.</a></li>
+                </ol>
+        </ol>
+    </ol>
+</ol>
+<hr>
+<p><span class="emph">FormGroup(stepapplication):</span> {{stepapplication.value | json}}</p>
+<div style="display: flex; flex-direction: row;gap:12px; justify-content: space-between; align-items: baseline;">
+    <div style="flex:1">
+        <h4>The stepapplication FormGroup firstname information</h4>
+        <ul>
+            <li><span  class="emph">Has required error:</span> {{stfirstname.hasError('required') | json}}</li>
+            <li><span class="emph">touched:</span> {{stfirstname.touched}}</li>
+            <li><span class="emph">untouched:</span> {{stfirstname.untouched}}</li>
+            <li><span class="emph">valid:</span> {{stfirstname.valid}}</li>
+            <li><span class="emph">invalid:</span>{{stfirstname.invalid}}</li>
+            <li><span class="emph">pristine:</span>{{stfirstname.pristine}}</li>
+            <li><span class="emph">dirty:</span>{{stfirstname.dirty}}</li>
+        </ul>
+    </div>
+    <div style="flex:1">
+        <h4>The stepapplication FormGroup's lastname control information</h4>
+        <ul>
+            <li><span  class="emph">Has required error:</span> {{stlastname.hasError('required') | json}} {{stlastname.errors?.required | json}}</li>
+            <li><span class="emph">touched:</span> {{stlastname.touched}}</li>
+            <li><span class="emph">untouched:</span> {{stlastname.untouched}}</li>
+            <li><span class="emph">valid:</span> {{stlastname.valid}}</li>
+            <li><span class="emph">invalid:</span>{{stlastname.invalid}}</li>
+            <li><span class="emph">pristine:</span>{{stlastname.pristine}}</li>
+            <li><span class="emph">dirty:</span>{{stlastname.dirty}}</li>
+        </ul>
+    </div>
+</div>
+<ng-container [formGroup]="stepapplication" (ngSubmit)="submitapplication()">
+    <mat-horizontal-stepper formArrayName="fgrouparray" labelPosition="bottom" (selectionChange)="selectionChange($event)">
+        <mat-step label="Personal Details" formGroupName="0" [stepControl]="personal" errorMessage="Errors">
+            <mat-form-field style="width: 100%;">
+                <mat-label>First Name</mat-label>
+                <input matInput required minlength="2" formControlName="firstname">
+                <mat-hint>Must enter a name of at least 2 charachters.</mat-hint>
+                <mat-error *ngIf="stfirstname.errors?.required && (stfirstname.touched || stfirstname.dirty)">
+                    You must enter a name.
+                </mat-error>
+                <mat-error *ngIf="stfirstname.errors?.minlength && (stfirstname.touched || stfirstname.dirty)">
+                    Min 2 charachters.
+                </mat-error>
+            </mat-form-field>
+            <br> 
+            <mat-form-field style="width: 100%;">
+                <mat-label>Last Name</mat-label>
+                <input matInput required formControlName="lastname">
+                <mat-hint>Must enter a last name, ending with either "yan" or "ian".</mat-hint>
+                <mat-error *ngIf="stlastname.errors?.required && (stlastname.touched || stlastname.dirty)">
+                    You must enter a last name.
+                </mat-error>
+                <mat-error *ngIf="stlastname.errors?.lastnameerror && (stlastname.touched || stlastname.dirty)">
+                    Your last name must end with either "yan" or "ian".
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field style="width: 100%;">
+                <mat-label>Email</mat-label>
+                <input matInput required formControlName="email">
+                <mat-hint>Must enter an email.</mat-hint>
+                <mat-error *ngIf="stemail.errors?.required && (stemail.touched || stemail.dirty)">
+                   You must enter an email.
+                </mat-error>
+                <mat-error *ngIf="stemail.errors?.email && (stemail.touched || stemail.dirty)">
+                    Not an email.
+                </mat-error>
+            </mat-form-field> 
+         <div align="end">
+            <button mat-raised-button matStepperNext type="button">Next</button>
+        </div>
+        </mat-step>
+        <mat-step label="Experience" formArrayName="1" [stepControl]="exparray" errorMessage="Missing details.">
+            <ng-container *ngFor="let exp of exparray.controls, let i = index, trackBy:trackbyID" [formGroupName]="i">
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Company</mat-label>
+                    <input matInput formControlName="company" [errorStateMatcher]="exp.hasError('companyval') && (exp.get('company').touchced || experiencestep)?errorMatcher:null">
+                    <mat-hint>Please name the company.</mat-hint>
+                    <mat-error *ngIf="exp.hasError('companyval') || (exp.get('company').errors?.required && (exp.get('company').touched || exp.get('company').dirty))">Company name is required for your position.</mat-error>
+                </mat-form-field>
+                    <br>
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Position</mat-label>
+                    <!-- <p>The form has custom position error: {{exp.hasError('positionval')}}, The form has custom company error: {{exp.hasError('companyval')}}, Control is Valid: {{exp.get('position').valid | json}}, Control hasError method required: {{exp.get('position').hasError('required') | json}}, Control .errors.required method: {{exp.get('position').errors?.required | json}}</p> -->
+                    <input matInput formControlName="position" [errorStateMatcher]="exp.hasError('positionval') && (exp.get('position').touched || experiencestep)?errorMatcher:null">
+                    <mat-hint>Please name the position.</mat-hint>
+                    <mat-error *ngIf="exp.hasError('positionval') || (exp.get('position').errors?.required && (exp.get('position').touched || exp.get('position').dirty))">Position name is required for your experience.</mat-error>
+                </mat-form-field>
+                 <div align="end"> <!--align="end" is just a quick alternative. Otherwise, a more reliable method should be used. See more here https://stackoverflow.com/questions/49420069/how-to-align-button-right-inside-dialog-angular-material-->
+                    <button mat-raised-button color="accent" (click)="reexp(i)" type="button">Remove Experience</button>
+                </div>
+                <hr style="border-top: 3px double #f000c8;">
+            </ng-container>
+            <!-- In case if I remove any experience -->
+            <ng-container *ngIf="exparray?.length==0">
+                <h3 style="text-align: center;">I do not have recorded experience.</h3>
+            </ng-container>   
+            <button mat-raised-button color="primary" (click)="addexp()" type="button">Add Experience</button>
+            <br>
+            <div style="display: flex; justify-content: space-between;">
+                <button mat-button matStepperPrevious type="button">Back</button>
+                <button mat-button matStepperNext type="button">Next</button>
+            </div>
+        </mat-step>
+         <mat-step label="Final" formGroupName="2" [stepControl]="final" errorMessage="Missing details.">
+            <mat-form-field style="width: 100%;">
+                <mat-label>Available In</mat-label>
+                <mat-select formControlName="availablein">
+                  <mat-option value="15 days">15 days</mat-option>
+                  <mat-option value="1 month">1 month</mat-option>
+                  <mat-option value="2 months">2 months</mat-option>
+                  <mat-option value="3 months">3 months</mat-option>
+                  <mat-option value="More than 2 months">More than 2 months</mat-option>
+                </mat-select>
+                <mat-hint>Please select how soon you will be able to join.</mat-hint>
+                <mat-error *ngIf="stavalable.errors?.required && (stavalable.touched || stavalable.dirty)">You haven't selected how soon you will be available.</mat-error>
+           </mat-form-field>
+           <div class="browsecvcontainer" [class]="cvhasdisplayederrorsgetter?'normalmatborder':'errormatborder'">
+                <button mat-raised-button color="primary" type="button">
+                    <label for="browseCV" class="fileinputlable">CV</label>
+                    <input id="browseCV" type="file" class="fileinput" (change)="trackfile($event)"  formControlName="cv"><!--  (click)="nullifyValue($event)" -->
+                </button>
+                <section *ngIf="fileisselected">
+                    <mat-chip-list aria-label="CV">
+                        <mat-chip [removable]="removable" (removed)="removefile()">
+                            {{filename}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                </section>
+           </div>
+           <ng-container *ngIf="cvhasdisplayederrorsgetter">
+                <span class="custommathint" @materrorhint>Maximum File Size: 5120 kB</span>
+                <span class="custommathint" @materrorhint>Accepted file formats: jpg, xlsx, tiff, bmp, gif, rtf, png, docx, tif, pptx, txt, odg, pdf, ppt, doc, jpeg, odp, text, odt, xls, ods</span>
+           </ng-container>
+                <span class="custommaterror" *ngIf="stcv.errors?.required && (stcv.dirty || finalstep)" @materrorhint>Required error</span>
+                <span class="custommaterror" *ngIf="stcv.errors?.filesizeError" @materrorhint>File size error</span>
+                <span class="custommaterror" *ngIf="stcv.errors?.filetypeError" @materrorhint>File type error</span>
+            <br>
+            <br>
+            <div style="display: flex; justify-content: space-between;">
+                <button mat-button matStepperPrevious type="button">Back</button>
+                <button mat-raised-button color="primary" type="submit" [disabled]="!stepapplication.valid" (click)="submitapplication()">Submit</button>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+</ng-container>
+
+<h2>Form tag </h2>
+<hr>
+<p>When we use <span class="emph">ReactiveForms</span>, there is <span class="emph">no need</span> for an HTML form tag.</p>
+<p>Reactive forms have nothing to do with HTML tag form at all. They even don't have submited property, while template based forms have it.</p>
+<p>Instead of the form tag we could have used <span class="emph">ng-container</span>. See more <a href="https://github.com/angular/angular/issues/23319#issuecomment-386609726">here</a>.</p>
+<h3>Radio type inputs</h3>
+<p>When we use <span class="emph">formControlName</span> with a <span class="emph">radio</span> type input <span class="emph">within an HTML form tag</span>, the <span class="emph">formControlName</span> needs to have the same <span class="emph">name</span> as the radio type input's <span class="emph">name</span> attribute.</p>
+<p>In that case, we need to also provide the <span class="emph">value</span> attribute of the radio type input. See the example above.</p>
+<p>In order to <span class="emph">make the label of radio type input clickable</span>, we include the input inside the label tag. See the dynamic form above as an example.</p>
+<p>Otherwise, we will have errors. See more <a href="https://github.com/angular/angular/issues/23319#issuecomment-386609726">here</a></p>
+<hr>
+<p>The <span class="emph">ControlContainer</span> is a abstract class which is extended by the AbstractFormGroupDirective inside the <span class="emph">ReactiveFormsModule</span>.</p>
+<p>An <span class="emph">error</span> is thrown if you're using the <span class="emph">ReactiveFormsModule</span> and a form-element without a <span class="emph">FormGroup</span> bound to it via <span class="emph">[formGroup]="someFormGroupName".</span></p>
+<hr>
+<h2>General HTML Forms Information</h2>
+<h3>name attribute</h3>
+<ol>
+    <li>The <span class="emph">name</span> attribute specifies the name of an input element.</li>
+    <li>The <span class="emph">name</span> attribute is used to <span class="emph">reference elements in a JavaScript</span>, or to <span class="emph">reference form data after a form is submitted</span>.</li>
+    <li class="emph">Only form elements with a name attribute will have their values passed when submitting a form.</li>
+    <li>For <span class="emph">radio</span> types the <span class="emph">name has to be the same</span> for the different inputs of a certain section to make it toggle.</li>
+</ol>
+<h2>Material Wizard Stepper</h2>
+<ol>
+    <li>Material Basic: <a href="https://material.angular.io/components/stepper/overview">here.</a></li>
+    <li>Custom: <a href="https://www.mokkapps.de/blog/how-i-built-a-custom-stepper-wizard-using-angular-material-cdk/">here.</a></li>
+</ol>
+<h2>Angular Documentation</h2>
+<p><a href="https://angular.io/guide/reactive-forms">Reactive forms</a></p>
