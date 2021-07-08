@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { map, reduce } from 'rxjs/operators';
-import { JustaservService } from '../justaserv.service';
-import { shake } from '../shared/myanimations/shake';
+import { JustaservService } from '../../justaserv.service';
+import { shake } from '../../shared/myanimations/shake';
 
 @Component({
   selector: 'app-basket',
