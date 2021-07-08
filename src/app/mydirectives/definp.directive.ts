@@ -1,11 +1,11 @@
-import { Directive, ElementRef, EventEmitter, HostListener,Input,OnInit,Output,Renderer2} from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener,Input, Output,Renderer2} from '@angular/core';
 import { JustaservService } from '../justaserv.service';
 
 @Directive({
   selector: '[defzero]',
   exportAs: 'newvalue'
 })
-export class DefinpDirective implements OnInit {
+export class DefinpDirective {
 @Input() spbool:boolean;
 @Output() spboolChange:EventEmitter<boolean>= new EventEmitter();
 @Input() availability:number;
@@ -89,15 +89,5 @@ quantityupdater(){
 }
 //Checking if the basket's added product's array is available, assigning the directive's quantity property to the array's quantity property through getters, described above.
 assbupquant(){
-  this.upquant?this.y=this.upquant:null
-}
-
-ngOnInit() {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    // this.el.nativeElement.value.length<1||parseInt(this.el.nativeElement.value)<1?this.renderer.setProperty(this.el.nativeElement,"value", 0):null
-    this.y=parseInt(this.el.nativeElement.value);
-    //console.log(this.el.nativeElement.parentNode.parentNode.parentNode);
-    // console.log(this.grandparent);
-  }
-}
+  this.upquant?this.y=this.upquant:this.y = this.el.nativeElement.value
+}}
